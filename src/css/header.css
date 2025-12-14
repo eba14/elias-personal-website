@@ -130,7 +130,7 @@ nav .container {
 }
 
 .mobile-menu-toggle.active span:nth-child(3) {
-    transform: rotate(-45deg) translate(7px, -6px);
+    transform: rotate(-45deg) translate(5px, -5px);
 }
 
 /* Mobile Menu */
@@ -145,6 +145,8 @@ nav .container {
     border-top: 1px solid rgba(244, 180, 0, 0.3);
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
     z-index: 999;
+    max-height: 60vh;
+    overflow-y: auto;
 }
 
 .mobile-menu.active {
