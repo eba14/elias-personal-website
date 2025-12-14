@@ -2,7 +2,7 @@
 
 // Load all component content
 function loadComponents() {
-  const compBase = 'components/';
+  const compBase = 'src/components/';
   return Promise.all([
     fetch(compBase + 'header.html').then(r => r.text()),
     fetch(compBase + 'left-profile.html').then(r => r.text()),
@@ -10,6 +10,13 @@ function loadComponents() {
     fetch(compBase + 'email-popup.html').then(r => r.text()),
     fetch(compBase + 'project-modals.html').then(r => r.text())
   ]).then(([headerHtml, leftHtml, footerHtml, emailHtml, projectModalsHtml]) => {
+    // Fix image paths for all components
+    leftHtml = leftHtml.replace(/src="images\//g, 'src="src/images/');
+    headerHtml = headerHtml.replace(/src="images\//g, 'src="src/images/');
+    footerHtml = footerHtml.replace(/src="images\//g, 'src="src/images/');
+    emailHtml = emailHtml.replace(/src="images\//g, 'src="src/images/');
+    projectModalsHtml = projectModalsHtml.replace(/src="images\//g, 'src="src/images/');
+    
     document.getElementById('header-container').innerHTML = headerHtml;
     document.getElementById('left-profile-container').innerHTML = leftHtml;
     document.getElementById('footer-container').innerHTML = footerHtml;
@@ -20,53 +27,59 @@ function loadComponents() {
 
 function loadContentComponents() {
   // About Me
-  fetch('components/content-components/about-me.html')
+  fetch('src/components/content-components/about-me.html')
     .then(response => response.text())
     .then(data => {
+      data = data.replace(/src="images\//g, 'src="src/images/');
       document.getElementById('about-me-container').innerHTML = data;
       animateBoxedSections();
     });
 
   // Work history (fix image paths)
-  fetch('components/content-components/work-history.html')
+  fetch('src/components/content-components/work-history.html')
     .then(response => response.text())
     .then(data => {
-      data = data.replace(/src="\.\.\/\.\.\/images\//g, 'src="images/');
+      data = data.replace(/src="\.\.\/\.\.\/images\//g, 'src="src/images/');
+      data = data.replace(/src="images\//g, 'src="src/images/');
       document.getElementById('work-history-container').innerHTML = data;
       animateBoxedSections();
     });
 
   // Leadership
-  fetch('components/content-components/leadership.html')
+  fetch('src/components/content-components/leadership.html')
     .then(response => response.text())
     .then(data => {
+      data = data.replace(/src="images\//g, 'src="src/images/');
       document.getElementById('leadership-container').innerHTML = data;
       animateBoxedSections();
     });
 
   // Personal projects
-  fetch('components/content-components/personal-projects.html')
+  fetch('src/components/content-components/personal-projects.html')
     .then(response => response.text())
     .then(data => {
+      data = data.replace(/src="images\//g, 'src="src/images/');
       document.getElementById('projects-container').innerHTML = data;
       animateBoxedSections();
       setupProjectModals();
     });
 
   // Hackathons (fix image paths)
-  fetch('components/content-components/hackathons.html')
+  fetch('src/components/content-components/hackathons.html')
     .then(response => response.text())
     .then(data => {
-      data = data.replace(/src="\.\.\/\.\.\/images\//g, 'src="images/');
+      data = data.replace(/src="\.\.\/\.\.\/images\//g, 'src="src/images/');
+      data = data.replace(/src="images\//g, 'src="src/images/');
       document.getElementById('hackathons-container').innerHTML = data;
       animateBoxedSections();
     });
 
   // Organizations (fix image paths)
-  fetch('components/content-components/organizations.html')
+  fetch('src/components/content-components/organizations.html')
     .then(response => response.text())
     .then(data => {
-      data = data.replace(/src="\.\.\/\.\.\/images\//g, 'src="images/');
+      data = data.replace(/src="\.\.\/\.\.\/images\//g, 'src="src/images/');
+      data = data.replace(/src="images\//g, 'src="src/images/');
       document.getElementById('organizations-container').innerHTML = data;
       animateBoxedSections();
     });
