@@ -1,0 +1,57 @@
+/* Main Layout */
+#main-content {
+    display: flex;
+    max-width: 100%;
+    margin-top: 100px;
+    padding: 0 5%;
+    justify-content: space-between;
+    flex: 1;
+    padding-top: 80px;
+    position: relative;
+    z-index: 10;
+}
+
+/* Left side (Bio Section) */
+.left-side {
+    width: 25%;
+    padding: 30px;
+    color: #fff;
+    text-align: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    margin-right: 3%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 500;
+}
+
+
+
+/* Responsive Layout */
+@media screen and (max-width: 992px) {
+    #main-content {
+        flex-direction: column;
+        padding-top: 20px;
+    }
+
+    .left-side {
+        width: 100%;
+        position: relative;
+        height: auto;
+        justify-content: flex-start;
+        top: 0;
+        margin-right: 0;
+        padding-top: 100px;
+        padding-bottom: 20px;
+    }
+
+    .right-side {
+        width: 100%;
+        margin-left: 0;
+        padding: 30px 5%;
+    }
+}

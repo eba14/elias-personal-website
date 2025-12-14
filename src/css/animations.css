@@ -1,0 +1,93 @@
+/* Animation Keyframes */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeOut {
+    from { opacity: 1; transform: translateY(0); }
+    to { opacity: 0; transform: translateY(-8px); }
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateY(-50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes blink {
+    0%, 45% { opacity: 1; }
+    46%, 100% { opacity: 0; }
+}
+
+/* Typewriter Animation */
+#typewriter-text::after {
+    content: '|';
+    color: #f4b400;
+    animation: blink 1.2s infinite;
+    margin-left: 3px;
+    -webkit-text-fill-color: #f4b400;
+    font-weight: 200;
+    transform: scaleX(0.5);
+}
+
+/* Animation Classes */
+.boxed-section, .project-card, .timeline-item {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.3s ease;
+}
+
+.boxed-section.animate, .project-card.animate, .timeline-item.animate {
+    animation: fadeInUp 0.6s ease forwards;
+}
+
+/* Profile Animations */
+.left-side .profile-img {
+    opacity: 0;
+    animation: fadeIn 0.6s ease 0.2s forwards;
+}
+
+.profile-name {
+    opacity: 0;
+    animation: fadeIn 0.6s ease 0.4s forwards;
+}
+
+.profile-info {
+    opacity: 0;
+    animation: fadeIn 0.6s ease 0.6s forwards;
+}
+
+.social-media {
+    opacity: 0;
+    animation: fadeIn 0.6s ease 0.6s forwards;
+}
+
+/* Popup Animations */
+.popup {
+    animation: fadeIn 0.3s ease;
+}
+
+.popup.fade-out {
+    animation: fadeOut 220ms ease forwards;
+}
+
+.popup-content {
+    animation: slideIn 0.3s ease;
+}

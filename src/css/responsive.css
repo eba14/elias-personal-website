@@ -1,0 +1,38 @@
+/* Media query for smaller screens */
+@media screen and (max-width: 992px) {
+    #main-content {
+        flex-direction: column;
+        padding-top: 20px;
+    }
+
+    .left-side {
+        width: 100%;
+        position: relative;
+        height: auto;
+        justify-content: flex-start;
+        top: 0;
+        margin-right: 0;
+        padding-top: 100px;
+        padding-bottom: 20px;
+    }
+
+    .right-side {
+        width: 100%;
+        margin-left: 0;
+        padding: 30px 5%;
+    }
+
+    .social-media {
+        margin-top: 10px;
+    }
+}
+
+/* Make section gaps smaller on narrow screens to save vertical space */
+@media screen and (max-width: 768px) {
+    section { margin-bottom: 0; }
+    .right-side section .boxed-section:last-of-type { margin-bottom: 56px; }
+    .right-side > div + div { margin-top: 40px; }
+    
+    section:last-of-type { margin-bottom: 8px; }
+    .right-side section:last-of-type .boxed-section:last-of-type { margin-bottom: 12px; }
+}
