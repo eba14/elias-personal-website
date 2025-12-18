@@ -45,7 +45,6 @@
     justify-content: center;
     overflow: hidden;
     position: relative;
-    background: linear-gradient(135deg, #34495e, #2c3e50);
 }
 
 .project-logo:hover .project-company-logo {
