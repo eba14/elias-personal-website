@@ -101,7 +101,6 @@ nav .container {
 /* Mobile Menu Toggle */
 .mobile-menu-toggle {
     display: none;
-    flex-direction: column;
     cursor: pointer;
     padding: 8px;
     border-radius: 6px;
@@ -112,25 +111,34 @@ nav .container {
     background: rgba(244, 180, 0, 0.1);
 }
 
-.mobile-menu-toggle span {
+.menu-icon {
+    position: relative;
     width: 25px;
-    height: 3px;
-    background: #fff;
-    margin: 3px 0;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.arrow-down, .arrow-up {
+    position: absolute;
+    font-size: 16px;
+    color: #fff;
     transition: all 0.3s ease;
-    border-radius: 2px;
 }
 
-.mobile-menu-toggle.active span:nth-child(1) {
-    transform: rotate(45deg) translate(5px, 5px);
+.arrow-up {
+    opacity: 0;
+    transform: rotate(180deg);
 }
 
-.mobile-menu-toggle.active span:nth-child(2) {
+.mobile-menu-toggle.active .arrow-down {
     opacity: 0;
 }
 
-.mobile-menu-toggle.active span:nth-child(3) {
-    transform: rotate(-45deg) translate(7px, -6px);
+.mobile-menu-toggle.active .arrow-up {
+    opacity: 1;
+    transform: rotate(0deg);
 }
 
 /* Mobile Menu */
