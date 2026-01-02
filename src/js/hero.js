@@ -4,7 +4,7 @@ function initializeHeroSection() {
   const typewriterElement = document.getElementById('typewriter-text');
   const emojiElement = document.getElementById('rotating-emoji');
   
-  // Tech, robotics, and engineering emojis
+  // Tech/engineering emojis
   const emojis = ['👋', '⚡', '💻', '🤖', '🔧', '🧠', '⚙️', '🧩', '💡', '🔌', '📊', '🧮', '📐', '🔋', '🦾', '🔑', '🌐', '📱', '🔥', '🎓', '👑', '✅'];
   
   if (typewriterElement) {
@@ -15,6 +15,8 @@ function initializeHeroSection() {
     const typewriterDuration = 800 + (text.length * 80) + 600 + 1500;
     
     if (emojiElement) {
+      // Set initial emoji to wave hand
+      emojiElement.textContent = emojis[0];
       const emojiRotator = new EmojiRotator(emojiElement, emojis);
       emojiRotator.start(typewriterDuration + 500);
     }
