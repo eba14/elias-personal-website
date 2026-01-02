@@ -29,6 +29,12 @@
 
 /* Make section gaps smaller on narrow screens to save vertical space */
 @media screen and (max-width: 768px) {
+    body {
+        width: 100vw;
+        min-width: 100vw;
+        overflow-x: hidden;
+    }
+    
     section { margin-bottom: 0; }
     .right-side section .boxed-section:last-of-type { margin-bottom: 56px; }
     .right-side > div + div { margin-top: 40px; }
