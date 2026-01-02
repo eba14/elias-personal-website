@@ -5,7 +5,7 @@ function initializeHeroSection() {
   const emojiElement = document.getElementById('rotating-emoji');
   
   // Tech, robotics, and engineering emojis
-  const emojis = ['💻', '⚡', '🤖', '🔧', '🧠', '⚙️', '💡', '🔌', '📊', '🧮', '📐', '🔋', '🦾', '🔑', '🌐', '📱', '🔥', '🎓', '👑', '✅'];
+  const emojis = ['👋', '⚡', '💻', '🤖', '🔧', '🧠', '⚙️', '🧩', '💡', '🔌', '📊', '🧮', '📐', '🔋', '🦾', '🔑', '🌐', '📱', '🔥', '🎓', '👑', '✅'];
   
   if (typewriterElement) {
     const typewriter = new TypewriterEffect(typewriterElement, text);
