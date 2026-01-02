@@ -4,23 +4,21 @@ A modern, responsive personal portfolio website showcasing my work, experience, 
 
 ## Features
 
-- Responsive design for all devices
-- Smooth scrolling navigation
-- Interactive animations
-- Project showcases
+- Responsive design for various devices
+- Interactive animations to improve UX/UI
+- Academic involvement showcases
 - Professional timeline layout
 
-## Technologies Used
+## Languages Used
 
-- HTML5
-- CSS3
-- JavaScript (ES6+)
-- Modern CSS Grid & Flexbox
+- HTML
+- CSS
+- JavaScript 
 
 ## Live Website
 
-Visit my portfolio at: https://eba14.github.io/elias-personal-website
+Visit my website at: https://eba14.github.io/elias-personal-website
 
 ---
 
-© 2025 Elias Assalif. All rights reserved.
+© 2026 Elias Assalif. All rights reserved.
