@@ -4,8 +4,8 @@ A modern, responsive personal portfolio website showcasing my work, experience, 
 
 ## Features
 
-- Responsive design for various devices
-- Interactive animations to improve UX/UI
+- Scalable design for various devices
+- Interactive animations that improves UX/UI
 - Academic involvement showcases
 - Professional timeline layout
 

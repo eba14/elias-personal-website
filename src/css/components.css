@@ -100,6 +100,15 @@
     filter: brightness(1.2) drop-shadow(0 0 8px rgba(244, 180, 0, 0.5));
 }
 
+/* Finger point direction for different devices */
+.finger-point-mobile {
+    display: none;
+}
+
+.finger-point-desktop {
+    display: inline;
+}
+
 /* Right side (Content Section) */
 .right-side {
     width: 70%;
@@ -329,6 +338,14 @@ body::-webkit-scrollbar-track {
 }
 
 @media screen and (max-width: 992px) {
+    .finger-point-mobile {
+        display: inline;
+    }
+    
+    .finger-point-desktop {
+        display: none;
+    }
+    
     .organizations-grid {
         grid-template-columns: repeat(2, 1fr);
         gap: 20px;
