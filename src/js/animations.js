@@ -16,9 +16,16 @@ function observeBoxes() {
   const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
+        // Animate the boxed element
         setTimeout(() => {
           entry.target.classList.add('animate');
         }, entry.target.dataset.index * 20);
+        
+        // Also animate the parent section's divider
+        const section = entry.target.closest('section');
+        if (section) {
+          section.classList.add('animate');
+        }
       } else {
         entry.target.classList.remove('animate');
         entry.target.style.opacity = '0';

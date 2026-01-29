@@ -66,7 +66,7 @@ function setupLogoClick() {
 }
 
 function updateActiveNavLink() {
-  const sections = ['about-me', 'work-history', 'leadership', 'projects', 'hackathons', 'organizations'];
+  const sections = ['about-me', 'work-history', 'leadership', 'coursework', 'projects', 'hackathons', 'organizations'];
   const navLinks = document.querySelectorAll('.nav-link');
   
   let currentSection = '';

@@ -123,14 +123,14 @@
     font-family: 'Montserrat', sans-serif;
     display: block;
     width: max-content;
-    margin: 40px auto 18px;
-    font-size: 2.2rem;
+    margin: 25px auto 12px;
+    font-size: 1.8rem;
     color: #ffffff;
     background: linear-gradient(180deg, #0b0b0b 0%, #1f1f1f 100%);
     border: 1px solid rgba(255,255,255,0.04);
     color: #f7fbff;
     transition: transform 220ms ease, box-shadow 220ms ease, background 220ms ease;
-    padding: 10px 18px;
+    padding: 8px 16px;
     border-radius: 999px;
     letter-spacing: 1px;
     position: relative;
@@ -165,6 +165,102 @@
 .section-title:focus-visible {
     outline: 3px solid rgba(74,151,232,0.22);
     outline-offset: 4px;
+}
+
+/* Coursework Section */
+.coursework-container {
+    max-width: 1000px;
+    margin: 0 auto 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.coursework-category {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 25px;
+    transition: all 0.3s ease;
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+.coursework-category.animate {
+    animation: fadeInUp 0.6s ease forwards;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.coursework-category:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(244, 180, 0, 0.3);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+.category-header {
+    margin-bottom: 20px;
+    border-bottom: 2px solid rgba(244, 180, 0, 0.3);
+    padding-bottom: 15px;
+}
+
+.category-header h3 {
+    font-size: 1.4rem;
+    color: #f4b400;
+    margin: 0;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+.category-subtitle {
+    font-size: 0.9rem;
+    color: #999;
+    margin: 5px 0 0;
+}
+
+.courses-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.course-item {
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    padding: 18px;
+    transition: all 0.3s ease;
+}
+
+.course-item:hover {
+    background: rgba(74, 151, 232, 0.1);
+    border-color: rgba(74, 151, 232, 0.4);
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(74, 151, 232, 0.15);
+}
+
+.course-item h4 {
+    font-size: 1.1rem;
+    color: #f7fbff;
+    margin: 0 0 12px 0;
+    font-weight: 600;
+}
+
+.course-item ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.course-item li {
+    color: #ccc;
+    font-size: 0.95rem;
+    margin-bottom: 8px;
+    padding-left: 0;
+}
+
+.course-item li:last-child {
+    margin-bottom: 0;
 }
 
 /* Boxed Sections */

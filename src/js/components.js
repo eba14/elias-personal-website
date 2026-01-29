@@ -54,6 +54,14 @@ function loadContentComponents() {
       animateBoxedSections();
     });
 
+  // Coursework
+  fetch('src/components/content-components/coursework.html')
+    .then(response => response.text())
+    .then(data => {
+      document.getElementById('coursework-container').innerHTML = data;
+      animateBoxedSections();
+    });
+
   // Personal projects
   fetch('src/components/content-components/personal-projects.html')
     .then(response => response.text())

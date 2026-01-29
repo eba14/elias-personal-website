@@ -34,3 +34,33 @@ body {
     overscroll-behavior: none;
     position: relative;
 }
+
+/* Section Spacing */
+section {
+    margin-bottom: 25px;
+    padding-bottom: 20px;
+    position: relative;
+}
+
+/* Section Dividers */
+section::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60%;
+    height: 1.5px;
+    background: linear-gradient(90deg, transparent, rgba(244, 180, 0, 0.6), rgba(110, 181, 255, 0.5), transparent);
+    opacity: 0;
+}
+
+section.animate::after {
+    animation: fadeInDivider 0.8s ease forwards;
+}
+
+@keyframes fadeInDivider {
+    to {
+        opacity: 1;
+    }
+}
