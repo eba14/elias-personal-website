@@ -168,6 +168,40 @@
 }
 
 /* Coursework Section */
+.coursework-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    margin: 20px auto 25px;
+    padding: 15px 30px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(244, 180, 0, 0.3);
+    border-radius: 12px;
+    max-width: fit-content;
+    transition: all 0.3s ease;
+}
+
+.coursework-header:hover {
+    background: rgba(255, 255, 255, 0.08);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+.coursework-university-logo {
+    width: 50px;
+    height: 50px;
+    object-fit: contain;
+    border-radius: 8px;
+}
+
+.university-name {
+    font-size: 1.3rem;
+    color: #fff;
+    margin: 0;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
 .coursework-container {
     max-width: 1000px;
     margin: 0 auto 20px;
@@ -202,6 +236,9 @@
     margin-bottom: 20px;
     border-bottom: 2px solid rgba(244, 180, 0, 0.3);
     padding-bottom: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .category-header h3 {
@@ -212,55 +249,81 @@
     letter-spacing: 0.5px;
 }
 
-.category-subtitle {
-    font-size: 0.9rem;
-    color: #999;
-    margin: 5px 0 0;
+.category-logo {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+    border-radius: 6px;
 }
 
-.courses-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 20px;
+.courses-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
 }
 
 .course-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 18px;
     background: rgba(0, 0, 0, 0.3);
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 8px;
-    padding: 18px;
     transition: all 0.3s ease;
+    justify-content: space-between;
 }
 
 .course-item:hover {
     background: rgba(74, 151, 232, 0.1);
     border-color: rgba(74, 151, 232, 0.4);
-    transform: translateY(-3px);
-    box-shadow: 0 6px 15px rgba(74, 151, 232, 0.15);
+    transform: translateX(5px);
+    box-shadow: 0 4px 12px rgba(74, 151, 232, 0.15);
 }
 
-.course-item h4 {
-    font-size: 1.1rem;
-    color: #f7fbff;
-    margin: 0 0 12px 0;
+.course-code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.95rem;
+    color: #f4b400;
     font-weight: 600;
+    min-width: 90px;
 }
 
-.course-item ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
+.course-separator {
+    color: rgba(255, 255, 255, 0.4);
+    font-size: 0.9rem;
 }
 
-.course-item li {
+.course-name {
     color: #ccc;
     font-size: 0.95rem;
-    margin-bottom: 8px;
-    padding-left: 0;
+    font-weight: 400;
 }
 
-.course-item li:last-child {
-    margin-bottom: 0;
+.course-note {
+    color: #999;
+    font-size: 0.85rem;
+    font-style: italic;
+    margin-left: auto;
+}
+
+/* Course logo placed at the end of each course row. Use contain to preserve full image */
+.course-logo {
+    margin-left: auto;
+    width: 84px;
+    max-width: 18%;
+    max-height: 48px;
+    height: auto;
+    object-fit: contain;
+    display: block;
+    flex-shrink: 0;
+}
+
+@media (max-width: 680px) {
+    .course-logo {
+        width: 56px;
+        max-height: 36px;
+    }
 }
 
 /* Boxed Sections */
@@ -331,7 +394,8 @@
     margin: 0 auto 20px;
     border-radius: 12px;
     overflow: hidden;
-    background: rgba(255, 255, 255, 0.1);
+    /* remove the light box so PNG transparency shows through */
+    background: transparent;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -342,8 +406,15 @@
 .org-logo img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    /* preserve full logo, avoid cropping */
+    object-fit: contain;
+    /* ensure transparent PNGs don't show a white box */
+    background: transparent;
     transition: transform 0.3s ease;
+}
+
+img[alt="Evans Scholar Logo"] {
+    transform: scale(1.27);
 }
 
 .org-card:hover .org-logo img {
