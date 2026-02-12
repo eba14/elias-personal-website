@@ -59,6 +59,7 @@ function loadContentComponents() {
     .then(response => response.text())
     .then(data => {
       document.getElementById('coursework-container').innerHTML = data;
+      setupCourseworkAccordion();
       animateBoxedSections();
     });
 
@@ -137,6 +138,18 @@ function setupProjectModals() {
         modal.style.display = 'flex';
         modal.style.animation = 'fadeIn 0.3s ease';
       }
+    });
+  });
+}
+
+// Setup coursework accordion functionality
+function setupCourseworkAccordion() {
+  const accordionHeaders = document.querySelectorAll('.accordion-header');
+  
+  accordionHeaders.forEach(header => {
+    header.addEventListener('click', function() {
+      const item = this.parentElement;
+      item.classList.toggle('open');
     });
   });
 }

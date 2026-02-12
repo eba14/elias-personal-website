@@ -168,125 +168,166 @@
 }
 
 /* Coursework Section */
-.coursework-header {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 15px;
-    margin: 20px auto 25px;
-    padding: 15px 30px;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(244, 180, 0, 0.3);
-    border-radius: 12px;
-    max-width: fit-content;
-    transition: all 0.3s ease;
-}
-
-.coursework-header:hover {
-    background: rgba(255, 255, 255, 0.08);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-}
-
-.coursework-university-logo {
-    width: 50px;
-    height: 50px;
-    object-fit: contain;
-    border-radius: 8px;
-}
-
-.university-name {
-    font-size: 1.3rem;
-    color: #fff;
-    margin: 0;
-    font-weight: 600;
-    letter-spacing: 0.5px;
-}
-
 .coursework-container {
     max-width: 1000px;
     margin: 0 auto 20px;
+}
+
+.coursework-accordion {
     display: flex;
     flex-direction: column;
     gap: 15px;
 }
 
-.coursework-category {
-    background: rgba(255, 255, 255, 0.05);
+.accordion-item {
+    background: rgba(255, 255, 255, 0.03);
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 12px;
-    padding: 25px;
+    overflow: hidden;
     transition: all 0.3s ease;
     opacity: 0;
     transform: translateY(20px);
 }
 
-.coursework-category.animate {
+.accordion-item.animate {
     animation: fadeInUp 0.6s ease forwards;
     opacity: 1;
     transform: translateY(0);
 }
 
-.coursework-category:hover {
-    background: rgba(255, 255, 255, 0.08);
-    border-color: rgba(244, 180, 0, 0.3);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-}
-
-.category-header {
-    margin-bottom: 20px;
-    border-bottom: 2px solid rgba(244, 180, 0, 0.3);
-    padding-bottom: 15px;
+.accordion-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    padding: 20px 25px;
+    background: rgba(244, 180, 0, 0.08);
+    border-bottom: 1px solid rgba(244, 180, 0, 0.2);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    user-select: none;
 }
 
-.category-header h3 {
-    font-size: 1.4rem;
+.accordion-header:hover {
+    background: rgba(244, 180, 0, 0.15);
+}
+
+.accordion-header h3 {
     color: #f4b400;
-    margin: 0;
+    font-size: 1.3rem;
     font-weight: 600;
+    margin: 0;
     letter-spacing: 0.5px;
 }
 
-.category-logo {
-    width: 40px;
-    height: 40px;
-    object-fit: contain;
-    border-radius: 6px;
-}
-
-.courses-list {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-}
-
-.course-item {
-    display: flex;
+.accordion-toggle {
+    display: inline-flex;
     align-items: center;
-    gap: 10px;
-    padding: 12px 18px;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    background: rgba(244, 180, 0, 0.15);
+    border: 1px solid rgba(244, 180, 0, 0.3);
+    border-radius: 8px;
+    color: #f4b400;
+    font-size: 0.95rem;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    flex-shrink: 0;
+    cursor: pointer;
+}
+
+.accordion-toggle:hover {
+    background: rgba(244, 180, 0, 0.25);
+    border-color: rgba(244, 180, 0, 0.5);
+    box-shadow: 0 4px 12px rgba(244, 180, 0, 0.1);
+}
+
+.accordion-item.open .accordion-toggle {
+    transform: rotate(180deg);
+}
+
+.accordion-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+}
+
+.accordion-item.open .accordion-content {
+    max-height: 800px;
+}
+
+.courses-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+    padding: 20px 25px;
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.course-card {
     background: rgba(0, 0, 0, 0.3);
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 8px;
+    padding: 16px;
     transition: all 0.3s ease;
-    justify-content: space-between;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    min-height: 100px;
 }
 
-.course-item:hover {
+.course-card:hover {
     background: rgba(74, 151, 232, 0.1);
     border-color: rgba(74, 151, 232, 0.4);
-    transform: translateX(5px);
-    box-shadow: 0 4px 12px rgba(74, 151, 232, 0.15);
+    transform: translateY(-4px);
+    box-shadow: 0 6px 16px rgba(74, 151, 232, 0.12);
+}
+
+.course-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
 }
 
 .course-code {
     font-family: 'JetBrains Mono', 'Fira Code', monospace;
-    font-size: 0.95rem;
+    font-size: 0.9rem;
     color: #f4b400;
     font-weight: 600;
-    min-width: 90px;
+    flex: 1;
+}
+
+.course-logo {
+    width: 28px;
+    height: 28px;
+    object-fit: contain;
+    object-position: center;
+    background: transparent;
+    border-radius: 4px;
+    flex-shrink: 0;
+    padding: 2px;
+}
+
+img[alt="UW logo"] {
+    width: 34px !important;
+    height: 28px !important;
+}
+
+img[alt="South Seattle College logo"] {
+    width: 25px !important;
+    height: 25px !important;
+}
+
+.course-name {
+    font-size: 0.9rem;
+    color: #d0d0d0;
+    line-height: 1.4;
+    font-weight: 500;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    flex-grow: 1;
+    display: flex;
+    align-items: flex-start;
 }
 
 .course-separator {
