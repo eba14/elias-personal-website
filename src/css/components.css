@@ -1,103 +1,201 @@
 /* Profile Components */
-.profile-img {
-    border-radius: 50%;
+.profile-avatar {
+    position: relative;
     width: 250px;
     height: 250px;
-    object-fit: cover;
-    margin-bottom: 20px;
-    margin-top: 25px;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    opacity: 0;
-    animation: fadeIn 0.6s ease 0.2s forwards;
-    cursor: pointer;
+    border-radius: 50%;
+    display: inline-block;
+    margin: 0;
+    transition: transform 0.35s ease;
+    z-index: 10;
 }
 
-.profile-img:hover {
-    transform: scale(1.05);
-    box-shadow: 0 0 20px rgba(255, 255, 255, 0.7), 0 0 35px rgba(255, 255, 255, 0.4);
+/* Stack and space the profile elements neatly within the left column */
+.profile {
+    display: flex;
+    flex-direction: column;
+    gap: 12px; /* restored tighter spacing between avatar, name, location, and socials */
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+    box-sizing: border-box;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    /* nudge the whole profile block slightly down to improve vertical centering */
+    transform: translateY(2vh);
 }
+
+/* tighter grouping for name, location and socials while keeping avatar spacing unchanged */
+.profile-body {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.profile-avatar::before {
+    /* bottom glow (always present, subtle) */
+    content: '';
+    position: absolute;
+    inset: -12px;
+    border-radius: 50%;
+    z-index: 1;
+    background: radial-gradient(circle at 50% 64%, rgba(124,197,255,0.08), rgba(6,18,36,0) 60%);
+    filter: blur(10px);
+    transition: transform 260ms ease, filter 260ms ease, opacity 260ms ease;
+    opacity: 1;
+}
+
+.profile-avatar::after {
+    /* top glow - hidden by default, fades in on hover synchronized with bottom glow */
+    content: '';
+    position: absolute;
+    inset: -16px;
+    border-radius: 50%;
+    z-index: 2;
+    background: radial-gradient(circle at 50% 18%, rgba(124,197,255,0.26), rgba(79,156,255,0.12) 36%, rgba(6,18,36,0) 58%);
+    filter: blur(10px);
+    transition: transform 260ms ease, filter 260ms ease, opacity 260ms ease;
+    opacity: 0;
+}
+
+.profile-avatar:hover::before,
+.profile-avatar:hover::after {
+    /* synchronized transition for both glows */
+    transform: scale(1.06);
+    filter: blur(16px);
+    opacity: 1;
+}
+
+.profile-avatar .profile-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    display: block;
+    position: relative;
+    z-index: 5;
+    box-shadow: 0 10px 30px rgba(2,6,23,0.6), 0 -10px 20px rgba(79,156,255,0.06);
+    transition: transform 0.35s ease, box-shadow 0.35s ease, filter 0.35s ease;
+    cursor: pointer;
+    opacity: 0;
+    animation: fadeIn 0.6s ease 0.2s forwards;
+    border: 3px solid rgba(124,197,255,0.26);
+}
+
+.profile-avatar:hover .profile-img {
+    transform: scale(1.06) translateY(-4px);
+    box-shadow: 0 18px 40px rgba(33,97,170,0.28);
+    filter: saturate(1.05) contrast(1.03);
+}
+
+/* Removed shifting translate and unused rotating ring to avoid distracting movement. */
 
 .profile-name {
     font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+    /* restored to original thinner white style */
     font-size: 2.2rem;
     font-weight: 600;
-    color: white;
-    margin: -15px 0 0px 0;
+    color: #ffffff;
+    margin: 0; /* center spacing now handled by .profile gap */
     opacity: 0;
     animation: fadeIn 0.6s ease 0.4s forwards;
     letter-spacing: -0.01em;
+    text-wrap: balance;
 }
 
 .profile-info {
-    margin: 8px 0 0px 0;
+    margin: 6px 0 0 0;
     opacity: 0;
     animation: fadeIn 0.6s ease 0.6s forwards;
     display: flex;
     justify-content: center;
 }
 
+
 .profile-location {
     font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
-    font-size: 1.1rem;
-    color: #ccc;
+    font-size: 0.98rem;
+    color: #bcd8ff;
     margin: 0;
-    font-weight: 400;
-    padding: 8px 40px;
-    background: rgba(255, 255, 255, 0.08);
-    border-radius: 16px;
-    border: 1px solid rgba(244, 180, 0, 0.2);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-    transition: all 0.3s ease;
+    font-weight: 500;
+    padding: 10px 28px; /* wider horizontally */
+    min-width: 220px; /* ensure a longer pill */
+    background: linear-gradient(180deg, rgba(11,22,40,0.6), rgba(8,15,28,0.4));
+    border-radius: 12px;
+    border: 1px solid rgba(124,197,255,0.12);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    box-shadow: 0 6px 18px rgba(12,24,48,0.5);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
     cursor: default;
     text-align: center;
 }
 
-/* Social Media Icons */
+.profile-location:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 24px rgba(18,46,78,0.28);
+}
+
+/* Social Media Icons (card-like buttons) */
+
 .social-media {
     opacity: 0;
     animation: fadeIn 0.6s ease 0.6s forwards;
-    margin-top: 13px;
-    background: rgba(255, 255, 255, 0.08);
-    border: 1px solid rgba(244, 180, 0, 0.2);
-    border-radius: 16px;
-    padding: 8px 16px;
-    backdrop-filter: blur(10px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-    transition: all 0.3s ease;
+    margin-top: 16px;
+    display: flex;
+    gap: 12px; /* more breathing room */
+    justify-content: center;
+    align-items: center;
 }
 
-.social-media a img {
-    width: 32px;
-    height: 32px;
-    object-fit: contain;
-    margin: 6px;
-    transition: transform 0.3s ease, filter 0.3s ease;
-}
-
-.social-media a {
-    display: inline-block;
-    background: transparent;
+.social-btn {
+    width: 60px; /* larger square */
+    height: 60px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 14px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(124,197,255,0.01));
+    border: 1px solid rgba(124,197,255,0.08);
+    box-shadow: 0 8px 26px rgba(6,18,36,0.36);
+    transition: transform 260ms cubic-bezier(.2,.9,.3,1), box-shadow 260ms ease, background 260ms ease;
     -webkit-tap-highlight-color: transparent;
-    outline: none;
-    border-radius: 8px;
-    padding: 4px;
-    transition: background 0.3s ease;
-    pointer-events: auto;
 }
 
-.social-media a:hover {
-    background: rgba(244, 180, 0, 0.25);
-}
-
-.social-media a img {
+.social-btn img {
+    width: 26px; /* larger icon */
+    height: 26px;
+    object-fit: contain;
     display: block;
+    filter: brightness(0.98) saturate(0.95);
+    transition: transform 220ms cubic-bezier(.2,.9,.3,1), filter 220ms ease;
 }
 
-.social-media a img:hover {
-    transform: scale(1.15) rotate(3deg);
-    filter: brightness(1.2) drop-shadow(0 0 8px rgba(244, 180, 0, 0.5));
+.social-btn:hover {
+    /* lift the square smoothly but do not scale it; icon will scale independently when hovered */
+    transform: translateY(-6px);
+    box-shadow: 0 22px 44px rgba(79,156,255,0.18);
+    background: linear-gradient(180deg, rgba(124,197,255,0.08), rgba(124,197,255,0.03));
+}
+
+/* Zoom the inner icon when the pointer is directly over it (not the square background) */
+.social-btn img:hover {
+    transform: scale(1.14);
+}
+
+/* Slightly larger GitHub icon for emphasis */
+.social-btn[href*="github.com"] img {
+    width: 30px;
+    height: 30px;
+}
+
+.social-btn:focus-visible {
+    outline: 3px solid rgba(124,197,255,0.16);
+    outline-offset: 2px;
 }
 
 /* Finger point direction for different devices */
@@ -579,4 +677,9 @@ body::-webkit-scrollbar-track {
     .org-card h3 {
         font-size: 1.1rem;
     }
+}
+
+@media screen and (max-width: 992px) {
+    /* reset the vertical nudge on narrower screens where layout stacks */
+    .profile { transform: translateY(0); }
 }
