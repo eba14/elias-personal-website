@@ -37,14 +37,16 @@
 
 
 .profile-avatar::before {
-    /* bottom glow (always present, subtle) */
+    /* bottom glow (always present, subtle but now more pronounced) */
     content: '';
     position: absolute;
-    inset: -12px;
+    /* extend the glow further from the photo edge for full circumference visibility */
+    inset: -20px;
     border-radius: 50%;
     z-index: 1;
-    background: radial-gradient(circle at 50% 64%, rgba(124,197,255,0.08), rgba(6,18,36,0) 60%);
-    filter: blur(10px);
+    /* wider gradient and slightly stronger color to make the halo visible all around */
+    background: radial-gradient(circle at 50% 50%, rgba(124,197,255,0.16), rgba(6,18,36,0) 80%);
+    filter: blur(16px);
     transition: transform 260ms ease, filter 260ms ease, opacity 260ms ease;
     opacity: 1;
 }
@@ -53,11 +55,13 @@
     /* top glow - hidden by default, fades in on hover synchronized with bottom glow */
     content: '';
     position: absolute;
-    inset: -16px;
+    /* match the expanded spread of the bottom layer */
+    inset: -24px;
     border-radius: 50%;
     z-index: 2;
-    background: radial-gradient(circle at 50% 18%, rgba(124,197,255,0.26), rgba(79,156,255,0.12) 36%, rgba(6,18,36,0) 58%);
-    filter: blur(10px);
+    /* stronger and wider halo for hover state with enhanced top visibility */
+    background: radial-gradient(circle at 50% 50%, rgba(124,197,255,0.38), rgba(79,156,255,0.24) 50%, rgba(6,18,36,0) 80%);
+    filter: blur(16px);
     transition: transform 260ms ease, filter 260ms ease, opacity 260ms ease;
     opacity: 0;
 }
