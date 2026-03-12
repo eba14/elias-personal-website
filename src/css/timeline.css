@@ -171,12 +171,12 @@ img[alt="Amazon Brand Ambassador Logo"] {
 
 .skills-section h4 {
     font-family: 'Montserrat', sans-serif;
-    font-size: 1.1rem;
+    font-size: 1.3rem;
     color: #f4b400;
     margin: 0 0 8px 0;
-    font-weight: 700;
+    font-weight: 600;
     text-transform: uppercase;
-    letter-spacing: 1px;
+    letter-spacing: 0.5px;
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 

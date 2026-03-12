@@ -697,6 +697,17 @@ body::-webkit-scrollbar-track {
     .org-card h3 {
         font-size: 1.1rem;
     }
+
+    /* Increase spacing between course/project count and toggle on mobile */
+    .accordion-header h3,
+    .projects-tab-header h3 {
+        margin-right: auto;
+    }
+
+    .course-count,
+    .projects-count {
+        margin-right: 20px;
+    }
 }
 
 @media screen and (max-width: 992px) {

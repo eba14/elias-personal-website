@@ -144,6 +144,18 @@ function setupProjectModals() {
   });
 }
 
+// Update scroll progress bar based on current scroll position
+function updateScrollProgress() {
+  const scrollProgress = document.getElementById('scroll-progress');
+  if (!scrollProgress) return;
+  
+  const scrollTop = window.pageYOffset;
+  const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+  const scrollPercent = scrollTop / docHeight;
+  
+  scrollProgress.style.transform = `scaleX(${scrollPercent})`;
+}
+
 // Setup coursework accordion functionality
 function setupCourseworkAccordion() {
   const accordionHeaders = document.querySelectorAll('.accordion-header');
@@ -152,6 +164,9 @@ function setupCourseworkAccordion() {
     header.addEventListener('click', function() {
       const item = this.parentElement;
       item.classList.toggle('open');
+      
+      // Update scroll progress when content height changes
+      setTimeout(updateScrollProgress, 300);
     });
   });
 }
@@ -169,6 +184,9 @@ function setupProjectsTabs() {
       if (targetContent) {
         targetContent.classList.toggle('active');
       }
+      
+      // Update scroll progress when content height changes
+      setTimeout(updateScrollProgress, 300);
     });
   });
 }
