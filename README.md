@@ -1,6 +1,6 @@
 # Personal Portfolio
 
-A modern, responsive personal portfolio website showcasing my work, experience, and projects.
+A personal portfolio website showcasing my work, experience, and projects.
 
 ## Features
 
