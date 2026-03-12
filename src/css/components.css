@@ -47,8 +47,9 @@
     /* wider gradient and slightly stronger color to make the halo visible all around */
     background: radial-gradient(circle at 50% 50%, rgba(124,197,255,0.16), rgba(6,18,36,0) 80%);
     filter: blur(16px);
-    transition: transform 260ms ease, filter 260ms ease, opacity 260ms ease;
     opacity: 1;
+    /* Ensure smooth transition in both directions */
+    transition: opacity 300ms ease, transform 300ms ease, filter 300ms ease;
 }
 
 .profile-avatar::after {
@@ -62,8 +63,9 @@
     /* stronger and wider halo for hover state with enhanced top visibility */
     background: radial-gradient(circle at 50% 50%, rgba(124,197,255,0.38), rgba(79,156,255,0.24) 50%, rgba(6,18,36,0) 80%);
     filter: blur(16px);
-    transition: transform 260ms ease, filter 260ms ease, opacity 260ms ease;
     opacity: 0;
+    /* Ensure smooth transition in both directions (hover and non-hover) */
+    transition: opacity 300ms ease, transform 300ms ease, filter 300ms ease;
 }
 
 .profile-avatar:hover::before,
@@ -283,7 +285,6 @@
 
 .accordion-item {
     background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 12px;
     overflow: hidden;
     transition: all 0.3s ease;
@@ -303,7 +304,6 @@
     justify-content: space-between;
     padding: 20px 25px;
     background: rgba(244, 180, 0, 0.08);
-    border-bottom: 1px solid rgba(244, 180, 0, 0.2);
     cursor: pointer;
     transition: all 0.3s ease;
     user-select: none;
@@ -319,6 +319,20 @@
     font-weight: 600;
     margin: 0;
     letter-spacing: 0.5px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.course-count {
+    background: rgba(244, 180, 0, 0.15);
+    border: 1px solid rgba(244, 180, 0, 0.2);
+    color: #f4b400;
+    padding: 4px 10px;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 700;
 }
 
 .accordion-toggle {
@@ -328,7 +342,7 @@
     width: 36px;
     height: 36px;
     background: rgba(244, 180, 0, 0.15);
-    border: 1px solid rgba(244, 180, 0, 0.3);
+    border: 1px solid rgba(244, 180, 0, 0.2);
     border-radius: 8px;
     color: #f4b400;
     font-size: 0.95rem;
@@ -350,11 +364,13 @@
 .accordion-content {
     max-height: 0;
     overflow: hidden;
-    transition: max-height 0.3s ease;
+    opacity: 0;
+    transition: max-height 0.3s ease, opacity 0.3s ease;
 }
 
 .accordion-item.open .accordion-content {
     max-height: 800px;
+    opacity: 1;
 }
 
 .courses-grid {

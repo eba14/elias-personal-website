@@ -2,7 +2,7 @@
 
 // Stagger animation for boxed sections
 function animateBoxedSections() {
-  const boxes = document.querySelectorAll('.boxed-section, .project-card, .timeline-item, .org-card, .accordion-item');
+  const boxes = document.querySelectorAll('.boxed-section, .project-card, .timeline-item, .academic-timeline-item, .org-card, .accordion-item, .projects-accordion-item');
   boxes.forEach((box) => {
     box.classList.remove('animate');
     box.style.opacity = '0';
@@ -34,7 +34,7 @@ function observeBoxes() {
     });
   }, { threshold: 0.1 });
 
-  const boxes = document.querySelectorAll('.boxed-section, .project-card, .timeline-item, .org-card, .accordion-item');
+  const boxes = document.querySelectorAll('.boxed-section, .project-card, .timeline-item, .academic-timeline-item, .org-card, .accordion-item, .projects-accordion-item');
   boxes.forEach((box, index) => {
     box.dataset.index = index;
     observer.observe(box);

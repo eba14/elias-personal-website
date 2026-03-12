@@ -43,6 +43,7 @@ function loadContentComponents() {
       data = data.replace(/src="images\//g, 'src="src/images/');
       document.getElementById('work-history-container').innerHTML = data;
       animateBoxedSections();
+      setupAwsInternshipTabs();
     });
 
   // Leadership
@@ -64,11 +65,12 @@ function loadContentComponents() {
     });
 
   // Personal projects
-  fetch('src/components/content-components/personal-projects.html')
+  fetch('src/components/content-components/projects.html')
     .then(response => response.text())
     .then(data => {
       data = data.replace(/src="images\//g, 'src="src/images/');
       document.getElementById('projects-container').innerHTML = data;
+      setupProjectsTabs();
       animateBoxedSections();
       setupProjectModals();
     });
@@ -150,6 +152,66 @@ function setupCourseworkAccordion() {
     header.addEventListener('click', function() {
       const item = this.parentElement;
       item.classList.toggle('open');
+    });
+  });
+}
+
+// Setup projects tab functionality
+function setupProjectsTabs() {
+  const tabHeaders = document.querySelectorAll('.projects-tab-header');
+
+  tabHeaders.forEach(header => {
+    header.addEventListener('click', function() {
+      const targetContent = this.nextElementSibling;
+      
+      this.classList.toggle('active');
+      
+      if (targetContent) {
+        targetContent.classList.toggle('active');
+      }
+    });
+  });
+}
+
+// Animate academic timeline items
+function animateAcademicTimelineItems() {
+  const items = document.querySelectorAll('.academic-timeline-item');
+  items.forEach((item, index) => {
+    setTimeout(() => {
+      item.classList.add('animate');
+    }, index * 100);
+  });
+}
+
+// Animate personal project cards
+function animatePersonalProjectCards() {
+  const cards = document.querySelectorAll('#personal-projects .project-card');
+  cards.forEach((card, index) => {
+    setTimeout(() => {
+      card.classList.add('animate');
+    }, index * 100);
+  });
+}
+
+// Setup AWS internship tabs
+function setupAwsInternshipTabs() {
+  const tabButtons = document.querySelectorAll('.internship-tab-btn');
+  const tabContents = document.querySelectorAll('.internship-content');
+
+  tabButtons.forEach(button => {
+    button.addEventListener('click', function() {
+      const year = this.getAttribute('data-year');
+      
+      // Remove active class from all buttons and contents
+      tabButtons.forEach(btn => btn.classList.remove('active'));
+      tabContents.forEach(content => content.classList.remove('active'));
+      
+      // Add active class to clicked button and corresponding content
+      this.classList.add('active');
+      const targetContent = document.getElementById('internship-' + year);
+      if (targetContent) {
+        targetContent.classList.add('active');
+      }
     });
   });
 }
