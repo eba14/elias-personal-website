@@ -108,6 +108,7 @@
 .projects-tab-content.active {
     max-height: 5000px;
     opacity: 1;
+    overflow: visible;
 }
 
 /* Projects Content Wrapper - Light background container */
@@ -115,6 +116,8 @@
     background: rgba(0, 0, 0, 0.2);
     padding: 20px 25px;
     transition: all 0.3s ease;
+    border: 1.5px solid rgba(110, 181, 255, 0.2);
+    border-radius: 0 0 12px 12px;
 }
 
 /* Projects Grid Layout */

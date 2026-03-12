@@ -59,10 +59,12 @@ window.addEventListener('scroll', function() {
   // Scroll progress bar
   const scrollProgress = document.getElementById('scroll-progress');
   if (scrollProgress) {
-    const scrollTop = window.scrollY;
-    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-    const scrollPercent = scrollTop / docHeight;
-    scrollProgress.style.transform = `scaleX(${scrollPercent})`;
+    requestAnimationFrame(() => {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const scrollPercent = Math.max(0, Math.min(1, scrollTop / docHeight));
+      scrollProgress.style.transform = `scaleX(${scrollPercent})`;
+    });
   }
   
   // Header background change

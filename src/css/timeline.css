@@ -252,7 +252,7 @@ img[alt="Amazon Brand Ambassador Logo"] {
     display: flex;
     gap: 12px;
     margin: 15px 0 20px 0;
-    border-bottom: 2px solid rgba(110, 181, 255, 0.2);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     padding-bottom: 10px;
 }
 
@@ -270,12 +270,12 @@ img[alt="Amazon Brand Ambassador Logo"] {
 }
 
 .internship-tab-btn:hover {
-    color: #6eb5ff;
+    color: #f4b400;
 }
 
 .internship-tab-btn.active {
-    color: #6eb5ff;
-    border-bottom-color: #6eb5ff;
+    color: #f4b400;
+    border-bottom-color: #f4b400;
 }
 
 .internship-content {

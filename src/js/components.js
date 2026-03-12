@@ -149,9 +149,12 @@ function updateScrollProgress() {
   const scrollProgress = document.getElementById('scroll-progress');
   if (!scrollProgress) return;
   
+  // Force reflow to ensure accurate height calculation
+  document.body.offsetHeight;
+  
   const scrollTop = window.pageYOffset;
   const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-  const scrollPercent = scrollTop / docHeight;
+  const scrollPercent = Math.max(0, Math.min(1, scrollTop / docHeight));
   
   scrollProgress.style.transform = `scaleX(${scrollPercent})`;
 }
@@ -159,21 +162,45 @@ function updateScrollProgress() {
 // Setup coursework accordion functionality
 function setupCourseworkAccordion() {
   const accordionHeaders = document.querySelectorAll('.accordion-header');
+  let isAnimating = false;
   
   accordionHeaders.forEach(header => {
     header.addEventListener('click', function() {
       const item = this.parentElement;
       item.classList.toggle('open');
       
-      // Update scroll progress when content height changes
-      setTimeout(updateScrollProgress, 300);
+      isAnimating = true;
+      
+      // Update scroll progress multiple times during animation
+      const updateInterval = setInterval(() => {
+        updateScrollProgress();
+      }, 50);
+      
+      // Clear interval and do final update after animation completes
+      setTimeout(() => {
+        clearInterval(updateInterval);
+        updateScrollProgress();
+        isAnimating = false;
+      }, 350);
     });
+  });
+  
+  // Recalculate on scroll if recently animated
+  let scrollTimeout;
+  window.addEventListener('scroll', () => {
+    if (isAnimating) {
+      clearTimeout(scrollTimeout);
+      scrollTimeout = setTimeout(() => {
+        updateScrollProgress();
+      }, 50);
+    }
   });
 }
 
 // Setup projects tab functionality
 function setupProjectsTabs() {
   const tabHeaders = document.querySelectorAll('.projects-tab-header');
+  let isAnimating = false;
 
   tabHeaders.forEach(header => {
     header.addEventListener('click', function() {
@@ -185,9 +212,31 @@ function setupProjectsTabs() {
         targetContent.classList.toggle('active');
       }
       
-      // Update scroll progress when content height changes
-      setTimeout(updateScrollProgress, 300);
+      isAnimating = true;
+      
+      // Update scroll progress multiple times during animation
+      const updateInterval = setInterval(() => {
+        updateScrollProgress();
+      }, 50);
+      
+      // Clear interval and do final update after animation completes
+      setTimeout(() => {
+        clearInterval(updateInterval);
+        updateScrollProgress();
+        isAnimating = false;
+      }, 350);
     });
+  });
+  
+  // Recalculate on scroll if recently animated
+  let scrollTimeout;
+  window.addEventListener('scroll', () => {
+    if (isAnimating) {
+      clearTimeout(scrollTimeout);
+      scrollTimeout = setTimeout(() => {
+        updateScrollProgress();
+      }, 50);
+    }
   });
 }
 

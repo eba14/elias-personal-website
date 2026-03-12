@@ -5,16 +5,24 @@ class ScrollEffects {
         this.navLinks = document.querySelectorAll('.nav-link, .mobile-nav-link');
         this.sections = document.querySelectorAll('section[id]');
         this.header = document.querySelector('header');
+        this.isUpdating = false;
     }
 
     updateScrollProgress() {
         if (!this.scrollProgress) return;
         
-        const scrollTop = window.pageYOffset;
-        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-        const scrollPercent = scrollTop / docHeight;
+        // Throttle updates for smoother performance
+        if (this.isUpdating) return;
+        this.isUpdating = true;
         
-        this.scrollProgress.style.transform = `scaleX(${scrollPercent})`;
+        requestAnimationFrame(() => {
+            const scrollTop = window.pageYOffset;
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const scrollPercent = Math.max(0, Math.min(1, scrollTop / docHeight));
+            
+            this.scrollProgress.style.transform = `scaleX(${scrollPercent})`;
+            this.isUpdating = false;
+        });
     }
 
     updateActiveNav() {
