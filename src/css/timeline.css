@@ -42,7 +42,7 @@
 .timeline-logo:hover {
     transform: scale(1.1);
     border-color: #6eb5ff;
-    box-shadow: 0 8px 24px rgba(110, 181, 255, 0.4);
+    box-shadow: 0 0 24px rgba(110, 181, 255, 0.3), 0 0 40px rgba(110, 181, 255, 0.12);
 }
 
 .timeline-company-logo {
