@@ -1,7 +1,6 @@
 // Scroll-related utility functions
 class ScrollEffects {
     constructor() {
-        this.scrollProgress = document.getElementById('scroll-progress');
         this.navLinks = document.querySelectorAll('.nav-link, .mobile-nav-link');
         this.sections = document.querySelectorAll('section[id]');
         this.header = document.querySelector('header');
@@ -9,9 +8,10 @@ class ScrollEffects {
     }
 
     updateScrollProgress() {
-        if (!this.scrollProgress) return;
+        // Look up lazily so it works after dynamic header injection
+        const scrollProgress = document.getElementById('scroll-progress');
+        if (!scrollProgress) return;
         
-        // Throttle updates for smoother performance
         if (this.isUpdating) return;
         this.isUpdating = true;
         
@@ -19,8 +19,7 @@ class ScrollEffects {
             const scrollTop = window.pageYOffset;
             const docHeight = document.documentElement.scrollHeight - window.innerHeight;
             const scrollPercent = Math.max(0, Math.min(1, scrollTop / docHeight));
-            
-            this.scrollProgress.style.transform = `scaleX(${scrollPercent})`;
+            scrollProgress.style.transform = `scaleX(${scrollPercent})`;
             this.isUpdating = false;
         });
     }

@@ -148,95 +148,40 @@ function setupProjectModals() {
 function updateScrollProgress() {
   const scrollProgress = document.getElementById('scroll-progress');
   if (!scrollProgress) return;
-  
-  // Force reflow to ensure accurate height calculation
-  document.body.offsetHeight;
-  
   const scrollTop = window.pageYOffset;
   const docHeight = document.documentElement.scrollHeight - window.innerHeight;
   const scrollPercent = Math.max(0, Math.min(1, scrollTop / docHeight));
-  
   scrollProgress.style.transform = `scaleX(${scrollPercent})`;
+}
+
+// Watch for any height changes in the page and immediately resync the progress bar
+function initProgressBarResizeObserver() {
+  const target = document.querySelector('.right-side') || document.body;
+  const observer = new ResizeObserver(() => {
+    updateScrollProgress();
+  });
+  observer.observe(target);
 }
 
 // Setup coursework accordion functionality
 function setupCourseworkAccordion() {
   const accordionHeaders = document.querySelectorAll('.accordion-header');
-  let isAnimating = false;
-  
   accordionHeaders.forEach(header => {
     header.addEventListener('click', function() {
-      const item = this.parentElement;
-      item.classList.toggle('open');
-      
-      isAnimating = true;
-      
-      // Update scroll progress multiple times during animation
-      const updateInterval = setInterval(() => {
-        updateScrollProgress();
-      }, 50);
-      
-      // Clear interval and do final update after animation completes
-      setTimeout(() => {
-        clearInterval(updateInterval);
-        updateScrollProgress();
-        isAnimating = false;
-      }, 350);
+      this.parentElement.classList.toggle('open');
     });
-  });
-  
-  // Recalculate on scroll if recently animated
-  let scrollTimeout;
-  window.addEventListener('scroll', () => {
-    if (isAnimating) {
-      clearTimeout(scrollTimeout);
-      scrollTimeout = setTimeout(() => {
-        updateScrollProgress();
-      }, 50);
-    }
   });
 }
 
 // Setup projects tab functionality
 function setupProjectsTabs() {
   const tabHeaders = document.querySelectorAll('.projects-tab-header');
-  let isAnimating = false;
-
   tabHeaders.forEach(header => {
     header.addEventListener('click', function() {
       const targetContent = this.nextElementSibling;
-      
       this.classList.toggle('active');
-      
-      if (targetContent) {
-        targetContent.classList.toggle('active');
-      }
-      
-      isAnimating = true;
-      
-      // Update scroll progress multiple times during animation
-      const updateInterval = setInterval(() => {
-        updateScrollProgress();
-      }, 50);
-      
-      // Clear interval and do final update after animation completes
-      setTimeout(() => {
-        clearInterval(updateInterval);
-        updateScrollProgress();
-        isAnimating = false;
-      }, 350);
+      if (targetContent) targetContent.classList.toggle('active');
     });
-  });
-  
-  // Recalculate on scroll if recently animated
-  let scrollTimeout;
-  window.addEventListener('scroll', () => {
-    if (isAnimating) {
-      clearTimeout(scrollTimeout);
-      scrollTimeout = setTimeout(() => {
-        updateScrollProgress();
-      }, 50);
-    }
   });
 }
 

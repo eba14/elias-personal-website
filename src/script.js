@@ -10,6 +10,8 @@ document.addEventListener('DOMContentLoaded', function() {
       initializeMobileNavigation();
       initializeScrollEffects();
       loadContentComponents();
+      // Start ResizeObserver after a tick so content has been injected
+      setTimeout(initProgressBarResizeObserver, 100);
     })
     .then(() => {
       setTimeout(initializeHeroSection, 300);
@@ -23,32 +25,12 @@ window.addEventListener('scroll', function() {
   if (footer) {
     const scrollPosition = window.scrollY + window.innerHeight;
     const documentHeight = document.documentElement.scrollHeight;
-    
     if (scrollPosition >= documentHeight - 10) {
       footer.classList.add('show');
     } else {
       footer.classList.remove('show');
     }
   }
-  
-  const scrollProgress = document.getElementById('scroll-progress');
-  if (scrollProgress) {
-    const scrollTop = window.scrollY;
-    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-    const scrollPercent = (scrollTop / docHeight) * 100;
-    scrollProgress.style.width = scrollPercent + '%';
-  }
-  
-  const header = document.querySelector('header');
-  if (header) {
-    if (window.scrollY > 50) {
-      header.classList.add('scrolled');
-    } else {
-      header.classList.remove('scrolled');
-    }
-  }
-  
-  updateActiveNavLink();
 });
 
 function initializeHeader() {
