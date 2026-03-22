@@ -895,10 +895,6 @@ img[alt="Evans Scholar Logo"] {
     transform: scale(1.27);
 }
 
-.org-card:hover .org-logo img {
-    /* Remove transform to prevent logo zoom on hover */
-}
-
 .org-logo:hover {
     border-color: rgba(100, 150, 200, 0.8);
 }
