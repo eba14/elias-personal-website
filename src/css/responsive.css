@@ -27,18 +27,113 @@
     }
 }
 
-/* Make section gaps smaller on narrow screens to save vertical space */
+/* Tablet */
 @media screen and (max-width: 768px) {
-    body {
-        width: 100vw;
-        min-width: 100vw;
+    html, body {
+        width: 100%;
+        max-width: 100%;
         overflow-x: hidden;
     }
-    
+
+    body {
+        background-attachment: scroll; /* fixed bg causes black bars on mobile */
+    }
+
     section { margin-bottom: 0; }
     .right-side section .boxed-section:last-of-type { margin-bottom: 56px; }
     .right-side > div + div { margin-top: 40px; }
-    
     section:last-of-type { margin-bottom: 8px; }
     .right-side section:last-of-type .boxed-section:last-of-type { margin-bottom: 12px; }
+
+    /* Coursework accordion */
+    .accordion-header {
+        padding: 16px 18px;
+    }
+
+    .accordion-header h3 {
+        font-size: 1.05rem;
+    }
+
+    .courses-grid {
+        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+        gap: 12px;
+        padding: 16px;
+    }
+
+    .course-card {
+        min-height: auto;
+        padding: 12px;
+    }
+
+    /* Timeline */
+    .timeline-container {
+        padding-left: 50px;
+    }
+
+    .timeline-logo {
+        left: -45px;
+        width: 60px;
+        height: 60px;
+    }
+
+    .timeline-content {
+        margin-left: 20px;
+        padding: 18px;
+    }
+
+    .timeline-content h3 {
+        font-size: 1.3rem;
+    }
+}
+
+/* Mobile */
+@media screen and (max-width: 480px) {
+    .courses-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+        padding: 12px;
+    }
+
+    .accordion-header h3 {
+        font-size: 0.95rem;
+        gap: 8px;
+    }
+
+    .course-count {
+        font-size: 0.75rem;
+        padding: 3px 7px;
+    }
+
+    .accordion-toggle {
+        width: 30px;
+        height: 30px;
+        font-size: 0.8rem;
+    }
+
+    .timeline-container {
+        padding-left: 40px;
+    }
+
+    .timeline-logo {
+        left: -38px;
+        width: 50px;
+        height: 50px;
+    }
+
+    .timeline-content {
+        margin-left: 14px;
+        padding: 14px;
+    }
+
+    .timeline-content h3 {
+        font-size: 1.1rem;
+    }
+
+    .right-side {
+        padding: 20px 4%;
+    }
+
+    .section-title {
+        font-size: 1.4rem;
+    }
 }

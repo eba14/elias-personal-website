@@ -555,11 +555,11 @@
     max-height: 0;
     overflow: hidden;
     opacity: 0;
-    transition: max-height 0.3s ease, opacity 0.3s ease;
+    transition: max-height 0.5s ease, opacity 0.3s ease;
 }
 
 .accordion-item.open .accordion-content {
-    max-height: 800px;
+    max-height: 2000px;
     opacity: 1;
     overflow: visible;
 }
@@ -572,6 +572,7 @@
     background: rgba(0, 0, 0, 0.2);
     border: 1.5px solid rgba(244, 180, 0, 0.2);
     border-radius: 0 0 12px 12px;
+    -webkit-overflow-scrolling: touch;
 }
 
 .course-card {
