@@ -527,6 +527,7 @@
     border-radius: 8px;
     font-size: 0.85rem;
     font-weight: 700;
+    font-family: 'Montserrat', sans-serif;
     flex-shrink: 0;
 }
 
@@ -1020,15 +1021,6 @@ body::-webkit-scrollbar-track {
     
     .org-card h3 {
         font-size: 1.1rem;
-    }
-
-    /* Increase spacing between course count and toggle on mobile */
-    .accordion-header h3 {
-        margin-right: auto;
-    }
-
-    .course-count {
-        margin-right: 12px;
     }
 }
 
