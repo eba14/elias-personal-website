@@ -363,7 +363,6 @@
     }
 
     .accordion-header h3 { font-size: 0.95rem; gap: 8px; }
-    .course-count { font-size: 0.75rem; padding: 3px 7px; }
     .accordion-toggle { width: 30px; height: 30px; font-size: 0.8rem; }
     .course-count { width: 30px; height: 30px; font-size: 0.75rem; }
 
