@@ -516,13 +516,18 @@
 }
 
 .course-count {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
     background: rgba(244, 180, 0, 0.15);
     border: 1px solid rgba(244, 180, 0, 0.2);
     color: #f4b400;
-    padding: 4px 10px;
     border-radius: 8px;
     font-size: 0.85rem;
     font-weight: 700;
+    flex-shrink: 0;
 }
 
 .accordion-toggle {
