@@ -1029,7 +1029,3 @@ body::-webkit-scrollbar-track {
     }
 }
 
-@media screen and (max-width: 992px) {
-    /* reset the vertical nudge on narrower screens where layout stacks */
-    .profile { transform: translateY(0); }
-}

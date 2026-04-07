@@ -472,32 +472,7 @@ img[src*="UWECE"] {
     opacity: 1;
 }
 
-@media (max-width: 768px) {
-    .academic-projects-timeline {
-        padding-left: 0;
-    }
 
-    .academic-project-logo {
-        position: relative;
-        left: 0;
-        top: 0;
-        width: 60px;
-        height: 60px;
-        margin-bottom: 15px;
-    }
-
-    .academic-project-content {
-        margin-left: 0;
-    }
-
-    .academic-timeline-item {
-        flex-direction: column;
-    }
-
-    .internship-tabs {
-        margin: 12px 0 15px 0;
-    }
-}
 
 /* Enhanced animations */
 @keyframes patternShift {
