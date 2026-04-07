@@ -25,9 +25,14 @@ function observeBoxes() {
           section.classList.add('animate');
         }
       } else {
-        entry.target.classList.remove('animate');
-        entry.target.style.opacity = '0';
-        entry.target.style.transform = 'translateY(20px)';
+        // Don't remove animate from items inside an open accordion/tab —
+        // that causes the flicker when the user scrolls inside a dropdown
+        const insideOpenAccordion = entry.target.closest('.accordion-item.open, .projects-tab-content.active');
+        if (!insideOpenAccordion) {
+          entry.target.classList.remove('animate');
+          entry.target.style.opacity = '0';
+          entry.target.style.transform = 'translateY(20px)';
+        }
       }
     });
   }, { threshold: 0.1 });

@@ -179,8 +179,21 @@ function setupProjectsTabs() {
   tabHeaders.forEach(header => {
     header.addEventListener('click', function() {
       const targetContent = this.nextElementSibling;
+      const isOpening = !this.classList.contains('active');
       this.classList.toggle('active');
-      if (targetContent) targetContent.classList.toggle('active');
+      if (targetContent) {
+        targetContent.classList.toggle('active');
+        // When opening, ensure inner animated items get their animate class
+        // without relying on the scroll observer (which can flicker)
+        if (isOpening) {
+          const items = targetContent.querySelectorAll(
+            '.academic-timeline-item, .project-card'
+          );
+          items.forEach((item, i) => {
+            setTimeout(() => item.classList.add('animate'), i * 80);
+          });
+        }
+      }
     });
   });
 }

@@ -1,4 +1,44 @@
-/* Tablet & below — stacked layout */
+/* =============================================
+   GLOBAL MOBILE OVERFLOW GUARD
+   Prevents horizontal scroll / black side bars
+   on ALL screen sizes
+   ============================================= */
+@media screen and (max-width: 992px) {
+    html, body {
+        max-width: 100%;
+        overflow-x: hidden;
+    }
+
+    #main-content,
+    .left-side,
+    .right-side {
+        box-sizing: border-box;
+        max-width: 100%;
+    }
+}
+
+/* =============================================
+   COUNT BADGE ALIGNMENT
+   Keeps the number badge flush against the
+   toggle arrow on both accordions
+   ============================================= */
+.accordion-header h3,
+.projects-tab-header h3 {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.course-count {
+    margin-left: auto;
+    margin-right: 12px;
+    flex-shrink: 0;
+}
+
+/* =============================================
+   TABLET & BELOW — stacked layout (≤992px)
+   ============================================= */
 @media screen and (max-width: 992px) {
     #main-content {
         flex-direction: column;
@@ -16,25 +56,39 @@
         display: flex;
         align-items: center;
         justify-content: center;
+        text-align: center;
     }
 
-    /* Remove desktop vertical nudge so profile centres properly */
     .profile {
         transform: none;
         align-items: center;
         justify-content: center;
         width: 100%;
+        max-width: 400px;
+        margin: 0 auto;
         padding: 0 16px;
     }
 
     .profile-body {
         align-items: center;
+        width: 100%;
+    }
+
+    .profile-name {
+        text-align: center;
+        width: 100%;
+    }
+
+    .profile-info {
+        justify-content: center;
+        width: 100%;
     }
 
     .social-media {
         margin-top: 10px;
         justify-content: center;
         flex-wrap: wrap;
+        width: 100%;
     }
 
     .right-side {
@@ -45,15 +99,10 @@
     }
 }
 
-/* Tablet */
+/* =============================================
+   TABLET (≤768px)
+   ============================================= */
 @media screen and (max-width: 768px) {
-    html, body {
-        width: 100%;
-        max-width: 100%;
-        overflow-x: hidden;
-    }
-
-    /* background-attachment: fixed causes black bars on iOS/Android */
     body {
         background-attachment: scroll;
     }
@@ -62,9 +111,8 @@
     .right-side section .boxed-section:last-of-type { margin-bottom: 56px; }
     .right-side > div + div { margin-top: 40px; }
     section:last-of-type { margin-bottom: 8px; }
-    .right-side section:last-of-type .boxed-section:last-of-type { margin-bottom: 12px; }
 
-    /* Hero typewriter */
+    /* Hero */
     .hero-text {
         font-size: 2.4rem;
         gap: 12px;
@@ -72,35 +120,16 @@
         justify-content: center;
     }
 
-    .rotating-emoji {
-        font-size: 2.6rem;
-    }
+    .rotating-emoji { font-size: 2.6rem; }
 
-    /* Profile avatar */
-    .profile-avatar {
-        width: 200px;
-        height: 200px;
-    }
-
-    .profile-name {
-        font-size: 1.8rem;
-        text-align: center;
-    }
-
-    /* Social buttons */
-    .social-btn {
-        width: 52px;
-        height: 52px;
-    }
+    /* Profile */
+    .profile-avatar { width: 200px; height: 200px; }
+    .profile-name { font-size: 1.8rem; }
+    .social-btn { width: 52px; height: 52px; }
 
     /* Coursework accordion */
-    .accordion-header {
-        padding: 16px 18px;
-    }
-
-    .accordion-header h3 {
-        font-size: 1.05rem;
-    }
+    .accordion-header { padding: 16px 18px; }
+    .accordion-header h3 { font-size: 1.05rem; }
 
     .courses-grid {
         grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
@@ -108,35 +137,16 @@
         padding: 16px;
     }
 
-    .course-card {
-        min-height: auto;
-        padding: 12px;
-    }
+    .course-card { min-height: auto; padding: 12px; }
 
     /* Work history timeline */
-    .timeline-container {
-        padding-left: 50px;
-    }
-
-    .timeline-logo {
-        left: -45px;
-        width: 60px;
-        height: 60px;
-    }
-
-    .timeline-content {
-        margin-left: 20px;
-        padding: 18px;
-    }
-
-    .timeline-content h3 {
-        font-size: 1.3rem;
-    }
+    .timeline-container { padding-left: 50px; }
+    .timeline-logo { left: -45px; width: 60px; height: 60px; }
+    .timeline-content { margin-left: 20px; padding: 18px; }
+    .timeline-content h3 { font-size: 1.3rem; }
 
     /* Academic projects — stack logo above card */
-    .academic-projects-timeline {
-        padding-left: 0;
-    }
+    .academic-projects-timeline { padding-left: 0; }
 
     .academic-timeline-item {
         flex-direction: column;
@@ -160,120 +170,112 @@
     }
 
     /* Personal projects grid */
-    .projects-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .projects-content-wrapper {
-        padding: 16px;
-    }
+    .projects-grid { grid-template-columns: 1fr; }
+    .projects-content-wrapper { padding: 16px; }
 }
 
 /* =============================================
-   LANDSCAPE ORIENTATION — PHONES
-   Targets: phones rotated sideways
-   (~480–900px wide, height < 500px)
+   LANDSCAPE — PHONES
+   height < 500px + landscape
    ============================================= */
 @media screen and (max-height: 500px) and (orientation: landscape) {
-    /* Kill the fixed background — causes black bars when rotated */
-    body {
-        background-attachment: scroll;
+    html, body { overflow-x: hidden; max-width: 100%; }
+
+    /* Prevent any section from exceeding viewport width */
+    #main-content,
+    .left-side,
+    .right-side,
+    .timeline-container,
+    .courses-grid,
+    .projects-grid,
+    .academic-projects-timeline {
+        max-width: 100%;
+        box-sizing: border-box;
     }
 
-    /* Profile: switch to horizontal row layout to save vertical space */
+    /* Profile: horizontal row to save vertical space, fully centred */
     .left-side {
         padding-top: 70px;
         padding-bottom: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
     }
 
     .profile {
         flex-direction: row;
-        flex-wrap: wrap;
+        flex-wrap: nowrap;
         gap: 16px;
         align-items: center;
         justify-content: center;
         transform: none;
         padding: 0 20px;
+        width: 100%;
+        max-width: 600px;
+        margin: 0 auto;
     }
 
     .profile-avatar {
-        width: 100px;
-        height: 100px;
+        width: 90px;
+        height: 90px;
         flex-shrink: 0;
     }
 
     .profile-body {
         align-items: flex-start;
         gap: 4px;
+        flex-shrink: 1;
+        min-width: 0;
     }
 
     .profile-name {
-        font-size: 1.4rem;
+        font-size: 1.3rem;
         text-align: left;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 
     .profile-location {
-        font-size: 0.85rem;
-        padding: 6px 16px;
+        font-size: 0.8rem;
+        padding: 5px 12px;
         min-width: unset;
     }
 
     .social-media {
         margin-top: 6px;
-        gap: 8px;
+        gap: 7px;
         justify-content: flex-start;
+        flex-wrap: wrap;
     }
 
-    .social-btn {
-        width: 44px;
-        height: 44px;
-    }
+    .social-btn { width: 40px; height: 40px; }
 
-    /* Hero — tighten up */
-    .hero-section {
-        margin: 20px 0 30px;
-        padding: 24px 16px;
-    }
-
-    .hero-text {
-        font-size: 1.8rem;
-        gap: 10px;
-    }
-
-    .rotating-emoji {
-        font-size: 2rem;
-    }
+    /* Hero */
+    .hero-section { margin: 16px 0 20px; padding: 18px 16px; }
+    .hero-text { font-size: 1.7rem; gap: 8px; }
+    .rotating-emoji { font-size: 1.9rem; }
 
     /* Section titles */
-    .section-title {
-        font-size: 1.3rem;
-        margin: 16px auto 10px;
+    .section-title { font-size: 1.2rem; margin: 14px auto 8px; }
+
+    /* Body text in cards — was too large in landscape */
+    .timeline-content p,
+    .academic-project-content p,
+    .project-content p {
+        font-size: 0.82rem;
+        line-height: 1.55;
     }
 
-    /* Timeline — keep side-by-side but shrink */
-    .timeline-container {
-        padding-left: 44px;
-    }
+    /* Work history timeline */
+    .timeline-container { padding-left: 44px; }
+    .timeline-logo { left: -40px; width: 50px; height: 50px; }
+    .timeline-content { margin-left: 12px; padding: 12px; }
+    .timeline-content h3 { font-size: 1rem; }
 
-    .timeline-logo {
-        left: -40px;
-        width: 52px;
-        height: 52px;
-    }
-
-    .timeline-content {
-        margin-left: 14px;
-        padding: 14px;
-    }
-
-    .timeline-content h3 {
-        font-size: 1.1rem;
-    }
-
-    /* Academic projects */
-    .academic-projects-timeline {
-        padding-left: 0;
-    }
+    /* Academic projects — inline logo in landscape (room available) */
+    .academic-projects-timeline { padding-left: 0; }
 
     .academic-timeline-item {
         flex-direction: row;
@@ -284,18 +286,21 @@
         position: relative;
         left: auto;
         top: auto;
-        width: 52px;
-        height: 52px;
-        margin-right: 14px;
+        width: 48px;
+        height: 48px;
+        margin-right: 12px;
         margin-bottom: 0;
         flex-shrink: 0;
     }
 
     .academic-project-content {
         margin-left: 0;
+        padding: 12px;
     }
 
-    /* Courses grid — 3 columns in landscape to use the extra width */
+    .academic-project-content h3 { font-size: 1rem; }
+
+    /* Courses grid — 3 columns in landscape */
     .courses-grid {
         grid-template-columns: repeat(3, 1fr);
         gap: 10px;
@@ -303,87 +308,52 @@
     }
 
     /* Projects grid — 2 columns in landscape */
-    .projects-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
+    .projects-grid { grid-template-columns: repeat(2, 1fr); }
 
-    /* Right side padding */
-    .right-side {
-        padding: 16px 4%;
+    .projects-content-wrapper { padding: 12px; }
+
+    /* Right side */
+    .right-side { padding: 14px 4%; }
+}
+
+/* =============================================
+   LANDSCAPE — TABLETS
+   height 500–768px + landscape + ≤1024px wide
+   ============================================= */
+@media screen and (min-height: 500px) and (max-height: 768px) and (orientation: landscape) and (max-width: 1024px) {
+    body { background-attachment: scroll; }
+
+    .profile { transform: none; }
+
+    .hero-text { font-size: 2.4rem; }
+
+    .courses-grid { grid-template-columns: repeat(3, 1fr); }
+    .projects-grid { grid-template-columns: repeat(2, 1fr); }
+    .timeline-content h3 { font-size: 1.2rem; }
+
+    .timeline-content p,
+    .academic-project-content p,
+    .project-content p {
+        font-size: 0.88rem;
     }
 }
 
 /* =============================================
-   LANDSCAPE ORIENTATION — TABLETS
-   Targets: tablets rotated sideways
-   (~768–1024px wide, height 500–768px)
+   MOBILE (≤480px)
    ============================================= */
-@media screen and (min-height: 500px) and (max-height: 768px) and (orientation: landscape) and (max-width: 1024px) {
-    body {
-        background-attachment: scroll;
-    }
-
-    .profile {
-        transform: none;
-    }
-
-    .hero-text {
-        font-size: 2.6rem;
-    }
-
-    /* Courses grid — 3 columns */
-    .courses-grid {
-        grid-template-columns: repeat(3, 1fr);
-    }
-
-    /* Projects grid — 2 columns */
-    .projects-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    .timeline-content h3 {
-        font-size: 1.25rem;
-    }
-}
-
-/* Mobile */
 @media screen and (max-width: 480px) {
-    .right-side {
-        padding: 20px 4%;
-    }
-
-    .section-title {
-        font-size: 1.3rem;
-    }
+    .right-side { padding: 20px 4%; }
+    .section-title { font-size: 1.3rem; }
 
     /* Hero */
-    .hero-text {
-        font-size: 1.9rem;
-        gap: 8px;
-    }
-
-    .rotating-emoji {
-        font-size: 2.1rem;
-    }
+    .hero-text { font-size: 1.9rem; gap: 8px; }
+    .rotating-emoji { font-size: 2.1rem; }
 
     /* Profile */
-    .profile-avatar {
-        width: 160px;
-        height: 160px;
-    }
-
-    .profile-name {
-        font-size: 1.5rem;
-    }
-
-    .social-btn {
-        width: 46px;
-        height: 46px;
-    }
-
-    .social-media {
-        gap: 8px;
-    }
+    .profile-avatar { width: 160px; height: 160px; }
+    .profile-name { font-size: 1.5rem; }
+    .social-btn { width: 46px; height: 46px; }
+    .social-media { gap: 8px; }
 
     /* Coursework */
     .courses-grid {
@@ -392,68 +362,23 @@
         padding: 12px;
     }
 
-    .accordion-header h3 {
-        font-size: 0.95rem;
-        gap: 8px;
-    }
-
-    .course-count {
-        font-size: 0.75rem;
-        padding: 3px 7px;
-    }
-
-    .accordion-toggle {
-        width: 30px;
-        height: 30px;
-        font-size: 0.8rem;
-    }
+    .accordion-header h3 { font-size: 0.95rem; gap: 8px; }
+    .course-count { font-size: 0.75rem; padding: 3px 7px; }
+    .accordion-toggle { width: 30px; height: 30px; font-size: 0.8rem; }
 
     /* Work history timeline */
-    .timeline-container {
-        padding-left: 40px;
-    }
-
-    .timeline-logo {
-        left: -38px;
-        width: 50px;
-        height: 50px;
-    }
-
-    .timeline-content {
-        margin-left: 14px;
-        padding: 14px;
-    }
-
-    .timeline-content h3 {
-        font-size: 1.1rem;
-    }
+    .timeline-container { padding-left: 40px; }
+    .timeline-logo { left: -38px; width: 50px; height: 50px; }
+    .timeline-content { margin-left: 14px; padding: 14px; }
+    .timeline-content h3 { font-size: 1.1rem; }
 
     /* Academic projects */
-    .academic-project-logo {
-        width: 48px;
-        height: 48px;
-    }
-
-    .academic-project-content {
-        padding: 14px;
-    }
-
-    .academic-project-content h3 {
-        font-size: 1.15rem;
-    }
+    .academic-project-logo { width: 48px; height: 48px; }
+    .academic-project-content { padding: 14px; }
+    .academic-project-content h3 { font-size: 1.15rem; }
 
     /* Projects tab headers */
-    .projects-tab-header {
-        padding: 14px 16px;
-    }
-
-    .projects-tab-header h3 {
-        font-size: 1rem;
-    }
-
-    .projects-toggle {
-        width: 30px;
-        height: 30px;
-        font-size: 0.8rem;
-    }
+    .projects-tab-header { padding: 14px 16px; }
+    .projects-tab-header h3 { font-size: 1rem; }
+    .projects-toggle { width: 30px; height: 30px; font-size: 0.8rem; }
 }

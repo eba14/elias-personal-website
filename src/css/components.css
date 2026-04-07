@@ -1017,15 +1017,13 @@ body::-webkit-scrollbar-track {
         font-size: 1.1rem;
     }
 
-    /* Increase spacing between course/project count and toggle on mobile */
-    .accordion-header h3,
-    .projects-tab-header h3 {
+    /* Increase spacing between course count and toggle on mobile */
+    .accordion-header h3 {
         margin-right: auto;
     }
 
-    .course-count,
-    .projects-count {
-        margin-right: 20px;
+    .course-count {
+        margin-right: 12px;
     }
 }
 
