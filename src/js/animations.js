@@ -15,27 +15,27 @@ function animateBoxedSections() {
 function observeBoxes() {
   const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
+      const insideOpen = entry.target.closest(
+        '.accordion-item.open, .projects-tab-content.active'
+      );
+
       if (entry.isIntersecting) {
         setTimeout(() => {
           entry.target.classList.add('animate');
         }, entry.target.dataset.index * 20);
-        
+
         const section = entry.target.closest('section');
-        if (section) {
-          section.classList.add('animate');
-        }
+        if (section) section.classList.add('animate');
       } else {
-        // Don't remove animate from items inside an open accordion/tab —
-        // that causes the flicker when the user scrolls inside a dropdown
-        const insideOpenAccordion = entry.target.closest('.accordion-item.open, .projects-tab-content.active');
-        if (!insideOpenAccordion) {
+        // Only remove animate (trigger disappear) if NOT inside an open dropdown
+        if (!insideOpen) {
           entry.target.classList.remove('animate');
           entry.target.style.opacity = '0';
           entry.target.style.transform = 'translateY(20px)';
         }
       }
     });
-  }, { threshold: 0.1 });
+  }, { threshold: 0.05 });
 
   const boxes = document.querySelectorAll('.boxed-section, .project-card, .timeline-item, .academic-timeline-item, .org-card, .accordion-item, .projects-accordion-item');
   boxes.forEach((box, index) => {
