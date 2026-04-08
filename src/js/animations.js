@@ -15,10 +15,6 @@ function animateBoxedSections() {
 function observeBoxes() {
   const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
-      const insideOpen = entry.target.closest(
-        '.accordion-item.open, .projects-tab-content.active'
-      );
-
       if (entry.isIntersecting) {
         setTimeout(() => {
           entry.target.classList.add('animate');
@@ -27,12 +23,19 @@ function observeBoxes() {
         const section = entry.target.closest('section');
         if (section) section.classList.add('animate');
       } else {
-        // Only remove animate (trigger disappear) if NOT inside an open dropdown
-        if (!insideOpen) {
-          entry.target.classList.remove('animate');
-          entry.target.style.opacity = '0';
-          entry.target.style.transform = 'translateY(20px)';
-        }
+        // Don't strip animate from an open accordion bar — collapsing it would change its height
+        const isOpenAccordion = entry.target.classList.contains('accordion-item')
+                             && entry.target.classList.contains('open');
+        if (isOpenAccordion) return;
+
+        const insideOpen = entry.target.closest(
+          '.accordion-item.open, .projects-tab-content.active'
+        );
+        if (insideOpen) return;
+
+        entry.target.classList.remove('animate');
+        entry.target.style.opacity = '0';
+        entry.target.style.transform = 'translateY(20px)';
       }
     });
   }, { threshold: 0.05 });

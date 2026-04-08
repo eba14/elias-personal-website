@@ -13,10 +13,11 @@ header {
         200px 200px, 200px 200px,
         300px 300px, 300px 300px,
         100% 100%;
-    background-attachment: fixed;
-    padding: 20px 0;
+    background-attachment: scroll;
+    padding: 20px 8px;
     position: fixed;
     width: 100%;
+    box-sizing: border-box;
     top: 0;
     left: 0;
     z-index: 1000;
@@ -36,6 +37,8 @@ nav {
     max-width: 1400px;
     display: flex;
     justify-content: center;
+    padding: 0 8px;
+    box-sizing: border-box;
 }
 
 .nav-container {
@@ -51,6 +54,8 @@ nav {
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
     gap: 60px;
     max-width: 1350px;
+    width: 100%;
+    box-sizing: border-box;
     transition: all 0.3s ease;
 }
 
