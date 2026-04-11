@@ -168,9 +168,27 @@ function setupCourseworkAccordion() {
   const accordionHeaders = document.querySelectorAll('.accordion-header');
   accordionHeaders.forEach(header => {
     header.addEventListener('click', function() {
-      this.parentElement.classList.toggle('open');
+      const item = this.parentElement;
+      item.classList.toggle('open');
     });
   });
+
+  // Watch each accordion-item: when it re-enters the viewport while open,
+  // reset inline styles and re-trigger animate — same logic as projects tabs
+  const accordionItems = document.querySelectorAll('.accordion-item');
+  const reentryObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting && entry.target.classList.contains('open')) {
+        entry.target.style.opacity = '';
+        entry.target.style.transform = '';
+        entry.target.classList.remove('animate');
+        void entry.target.offsetWidth;
+        entry.target.classList.add('animate');
+      }
+    });
+  }, { threshold: 0.05 });
+
+  accordionItems.forEach(item => reentryObserver.observe(item));
 }
 
 // Setup projects tab functionality

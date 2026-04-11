@@ -19,20 +19,13 @@ function observeBoxes() {
         setTimeout(() => {
           entry.target.classList.add('animate');
         }, entry.target.dataset.index * 20);
-
         const section = entry.target.closest('section');
         if (section) section.classList.add('animate');
       } else {
-        // Don't strip animate from an open accordion bar — collapsing it would change its height
-        const isOpenAccordion = entry.target.classList.contains('accordion-item')
-                             && entry.target.classList.contains('open');
-        if (isOpenAccordion) return;
-
         const insideOpen = entry.target.closest(
           '.accordion-item.open, .projects-tab-content.active'
         );
         if (insideOpen) return;
-
         entry.target.classList.remove('animate');
         entry.target.style.opacity = '0';
         entry.target.style.transform = 'translateY(20px)';
