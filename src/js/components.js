@@ -179,11 +179,15 @@ function setupCourseworkAccordion() {
   const reentryObserver = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
       if (entry.isIntersecting && entry.target.classList.contains('open')) {
-        entry.target.style.opacity = '';
-        entry.target.style.transform = '';
-        entry.target.classList.remove('animate');
-        void entry.target.offsetWidth;
-        entry.target.classList.add('animate');
+        const el = entry.target;
+        // Disable transition temporarily so the class cycle doesn't cause a flash
+        el.style.transition = 'none';
+        el.style.opacity = '';
+        el.style.transform = '';
+        el.classList.remove('animate');
+        void el.offsetWidth;
+        el.style.transition = '';
+        el.classList.add('animate');
       }
     });
   }, { threshold: 0.05 });
