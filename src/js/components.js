@@ -187,7 +187,10 @@ function setupCourseworkAccordion() {
         el.classList.remove('animate');
         void el.offsetWidth;
         el.style.transition = '';
-        el.classList.add('animate');
+        // Use same stagger timing as main scroll observer (dataset.index * 20)
+        setTimeout(() => {
+          el.classList.add('animate');
+        }, el.dataset.index * 20);
       }
     });
   }, { threshold: 0.05 });
