@@ -125,6 +125,7 @@
     transition: all 0.3s ease;
     border: 1.5px solid rgba(110, 181, 255, 0.2);
     border-radius: 0 0 12px 12px;
+    position: relative; /* anchor for the counter badge */
 }
 
 /* Projects Grid Layout */
@@ -156,7 +157,7 @@
         0 4px 16px rgba(0, 0, 0, 0.2),
         inset 0 1px 0 rgba(255, 255, 255, 0.1);
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    cursor: pointer;
+    cursor: default;
     overflow: hidden;
     position: relative;
     opacity: 0;
@@ -218,6 +219,7 @@
     justify-content: center;
     overflow: hidden;
     position: relative;
+    background: #0a0f1e;
 }
 
 .project-logo:hover .project-company-logo {
@@ -240,8 +242,8 @@
 }
 
 .project-content h3 {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.4rem;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.15rem;
     font-weight: 600;
     color: #ffffff;
     margin-top: 0;
@@ -378,7 +380,7 @@ img[src*="UWECE"] {
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     width: 100%;
     padding: 25px;
-    margin-left: 40px;
+    margin-left: 15px;
     position: relative;
     overflow: hidden;
 }
@@ -426,8 +428,8 @@ img[src*="UWECE"] {
 }
 
 .academic-project-content h3 {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.4rem;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.15rem;
     font-weight: 600;
     color: #ffffff;
     margin-top: 0;
@@ -480,6 +482,151 @@ img[src*="UWECE"] {
 }
 
 
+
+/* ─── Personal Projects Carousel ──────────────────────────── */
+.projects-carousel {
+    position: relative;
+    padding: 0 52px;
+    /* no max-width: let the wrapper decide the width */
+}
+
+/* Counter badge sits at top-right of the dropdown wrapper */
+.carousel-counter-badge {
+    position: absolute;
+    top: 10px;
+    right: 14px;
+    background: rgba(110, 181, 255, 0.1);
+    border: 1px solid rgba(110, 181, 255, 0.25);
+    color: #6eb5ff;
+    padding: 5px 16px;
+    border-radius: 20px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.82rem;
+    font-weight: 600;
+    z-index: 5;
+    line-height: 1.6;
+    pointer-events: none;
+}
+
+.carousel-viewport {
+    overflow: hidden;
+    border-radius: 16px;
+    margin-top: 32px;
+    width: 100%;
+    /* no translateZ — it was clipping card content */
+}
+
+/* CSS Grid ensures each slide is exactly 100% of the viewport width,
+   resolving the percentage-width ambiguity of flexbox without any JS. */
+.carousel-track {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 100%;
+    transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: transform;
+}
+
+.carousel-slide {
+    /* width determined entirely by the grid column */
+    min-width: 0;
+}
+
+/* Tone down the card hover for carousel slides */
+.carousel-slide.project-card.animate:hover {
+    transform: translateY(-4px) scale(1.01);
+}
+
+.carousel-btn {
+    position: absolute;
+    top: calc(50% + 16px);
+    transform: translateY(-50%);
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: rgba(110, 181, 255, 0.07);
+    border: 1px solid rgba(110, 181, 255, 0.22);
+    color: #6eb5ff;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+    z-index: 6;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    outline: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.carousel-btn:hover {
+    background: rgba(110, 181, 255, 0.18);
+    border-color: rgba(110, 181, 255, 0.5);
+    box-shadow: 0 0 16px rgba(110, 181, 255, 0.2);
+}
+
+.carousel-prev { left: 6px; }
+.carousel-next { right: 6px; }
+
+/* ─── Project status badges ───────────────────────────────── */
+.project-status-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 14px;
+}
+
+.status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+}
+
+.status-badge::before {
+    content: '';
+    display: block;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: currentColor;
+    flex-shrink: 0;
+    animation: statusDot 2s ease-in-out infinite;
+}
+
+.status-badge.released {
+    background: rgba(0, 200, 100, 0.1);
+    color: #00c864;
+    border: 1px solid rgba(0, 200, 100, 0.22);
+}
+
+.status-badge.wip {
+    background: rgba(244, 180, 0, 0.1);
+    color: #f4b400;
+    border: 1px solid rgba(244, 180, 0, 0.22);
+}
+
+.status-badge.wip::before {
+    animation-duration: 1.3s;
+}
+
+.status-hint {
+    font-family: 'Source Sans Pro', 'Inter', sans-serif;
+    font-size: 0.82rem;
+    font-style: italic;
+}
+
+/* Hint text inherits the badge's color family */
+.released-row .status-hint { color: rgba(0, 200, 100, 0.72); }
+.wip-row      .status-hint { color: rgba(244, 180, 0, 0.72); }
+
+@keyframes statusDot {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50%       { opacity: 0.35; transform: scale(0.65); }
+}
 
 /* Enhanced animations */
 @keyframes patternShift {

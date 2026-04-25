@@ -208,19 +208,82 @@ function setupProjectsTabs() {
       this.classList.toggle('active');
       if (targetContent) {
         targetContent.classList.toggle('active');
-        // When opening, ensure inner animated items get their animate class
-        // without relying on the scroll observer (which can flicker)
         if (isOpening) {
-          const items = targetContent.querySelectorAll(
-            '.academic-timeline-item, .project-card'
-          );
-          items.forEach((item, i) => {
-            setTimeout(() => item.classList.add('animate'), i * 80);
-          });
+          const tab = this.getAttribute('data-tab');
+          if (tab === 'personal') {
+            // Carousel handles its own animation
+            setupPersonalProjectsCarousel();
+          } else {
+            // Stagger academic timeline items
+            const items = targetContent.querySelectorAll('.academic-timeline-item');
+            items.forEach((item, i) => {
+              item.classList.remove('animate');
+              item.style.opacity = '0';
+              item.style.transform = 'translateY(20px)';
+              setTimeout(() => {
+                item.style.opacity = '';
+                item.style.transform = '';
+                item.classList.add('animate');
+              }, i * 90 + 30);
+            });
+          }
         }
       }
     });
   });
+}
+
+// Personal projects carousel
+function setupPersonalProjectsCarousel() {
+  const viewport = document.querySelector('#personal-projects .carousel-viewport');
+  const track    = document.querySelector('#personal-projects .carousel-track');
+  const slides   = Array.from(document.querySelectorAll('#personal-projects .carousel-slide'));
+  const prevBtn  = document.querySelector('#personal-projects .carousel-prev'); // ← left arrow
+  const nextBtn  = document.querySelector('#personal-projects .carousel-next'); // → right arrow
+  const counter  = document.querySelector('#personal-projects .carousel-counter-badge');
+
+  if (!viewport || !track || slides.length === 0) return;
+
+  let current = 0;
+  const total = slides.length;
+
+  // CSS Grid handles slide widths; we only need pixel translate for positioning.
+  function goTo(index) {
+    current = ((index % total) + total) % total;
+    track.style.transform = `translateX(-${current * viewport.offsetWidth}px)`;
+    if (counter) counter.textContent = `${current + 1} / ${total}`;
+
+    // Re-trigger entrance animation on incoming slide
+    const slide = slides[current];
+    slide.classList.remove('animate');
+    slide.style.opacity = '';
+    void slide.offsetWidth;
+    setTimeout(() => slide.classList.add('animate'), 20);
+  }
+
+  // LEFT arrow (←) swipes LEFT → advance to next slide
+  if (prevBtn) prevBtn.addEventListener('click', (e) => { e.stopPropagation(); goTo(current + 1); });
+  // RIGHT arrow (→) swipes RIGHT → go back to previous slide
+  if (nextBtn) nextBtn.addEventListener('click', (e) => { e.stopPropagation(); goTo(current - 1); });
+
+  // Touch / swipe support for mobile
+  let touchX = 0;
+  track.addEventListener('touchstart', (e) => { touchX = e.touches[0].clientX; }, { passive: true });
+  track.addEventListener('touchend', (e) => {
+    const diff = touchX - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 40) goTo(diff > 0 ? current + 1 : current - 1);
+  }, { passive: true });
+
+  // Reposition on resize without animation
+  window.addEventListener('resize', () => {
+    track.style.transition = 'none';
+    track.style.transform = `translateX(-${current * viewport.offsetWidth}px)`;
+    requestAnimationFrame(() => { track.style.transition = ''; });
+  }, { passive: true });
+
+  // Double RAF: wait for the accordion's CSS transition to push the viewport
+  // to its real width before computing the initial pixel offset.
+  requestAnimationFrame(() => requestAnimationFrame(() => goTo(0)));
 }
 
 // Animate academic timeline items

@@ -204,16 +204,18 @@
 .profile {
     display: flex;
     flex-direction: column;
-    gap: 12px; /* restored tighter spacing between avatar, name, location, and socials */
+    gap: 6px;
     align-items: center;
     justify-content: center;
     height: 100%;
     width: 100%;
     box-sizing: border-box;
-    padding-top: 12px;
-    padding-bottom: 12px;
-    /* nudge the whole profile block slightly down to improve vertical centering */
-    transform: translateY(2vh);
+    padding-top: 8px;
+    padding-bottom: 8px;
+    /* vertical centering handled by flexbox on .left-side */
+    position: relative;
+    z-index: 1;
+    transform: translateY(-14px);
 }
 
 /* tighter grouping for name, location and socials while keeping avatar spacing unchanged */
@@ -303,8 +305,36 @@
     text-wrap: balance;
 }
 
+.profile-tagline {
+    font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+    font-size: 0.88rem;
+    color: #93c4ff;
+    margin: 0;
+    font-weight: 500;
+    text-align: center;
+    letter-spacing: 0.3px;
+    opacity: 0;
+    animation: fadeIn 0.6s ease 0.5s forwards;
+    /* Same pill style and dimensions as .profile-location */
+    padding: 10px 28px;
+    min-width: 220px;
+    background: linear-gradient(180deg, rgba(11,22,40,0.6), rgba(8,15,28,0.4));
+    border-radius: 12px;
+    border: 1px solid rgba(124,197,255,0.12);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    box-shadow: 0 6px 18px rgba(12,24,48,0.5);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    cursor: default;
+}
+
+.profile-tagline:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 24px rgba(18,46,78,0.28);
+}
+
 .profile-info {
-    margin: 6px 0 0 0;
+    margin: 0;
     opacity: 0;
     animation: fadeIn 0.6s ease 0.6s forwards;
     display: flex;
@@ -341,9 +371,9 @@
 .social-media {
     opacity: 0;
     animation: fadeIn 0.6s ease 0.6s forwards;
-    margin-top: 16px;
+    margin-top: 6px;
     display: flex;
-    gap: 12px; /* more breathing room */
+    gap: 12px;
     justify-content: center;
     align-items: center;
 }
@@ -441,7 +471,7 @@
     content: '';
     position: absolute;
     left: 12px;
-    bottom: -10px;
+    bottom: -4px;
     height: 5px;
     width: calc(100% - 24px);
     background: linear-gradient(90deg, #4a97e8 0%, #6eb5ff 100%);
@@ -618,6 +648,10 @@
     background-position: 0 0, 15px 15px;
     pointer-events: none;
     opacity: 0.2;
+}
+
+.course-card.animate {
+    animation: fadeInUp 0.4s ease forwards;
 }
 
 .course-card:hover {
@@ -942,14 +976,14 @@ footer {
         linear-gradient(135deg, #000 0%, #111 50%, #000 100%);
     background-size: 40px 40px, 40px 40px, 100% 100%;
     border-top: 2px solid rgba(244, 180, 0, 0.3);
-    padding: 10px 0;
+    padding: 5px 0;
     text-align: center;
     color: #ccc;
     position: fixed;
     bottom: 0;
     left: 0;
     right: 0;
-    height: 45px;
+    height: 36px;
     transform: translateY(100%);
     transition: transform 0.3s ease;
     z-index: 100;
@@ -966,6 +1000,7 @@ footer {
 footer.show {
     transform: translateY(0);
 }
+
 
 /* Scrollbar Styling */
 body::-webkit-scrollbar {

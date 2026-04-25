@@ -18,21 +18,61 @@
     color: #fff;
     text-align: center;
     position: fixed;
-    top: 0;
+    top: 50px;
     left: 0;
-    height: 100vh;
+    height: calc(100vh - 50px);
     margin-right: 3%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     z-index: 500;
+    /* Darker tint — still lets the animated bg show through but clearly distinct */
+    background: rgba(4, 7, 18, 0.42);
+    /* Extra bottom padding keeps social icons clear of the fixed footer (36px) */
+    padding-bottom: 65px;
+}
+
+/* Soft ambient glow centred behind the avatar */
+.left-side::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 75% 50% at 50% 48%, rgba(110,181,255,0.07) 0%, transparent 68%);
+    pointer-events: none;
+    z-index: 0;
 }
 
 
 
+/* Glowing gradient divider between panels */
+.vertical-line {
+    position: fixed;
+    left: calc(25% + 60px);
+    top: 50px;
+    bottom: 0;
+    width: 1px;
+    background: linear-gradient(
+        180deg,
+        transparent 0%,
+        rgba(110, 181, 255, 0.12) 10%,
+        rgba(110, 181, 255, 0.38) 35%,
+        rgba(110, 181, 255, 0.55) 50%,
+        rgba(110, 181, 255, 0.38) 65%,
+        rgba(110, 181, 255, 0.12) 90%,
+        transparent 100%
+    );
+    box-shadow: 0 0 10px rgba(110, 181, 255, 0.08), 0 0 3px rgba(110, 181, 255, 0.18);
+    z-index: 5;
+    pointer-events: none;
+}
+
 /* Responsive Layout */
 @media screen and (max-width: 992px) {
+    .vertical-line {
+        display: none;
+    }
+
     #main-content {
         flex-direction: column;
         padding-top: 20px;

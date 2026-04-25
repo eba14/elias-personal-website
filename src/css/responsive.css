@@ -99,6 +99,33 @@
 }
 
 /* =============================================
+   CAROUSEL & NEW FEATURES — TABLET/MOBILE
+   ============================================= */
+@media screen and (max-width: 992px) {
+    /* Profile: reset the desktop-only upward nudge */
+    .profile { transform: none; }
+
+    /* Tagline pill: allow it to shrink on narrow screens */
+    .profile-tagline { min-width: unset; width: auto; }
+}
+
+@media screen and (max-width: 768px) {
+    /* Carousel */
+    .projects-carousel        { padding: 0 38px; max-width: 100%; }
+    .carousel-btn             { width: 30px; height: 30px; font-size: 0.85rem; }
+    .carousel-prev            { left: 2px; }
+    .carousel-next            { right: 2px; }
+    .carousel-counter-badge   { font-size: 0.72rem; padding: 4px 10px; top: 6px; right: 8px; }
+    .carousel-viewport        { margin-top: 24px; }
+    .project-logo             { height: 180px; }
+
+    /* Status row on small screens */
+    .project-status-row       { flex-wrap: wrap; gap: 6px; }
+
+    /* Left panel vertical line hidden on mobile (already set in layout.css) */
+}
+
+/* =============================================
    TABLET (≤768px)
    ============================================= */
 @media screen and (max-width: 768px) {
