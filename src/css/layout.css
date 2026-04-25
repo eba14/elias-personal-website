@@ -27,8 +27,8 @@
     justify-content: center;
     align-items: center;
     z-index: 500;
-    /* Darker tint — still lets the animated bg show through but clearly distinct */
-    background: rgba(4, 7, 18, 0.42);
+    /* Dark blue panel — distinct from header, no canvas dots (clipped in JS) */
+    background: rgba(6, 14, 42, 0.72);
     /* Extra bottom padding keeps social icons clear of the fixed footer (36px) */
     padding-bottom: 65px;
 }

@@ -1,169 +1,171 @@
-// ECE-themed background: circuit board traces with data pulses + floating binary
+// Tile-grid background — RIGHT panel only.
+// Faint 60-px grid lines; small blue circles travel along the paths,
+// choosing random turns at intersections (full RNG).
+//
+// Bug avoided: after snapping to an intersection we record it as
+// `lastSnapX/Y` and skip any snap that would land on the same node,
+// so circles are never frozen in place by oscillation.
 (function () {
   const canvas = document.getElementById('bg-canvas');
   if (!canvas) return;
-  if (!window.matchMedia('(pointer: fine)').matches) {
-    canvas.style.display = 'none';
-    return;
+
+  const ctx  = canvas.getContext('2d');
+  const CELL = 60;
+  const DIRS = [
+    { dx:  1, dy:  0 },
+    { dx: -1, dy:  0 },
+    { dx:  0, dy:  1 },
+    { dx:  0, dy: -1 },
+  ];
+
+  let circles = [];
+  let SPLIT   = 0;
+
+  // Mirrors layout.css: left-side is width:25% + 30px padding each side = 25%+60px
+  function calcSplit() {
+    return canvas.width > 992 ? Math.round(canvas.width * 0.25) + 60 : 0;
   }
 
-  const ctx = canvas.getContext('2d');
-  let nodes = [], traces = [], bits = [];
-
-  /* ── Build circuit layout ──────────────────────────────── */
-  function init() {
-    nodes = []; traces = []; bits = [];
-
-    const cellW = Math.max(70, canvas.width  / 14);
-    const cellH = Math.max(65, canvas.height / 10);
-    const cols  = Math.ceil(canvas.width  / cellW) + 1;
-    const rows  = Math.ceil(canvas.height / cellH) + 1;
-
-    // Place nodes on a denser grid for full-canvas coverage
-    for (let c = 0; c < cols; c++) {
-      for (let r = 0; r < rows; r++) {
-        if (Math.random() < 0.62) {
-          nodes.push({
-            x: c * cellW + (0.2 + Math.random() * 0.6) * cellW,
-            y: r * cellH + (0.2 + Math.random() * 0.6) * cellH,
-            r:   Math.random() * 0.7 + 0.4,
-            a:   Math.random() * 0.22 + 0.10,
-            glow: Math.random() > 0.60,
-          });
-        }
-      }
-    }
-
-    // Connect nearby nodes with right-angle PCB traces
-    const maxDist = Math.min(canvas.width, canvas.height) * 0.30;
-    for (let i = 0; i < nodes.length; i++) {
-      let conns = 0;
-      for (let j = i + 1; j < nodes.length && conns < 4; j++) {
-        const dx = nodes[j].x - nodes[i].x;
-        const dy = nodes[j].y - nodes[i].y;
-        if (dx * dx + dy * dy < maxDist * maxDist && Math.random() < 0.52) {
-          traces.push({
-            from: i, to: j,
-            p:     Math.random(),
-            speed: 0.0007 + Math.random() * 0.0013,
-            on:    Math.random() > 0.38,  // whether a pulse is currently active
-          });
-          conns++;
-        }
-      }
-    }
-
-    // Floating binary digits
-    for (let i = 0; i < 40; i++) bits.push(spawnBit(true));
+  function gridStart() {
+    return Math.ceil(SPLIT / CELL) * CELL;
   }
 
-  function spawnBit(anywhere) {
-    return {
-      x:    Math.random() * canvas.width,
-      y:    anywhere ? Math.random() * canvas.height : canvas.height + 12,
-      ch:   Math.random() > 0.5 ? '1' : '0',
-      vy:   0.18 + Math.random() * 0.32,
-      a:    Math.random() * 0.08 + 0.03,
-      size: Math.random() * 2 + 7,
-    };
-  }
-
-  /* ── Draw a single trace + its travelling pulse ────────── */
-  function drawTrace(tr) {
-    const a = nodes[tr.from], b = nodes[tr.to];
-    // Right-angle path: horizontal leg first, then vertical
-    const mx = b.x, my = a.y;
-
-    ctx.beginPath();
-    ctx.moveTo(a.x, a.y);
-    ctx.lineTo(mx,  my);
-    ctx.lineTo(b.x, b.y);
-    ctx.strokeStyle = 'rgba(110,181,255,0.09)';
-    ctx.lineWidth   = 0.9;
-    ctx.stroke();
-
-    if (!tr.on) return;
-
-    // Compute pulse position along the two-segment path
-    const seg1  = Math.abs(mx - a.x);
-    const seg2  = Math.abs(b.y - my);
-    const total = seg1 + seg2;
-    if (total < 2) return;
-
-    const dist = tr.p * total;
-    let px, py;
-    if (dist <= seg1) {
-      px = a.x + (mx - a.x) * (dist / seg1);
-      py = a.y;
-    } else {
-      const t = (dist - seg1) / seg2;
-      px = mx;
-      py = my + (b.y - my) * t;
-    }
-
-    // Glowing pulse dot (small)
-    const g = ctx.createRadialGradient(px, py, 0, px, py, 3);
-    g.addColorStop(0,   'rgba(110,181,255,0.92)');
-    g.addColorStop(0.5, 'rgba(110,181,255,0.3)');
-    g.addColorStop(1,   'rgba(110,181,255,0)');
-    ctx.fillStyle = g;
-    ctx.beginPath();
-    ctx.arc(px, py, 3, 0, Math.PI * 2);
-    ctx.fill();
-  }
-
-  /* ── Resize & re-init ───────────────────────────────────── */
+  /* ── Resize ─────────────────────────────────────────────── */
   function resize() {
     canvas.width  = window.innerWidth;
     canvas.height = window.innerHeight;
-    init();
+    SPLIT = calcSplit();
+    seedCircles();
   }
+
+  /* ── Seed circles ───────────────────────────────────────── */
+  function seedCircles() {
+    const w     = canvas.width - SPLIT;
+    const count = Math.min(30, Math.max(8, Math.floor((w * canvas.height) / 36000)));
+    circles = Array.from({ length: count }, () => spawnCircle(true));
+  }
+
+  function spawnCircle(anywhere) {
+    const xStart = gridStart();
+    const cols   = Math.max(0, Math.floor((canvas.width  - xStart) / CELL));
+    const rows   = Math.floor(canvas.height / CELL);
+
+    const gx  = Math.floor(Math.random() * (cols + 1));
+    const gy  = anywhere
+      ? Math.floor(Math.random() * (rows + 1))
+      : (Math.random() < 0.5 ? -1 : rows + 1);
+
+    const sx  = xStart + gx * CELL;
+    const sy  = gy     * CELL;
+    const dir = DIRS[Math.floor(Math.random() * DIRS.length)];
+
+    return {
+      x:  sx,   y:  sy,
+      dx: dir.dx, dy: dir.dy,
+      speed: 0.6 + Math.random() * 1.1,
+      alpha: 0.45 + Math.random() * 0.35,
+      // Record spawn node so the very first intersection check doesn't
+      // immediately snap back to where we started.
+      lastSnapX: sx,
+      lastSnapY: sy,
+    };
+  }
+
+  /* ── Draw grid ──────────────────────────────────────────── */
+  function drawGrid() {
+    const xStart = gridStart();
+    ctx.lineWidth   = 0.7;
+    ctx.strokeStyle = 'rgba(110,181,255,0.055)';
+    ctx.beginPath();
+    for (let x = xStart; x <= canvas.width + CELL; x += CELL) {
+      ctx.moveTo(x, 0);
+      ctx.lineTo(x, canvas.height);
+    }
+    for (let y = 0; y <= canvas.height + CELL; y += CELL) {
+      ctx.moveTo(xStart, y);
+      ctx.lineTo(canvas.width, y);
+    }
+    ctx.stroke();
+  }
+
+  /* ── Step one circle ─────────────────────────────────────── */
+  function stepCircle(c) {
+    c.x += c.dx * c.speed;
+    c.y += c.dy * c.speed;
+
+    // Intersection detection
+    const tol  = c.speed + 0.8;
+    const modX = ((c.x % CELL) + CELL) % CELL;
+    const modY = ((c.y % CELL) + CELL) % CELL;
+    const onX  = modX < tol || modX > CELL - tol;
+    const onY  = modY < tol || modY > CELL - tol;
+
+    if (onX && onY) {
+      const snapX = Math.round(c.x / CELL) * CELL;
+      const snapY = Math.round(c.y / CELL) * CELL;
+
+      // Only snap when this is a NEW intersection (prevents frozen oscillation)
+      if (snapX !== c.lastSnapX || snapY !== c.lastSnapY) {
+        c.x = snapX;
+        c.y = snapY;
+        c.lastSnapX = snapX;
+        c.lastSnapY = snapY;
+
+        // 40 % chance to turn; never reverse
+        if (Math.random() < 0.40) {
+          const opts   = DIRS.filter(d => !(d.dx === -c.dx && d.dy === -c.dy));
+          const chosen = opts[Math.floor(Math.random() * opts.length)];
+          c.dx = chosen.dx;
+          c.dy = chosen.dy;
+        }
+      }
+    }
+
+    // Respawn when off the right panel
+    if (c.x < SPLIT - CELL || c.x > canvas.width  + CELL ||
+        c.y < -CELL          || c.y > canvas.height + CELL) {
+      return spawnCircle(true);
+    }
+    return c;
+  }
+
+  /* ── Draw one circle ─────────────────────────────────────── */
+  function drawCircle(c) {
+    // Glow
+    const g = ctx.createRadialGradient(c.x, c.y, 0, c.x, c.y, 8);
+    g.addColorStop(0,   `rgba(110,181,255,${(c.alpha * 0.9 ).toFixed(2)})`);
+    g.addColorStop(0.4, `rgba(110,181,255,${(c.alpha * 0.28).toFixed(2)})`);
+    g.addColorStop(1,   'rgba(110,181,255,0)');
+    ctx.fillStyle = g;
+    ctx.beginPath();
+    ctx.arc(c.x, c.y, 8, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Core dot
+    ctx.beginPath();
+    ctx.arc(c.x, c.y, 2.2, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(110,181,255,${c.alpha.toFixed(2)})`;
+    ctx.fill();
+  }
+
   window.addEventListener('resize', resize, { passive: true });
   resize();
 
-  /* ── Main animation loop ────────────────────────────────── */
+  /* ── Main loop ───────────────────────────────────────────── */
   function loop() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    // Traces + pulses
-    for (const tr of traces) {
-      drawTrace(tr);
-      if (tr.on) {
-        tr.p += tr.speed;
-        if (tr.p > 1) { tr.p = 0; tr.on = Math.random() > 0.25; }
-      } else {
-        if (Math.random() < 0.0025) tr.on = true;
-      }
-    }
+    // Clip ALL drawing to the right panel — nothing appears on the left side
+    ctx.save();
+    ctx.beginPath();
+    ctx.rect(SPLIT, 0, canvas.width - SPLIT, canvas.height);
+    ctx.clip();
 
-    // Circuit nodes
-    for (const n of nodes) {
-      if (n.glow) {
-        const g = ctx.createRadialGradient(n.x, n.y, 0, n.x, n.y, n.r * 2.8);
-        g.addColorStop(0, `rgba(110,181,255,${n.a * 1.4})`);
-        g.addColorStop(1, 'rgba(110,181,255,0)');
-        ctx.fillStyle = g;
-        ctx.beginPath();
-        ctx.arc(n.x, n.y, n.r * 2.8, 0, Math.PI * 2);
-        ctx.fill();
-      }
-      ctx.beginPath();
-      ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(110,181,255,${n.a})`;
-      ctx.fill();
-    }
+    drawGrid();
+    circles = circles.map(stepCircle);
+    circles.forEach(drawCircle);
 
-    // Floating binary (0s and 1s)
-    ctx.textAlign = 'center';
-    for (const b of bits) {
-      ctx.font      = `${b.size}px "JetBrains Mono", monospace`;
-      ctx.fillStyle = `rgba(110,181,255,${b.a})`;
-      ctx.fillText(b.ch, b.x, b.y);
-      b.y -= b.vy;
-      if (b.y < -16) {
-        Object.assign(b, spawnBit(false));
-      }
-    }
+    ctx.restore();
 
     requestAnimationFrame(loop);
   }

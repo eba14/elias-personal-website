@@ -209,35 +209,6 @@ img[alt="Amazon Brand Ambassador Logo"] {
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
-/* Staggered skill-tag entrance when parent card animates in */
-@keyframes tagReveal {
-    from { opacity: 0; transform: translateY(5px) scale(0.88); }
-    to   { opacity: 1; transform: translateY(0)   scale(1);    }
-}
-
-.timeline-item.animate .skill-tag,
-.academic-timeline-item.animate .skill-tag {
-    animation: tagReveal 0.22s ease both;
-}
-.timeline-item.animate .skill-tag:nth-child(1),
-.academic-timeline-item.animate .skill-tag:nth-child(1) { animation-delay: 0.42s; }
-.timeline-item.animate .skill-tag:nth-child(2),
-.academic-timeline-item.animate .skill-tag:nth-child(2) { animation-delay: 0.50s; }
-.timeline-item.animate .skill-tag:nth-child(3),
-.academic-timeline-item.animate .skill-tag:nth-child(3) { animation-delay: 0.58s; }
-.timeline-item.animate .skill-tag:nth-child(4),
-.academic-timeline-item.animate .skill-tag:nth-child(4) { animation-delay: 0.66s; }
-.timeline-item.animate .skill-tag:nth-child(5),
-.academic-timeline-item.animate .skill-tag:nth-child(5) { animation-delay: 0.74s; }
-.timeline-item.animate .skill-tag:nth-child(6),
-.academic-timeline-item.animate .skill-tag:nth-child(6) { animation-delay: 0.82s; }
-.timeline-item.animate .skill-tag:nth-child(7),
-.academic-timeline-item.animate .skill-tag:nth-child(7) { animation-delay: 0.90s; }
-.timeline-item.animate .skill-tag:nth-child(8),
-.academic-timeline-item.animate .skill-tag:nth-child(8) { animation-delay: 0.98s; }
-.timeline-item.animate .skill-tag:nth-child(9),
-.academic-timeline-item.animate .skill-tag:nth-child(9) { animation-delay: 1.06s; }
-
 /* Skills tags styling */
 .skills-section {
     margin-top: 15px;
