@@ -1,10 +1,10 @@
 # Personal Portfolio
 
-A personal portfolio website showcasing my educational experiences and projects.
+A personal portfolio website showcasing my academic experiences and projects.
 
 ## Features
 
-- Scalable design for various devices
+- Scalable design for various devices (laptops, tablets, mobile phones, etc.)
 - Interactive animations that improves UX/UI
 - Academic involvement showcases
 - Professional timeline layout
