@@ -365,6 +365,49 @@
 }
 
 /* =============================================
+   TOUCH DEVICES — disable stuck hover transforms
+   Cards / hero / profile shouldn't jump on tap
+   ============================================= */
+@media (hover: none) {
+    .boxed-section.animate:hover,
+    .project-card.animate:hover,
+    .enhanced-card:hover,
+    .org-card:hover {
+        transform: none;
+    }
+    .hero-section:hover  { transform: none; }
+    .profile-tagline:hover { transform: none; }
+    .elias-a:hover       { transform: none; }
+}
+
+/* =============================================
+   HACKATHON ACCORDION — TABLET (≤768px)
+   ============================================= */
+@media screen and (max-width: 768px) {
+    .hackathon-header        { padding: 16px 18px; }
+    .hackathon-header h3     { font-size: 1.05rem; }
+    .hackathon-content-wrapper { padding: 16px 18px; }
+}
+
+/* =============================================
+   HACKATHON ACCORDION — MOBILE (≤480px)
+   ============================================= */
+@media screen and (max-width: 480px) {
+    .hackathon-header        { padding: 14px 16px; }
+    .hackathon-header h3     { font-size: 0.95rem; }
+    .hackathon-count         { width: 30px; height: 30px; font-size: 0.75rem; margin-right: 8px; }
+    .hackathon-toggle        { width: 30px; height: 30px; font-size: 0.8rem; }
+    .hackathon-content-wrapper { padding: 14px 16px; }
+}
+
+/* =============================================
+   RIGHT SIDE — trim excess bottom gap on mobile
+   ============================================= */
+@media screen and (max-width: 992px) {
+    .right-side { margin-bottom: 80px; }
+}
+
+/* =============================================
    MOBILE (≤480px)
    ============================================= */
 @media screen and (max-width: 480px) {
