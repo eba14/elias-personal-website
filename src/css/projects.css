@@ -212,11 +212,8 @@
 
 .project-logo {
     width: 100%;
-    height: 250px;
+    aspect-ratio: 3 / 2;
     border-radius: 12px 12px 0 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     overflow: hidden;
     position: relative;
     background: #0a0f1e;
@@ -287,25 +284,9 @@
     background-color: rgba(110, 181, 255, 0.05);
 }
 
-/* Responsive adjustments to ensure logos fill completely on all devices */
 @media (max-width: 768px) {
-    .project-logo {
-        height: 200px;
-    }
-
-    .projects-tabs {
-        flex-wrap: wrap;
-    }
-
-    .projects-grid {
-        grid-template-columns: 1fr;
-    }
-}
-
-@media (max-width: 480px) {
-    .project-logo {
-        height: 150px;
-    }
+    .projects-tabs  { flex-wrap: wrap; }
+    .projects-grid  { grid-template-columns: 1fr; }
 }
 
 /* Academic Projects Timeline Layout */
@@ -493,11 +474,11 @@ img[src*="UWECE"] {
 
 /* ─── Personal Projects Carousel ──────────────────────────── */
 .projects-carousel {
-    position: relative;
-    padding: 0 70px;   /* 52px button + 18px breathing room each side */
-    max-width: 560px;
-    margin-left: auto;
-    margin-right: auto;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    max-width: 680px;
+    margin: 32px auto 0;
 }
 
 /* Counter badge sits at top-right of the dropdown wrapper */
@@ -521,9 +502,8 @@ img[src*="UWECE"] {
 .carousel-viewport {
     overflow: hidden;
     border-radius: 16px;
-    margin-top: 32px;
-    width: 100%;
-    /* no translateZ — it was clipping card content */
+    flex: 1;
+    min-width: 0;   /* flex shrink fix */
 }
 
 /* CSS Grid ensures each slide is exactly 100% of the viewport width,
@@ -547,34 +527,34 @@ img[src*="UWECE"] {
 }
 
 .carousel-btn {
-    position: absolute;
-    top: calc(50% + 16px);
-    transform: translateY(-50%);
+    flex-shrink: 0;
     width: 52px;
     height: 52px;
     border-radius: 50%;
-    background: rgba(110, 181, 255, 0.07);
-    border: 1px solid rgba(110, 181, 255, 0.22);
+    background: rgba(110, 181, 255, 0.08);
+    border: 1.5px solid rgba(110, 181, 255, 0.32);
     color: #6eb5ff;
-    font-size: 1.3rem;
     cursor: pointer;
-    transition: background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
-    z-index: 6;
     display: flex;
     align-items: center;
     justify-content: center;
+    transition: background 0.22s ease, border-color 0.22s ease,
+                box-shadow 0.22s ease, transform 0.22s ease;
     outline: none;
     -webkit-tap-highlight-color: transparent;
 }
 
 .carousel-btn:hover {
     background: rgba(110, 181, 255, 0.18);
-    border-color: rgba(110, 181, 255, 0.5);
-    box-shadow: 0 0 16px rgba(110, 181, 255, 0.2);
+    border-color: rgba(110, 181, 255, 0.65);
+    box-shadow: 0 0 20px rgba(110, 181, 255, 0.25);
+    transform: scale(1.1);
 }
 
-.carousel-prev { left: 0; }
-.carousel-next { right: 0; }
+.carousel-btn svg {
+    display: block;
+    pointer-events: none;
+}
 
 /* ─── Project status badges ───────────────────────────────── */
 .project-status-row {

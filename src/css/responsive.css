@@ -50,8 +50,12 @@
         height: auto;
         top: 0;
         margin-right: 0;
-        padding-top: 100px;
-        padding-bottom: 20px;
+        /* #main-content already pushes content below the fixed header via margin-top:100px,
+           so only a small breathing gap is needed here */
+        padding-top: 28px;
+        padding-bottom: 28px;
+        padding-left: 5%;
+        padding-right: 5%;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -60,13 +64,17 @@
 
     .profile {
         transform: none;
+        height: auto;
         align-items: center;
         justify-content: center;
         width: 100%;
-        max-width: 400px;
+        max-width: 480px;
         margin: 0 auto;
-        padding: 0 16px;
+        padding: 0;
     }
+
+    /* Tablet-size avatar step-down (desktop is 250px) */
+    .profile-avatar { width: 210px; height: 210px; }
 
     .profile-body {
         align-items: center;
@@ -83,6 +91,10 @@
         width: 100%;
     }
 
+    /* Release fixed widths on pills so they shrink to content */
+    .profile-tagline  { min-width: unset; width: auto; }
+    .profile-location { min-width: unset; width: auto; }
+
     .social-media {
         margin-top: 10px;
         justify-content: center;
@@ -98,26 +110,13 @@
     }
 }
 
-/* =============================================
-   CAROUSEL & NEW FEATURES — TABLET/MOBILE
-   ============================================= */
-@media screen and (max-width: 992px) {
-    /* Profile: reset the desktop-only upward nudge */
-    .profile { transform: none; }
-
-    /* Tagline pill: allow it to shrink on narrow screens */
-    .profile-tagline { min-width: unset; width: auto; }
-}
 
 @media screen and (max-width: 768px) {
     /* Carousel */
-    .projects-carousel        { padding: 0 38px; max-width: 100%; }
-    .carousel-btn             { width: 30px; height: 30px; font-size: 0.85rem; }
-    .carousel-prev            { left: 2px; }
-    .carousel-next            { right: 2px; }
-    .carousel-counter-badge   { font-size: 0.72rem; padding: 4px 10px; top: 6px; right: 8px; }
-    .carousel-viewport        { margin-top: 24px; }
-    .project-logo             { height: 180px; }
+    .projects-carousel      { gap: 10px; margin-top: 24px; }
+    .carousel-btn           { width: 40px; height: 40px; }
+    .carousel-btn svg       { width: 16px; height: 16px; }
+    .carousel-counter-badge { font-size: 0.72rem; padding: 4px 10px; top: 6px; right: 8px; }
 
     /* Status row on small screens */
     .project-status-row       { flex-wrap: wrap; gap: 6px; }
@@ -149,9 +148,11 @@
     .rotating-emoji { font-size: 2.6rem; }
 
     /* Profile */
-    .profile-avatar { width: 200px; height: 200px; }
-    .profile-name { font-size: 1.8rem; }
-    .social-btn { width: 52px; height: 52px; }
+    .left-side       { padding-top: 22px; padding-bottom: 22px; }
+    .profile-avatar  { width: 185px; height: 185px; }
+    .profile-name    { font-size: 1.8rem; }
+    .profile-tagline, .profile-location { padding: 9px 20px; font-size: 0.85rem; }
+    .social-btn      { width: 52px; height: 52px; }
 
     /* Coursework accordion */
     .accordion-header { padding: 16px 18px; }
@@ -419,10 +420,13 @@
     .rotating-emoji { font-size: 2.1rem; }
 
     /* Profile */
-    .profile-avatar { width: 160px; height: 160px; }
-    .profile-name { font-size: 1.5rem; }
-    .social-btn { width: 46px; height: 46px; }
-    .social-media { gap: 8px; }
+    .left-side       { padding-top: 18px; padding-bottom: 18px; }
+    .profile         { gap: 4px; }
+    .profile-avatar  { width: 145px; height: 145px; }
+    .profile-name    { font-size: 1.5rem; }
+    .profile-tagline, .profile-location { padding: 8px 16px; font-size: 0.8rem; }
+    .social-btn      { width: 46px; height: 46px; }
+    .social-media    { gap: 8px; }
 
     /* Coursework */
     .courses-grid {
