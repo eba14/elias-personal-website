@@ -10,6 +10,18 @@
     <link rel="stylesheet" href="src/styles.css">
 </head>
 <body>
+    <!-- Custom cursor (pointer devices only, hidden until first mouse move) -->
+    <div id="cursor-ring"></div>
+    <div id="cursor-dot"></div>
+
+    <!-- Loading / splash screen -->
+    <div id="loading-screen" aria-hidden="true">
+        <div class="loader-content">
+            <div class="loader-logo">EA</div>
+            <div class="loader-bar"><div class="loader-bar-fill"></div></div>
+        </div>
+    </div>
+
     <!-- Animated background layers (behind all content) -->
     <canvas id="bg-canvas"></canvas>
     <div class="bg-blob bg-blob-1"></div>
@@ -58,7 +70,6 @@
     </div>
 
     <div id="email-popup-container"></div>
-    <div id="project-modals-container"></div>
   
   <!-- Load utility classes first -->
   <script src="src/js/utils/typewriter.js"></script>
@@ -74,5 +85,6 @@
   <script src="src/js/animations.js"></script>
   <script src="src/script.js"></script>
   <script src="src/js/particles.js"></script>
+  <script src="src/js/cursor.js"></script>
 </body>
 </html>

@@ -831,6 +831,107 @@ img[alt="South Seattle College logo"] {
     transform: translateY(0);
 }
 
+/* ─── Hackathon Accordion (light green) ─────────────────── */
+.hackathons-accordion-container {
+    max-width: 1000px;
+    margin: 0 auto 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.hackathon-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 25px;
+    background: rgba(102, 187, 106, 0.08);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    user-select: none;
+}
+
+.hackathon-header:hover {
+    background: rgba(102, 187, 106, 0.15);
+}
+
+.hackathon-header h3 {
+    color: #66bb6a;
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin: 0;
+    letter-spacing: 0.5px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-family: 'Montserrat', sans-serif;
+    flex: 1;
+}
+
+.hackathon-count {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    background: rgba(102, 187, 106, 0.15);
+    border: 1px solid rgba(102, 187, 106, 0.2);
+    color: #66bb6a;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    font-family: 'Montserrat', sans-serif;
+    margin-left: auto;
+    margin-right: 12px;
+    flex-shrink: 0;
+}
+
+.hackathon-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    background: rgba(102, 187, 106, 0.15);
+    border: 1px solid rgba(102, 187, 106, 0.2);
+    border-radius: 8px;
+    color: #66bb6a;
+    font-size: 0.95rem;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    flex-shrink: 0;
+    cursor: pointer;
+}
+
+.hackathon-toggle:hover {
+    background: rgba(102, 187, 106, 0.25);
+    border-color: rgba(102, 187, 106, 0.5);
+    box-shadow: 0 4px 12px rgba(102, 187, 106, 0.12);
+}
+
+.hackathon-accordion-item.open .hackathon-toggle {
+    transform: rotate(180deg);
+}
+
+.hackathon-content {
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: max-height 0.35s ease, opacity 0.35s ease;
+}
+
+.hackathon-accordion-item.open .hackathon-content {
+    max-height: 2000px;
+    opacity: 1;
+    overflow: visible;
+}
+
+.hackathon-content-wrapper {
+    background: rgba(0, 0, 0, 0.2);
+    padding: 20px 25px;
+    border: 1.5px solid rgba(102, 187, 106, 0.2);
+    border-radius: 0 0 12px 12px;
+}
+
 /* Organizations Grid */
 .organizations-grid {
     display: grid;

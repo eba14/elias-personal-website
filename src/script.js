@@ -1,8 +1,22 @@
 // Initialize application
 document.addEventListener('DOMContentLoaded', function() {
-  // Ensure page starts at top
   window.scrollTo(0, 0);
-  
+
+  const loadStart = Date.now();
+
+  function dismissLoader() {
+    const ls = document.getElementById('loading-screen');
+    if (!ls) return;
+    const elapsed = Date.now() - loadStart;
+    setTimeout(() => {
+      ls.classList.add('fade-out');
+      setTimeout(() => {
+        ls.remove();
+        initializeHeroSection(); // start typewriter only after loader is fully gone
+      }, 500);
+    }, Math.max(0, 1600 - elapsed));
+  }
+
   loadComponents()
     .then(() => {
       setupInteractions();
@@ -10,13 +24,13 @@ document.addEventListener('DOMContentLoaded', function() {
       initializeMobileNavigation();
       initializeScrollEffects();
       loadContentComponents();
-      // Start ResizeObserver after a tick so content has been injected
       setTimeout(initProgressBarResizeObserver, 100);
+      dismissLoader();
     })
-    .then(() => {
-      setTimeout(initializeHeroSection, 300);
-    })
-    .catch(err => console.error('Error loading components:', err));
+    .catch(err => {
+      console.error('Error loading components:', err);
+      dismissLoader();
+    });
 });
 
 // Enhanced scroll functionality
@@ -34,41 +48,5 @@ window.addEventListener('scroll', function() {
 });
 
 function initializeHeader() {
-  setupLogoClick();
-  updateActiveNavLink();
-}
-
-function setupLogoClick() {
-  const logo = document.getElementById('logo-home');
-  if (logo) {
-    logo.addEventListener('click', function() {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
-  }
-}
-
-function updateActiveNavLink() {
-  const sections = ['about-me', 'work-history', 'leadership', 'coursework', 'projects', 'hackathons', 'organizations'];
-  const navLinks = document.querySelectorAll('.nav-link');
-  
-  let currentSection = '';
-  const header = document.querySelector('header');
-  const headerHeight = header ? header.getBoundingClientRect().height : 80;
-  
-  sections.forEach(sectionId => {
-    const section = document.getElementById(sectionId);
-    if (section) {
-      const rect = section.getBoundingClientRect();
-      if (rect.top <= headerHeight + 20 && rect.bottom >= headerHeight + 20) {
-        currentSection = sectionId;
-      }
-    }
-  });
-  
-  navLinks.forEach(link => {
-    link.classList.remove('active');
-    if (link.getAttribute('href') === `#${currentSection}`) {
-      link.classList.add('active');
-    }
-  });
+  // Nav active state + smooth scroll handled by ScrollEffects + SmoothScroll in initializeScrollEffects()
 }

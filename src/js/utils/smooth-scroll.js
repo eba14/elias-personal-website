@@ -6,7 +6,7 @@ class SmoothScroll {
 
     init() {
         const navLinks = document.querySelectorAll('.nav-link, .mobile-nav-link');
-        
+
         navLinks.forEach(link => {
             link.addEventListener('click', (e) => {
                 e.preventDefault();
@@ -15,7 +15,6 @@ class SmoothScroll {
             });
         });
 
-        // Logo click to top
         const logo = document.getElementById('logo-home');
         if (logo) {
             logo.addEventListener('click', () => {
@@ -25,43 +24,42 @@ class SmoothScroll {
     }
 
     scrollToSection(sectionId) {
-        // Wait for content to be fully loaded
-        setTimeout(() => {
-            const targetSection = document.getElementById(sectionId);
-            if (targetSection) {
-                const header = document.querySelector('header');
-                const headerHeight = header ? header.getBoundingClientRect().height : 80;
-                
-                // Find the section title within the section
-                const sectionTitle = targetSection.querySelector('.section-title');
-                if (sectionTitle) {
-                    // Get the actual position of the section title
-                    const titleRect = sectionTitle.getBoundingClientRect();
-                    const titleTop = window.pageYOffset + titleRect.top;
-                    
-                    // Position title just below header with small buffer
-                    const scrollPosition = titleTop - headerHeight - 10;
-                    
-                    window.scrollTo({
-                        top: Math.max(0, scrollPosition),
-                        behavior: 'smooth'
-                    });
-                } else {
-                    // Fallback to section top if no title found
-                    const scrollPosition = targetSection.offsetTop - headerHeight - 10;
-                    window.scrollTo({
-                        top: Math.max(0, scrollPosition),
-                        behavior: 'smooth'
-                    });
-                }
-            }
-        }, 100);
+        const targetSection = document.getElementById(sectionId);
+        if (!targetSection) return;
+
+        const header = document.querySelector('header');
+        const headerHeight = header ? header.getBoundingClientRect().height : 80;
+
+        const sectionTitle = targetSection.querySelector('.section-title');
+        let target;
+        if (sectionTitle) {
+            target = window.pageYOffset + sectionTitle.getBoundingClientRect().top - headerHeight - 10;
+        } else {
+            target = targetSection.offsetTop - headerHeight - 10;
+        }
+
+        this._animateScroll(Math.max(0, target), 380);
     }
 
     scrollToTop() {
-        window.scrollTo({ 
-            top: 0, 
-            behavior: 'smooth' 
-        });
+        this._animateScroll(0, 380);
+    }
+
+    _animateScroll(target, duration) {
+        const start = window.pageYOffset;
+        const distance = target - start;
+        if (distance === 0) return;
+        const startTime = performance.now();
+
+        const ease = t => t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
+
+        function step(now) {
+            const elapsed = now - startTime;
+            const progress = Math.min(elapsed / duration, 1);
+            window.scrollTo(0, start + distance * ease(progress));
+            if (progress < 1) requestAnimationFrame(step);
+        }
+
+        requestAnimationFrame(step);
     }
 }

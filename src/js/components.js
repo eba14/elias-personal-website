@@ -1,108 +1,59 @@
 // Component loading and interaction functionality
 
-// Load all component content
+const fixPaths = html => html
+  .replace(/src="\.\.\/\.\.\/images\//g, 'src="src/images/')
+  .replace(/src="images\//g, 'src="src/images/');
+
+// Load shell components (header, profile, footer, email popup)
 function loadComponents() {
-  const compBase = 'src/components/';
+  const base = 'src/components/';
   return Promise.all([
-    fetch(compBase + 'header.html').then(r => r.text()),
-    fetch(compBase + 'left-profile.html').then(r => r.text()),
-    fetch(compBase + 'footer.html').then(r => r.text()),
-    fetch(compBase + 'email-popup.html').then(r => r.text()),
-    fetch(compBase + 'project-modals.html').then(r => r.text())
-  ]).then(([headerHtml, leftHtml, footerHtml, emailHtml, projectModalsHtml]) => {
-    // Fix image paths for all components
-    leftHtml = leftHtml.replace(/src="images\//g, 'src="src/images/');
-    headerHtml = headerHtml.replace(/src="images\//g, 'src="src/images/');
-    footerHtml = footerHtml.replace(/src="images\//g, 'src="src/images/');
-    emailHtml = emailHtml.replace(/src="images\//g, 'src="src/images/');
-    projectModalsHtml = projectModalsHtml.replace(/src="images\//g, 'src="src/images/');
-    
-    document.getElementById('header-container').innerHTML = headerHtml;
-    document.getElementById('left-profile-container').innerHTML = leftHtml;
-    document.getElementById('footer-container').innerHTML = footerHtml;
-    document.getElementById('email-popup-container').innerHTML = emailHtml;
-    document.getElementById('project-modals-container').innerHTML = projectModalsHtml;
+    fetch(base + 'header.html').then(r => r.text()),
+    fetch(base + 'left-profile.html').then(r => r.text()),
+    fetch(base + 'footer.html').then(r => r.text()),
+    fetch(base + 'email-popup.html').then(r => r.text()),
+  ]).then(([header, left, footer, email]) => {
+    document.getElementById('header-container').innerHTML         = fixPaths(header);
+    document.getElementById('left-profile-container').innerHTML   = fixPaths(left);
+    document.getElementById('footer-container').innerHTML         = fixPaths(footer);
+    document.getElementById('email-popup-container').innerHTML    = fixPaths(email);
   });
 }
 
+// Load all content sections, then trigger a single animation pass
 function loadContentComponents() {
-  // About Me
-  fetch('src/components/content-components/about-me.html')
-    .then(response => response.text())
-    .then(data => {
-      data = data.replace(/src="images\//g, 'src="src/images/');
-      document.getElementById('about-me-container').innerHTML = data;
-      animateBoxedSections();
-    });
+  const base = 'src/components/content-components/';
 
-  // Work history (fix image paths)
-  fetch('src/components/content-components/work-history.html')
-    .then(response => response.text())
-    .then(data => {
-      data = data.replace(/src="\.\.\/\.\.\/images\//g, 'src="src/images/');
-      data = data.replace(/src="images\//g, 'src="src/images/');
-      document.getElementById('work-history-container').innerHTML = data;
-      animateBoxedSections();
-      setupAwsInternshipTabs();
-    });
+  const sections = [
+    { id: 'about-me-container',      file: 'about-me.html' },
+    { id: 'work-history-container',  file: 'work-history.html',  setup: setupAwsInternshipTabs },
+    { id: 'leadership-container',    file: 'leadership.html' },
+    { id: 'coursework-container',    file: 'coursework.html',    setup: setupCourseworkAccordion },
+    { id: 'projects-container',      file: 'projects.html',      setup: () => { setupProjectsTabs(); } },
+    { id: 'hackathons-container',    file: 'hackathons.html',    setup: setupHackathonAccordion },
+    { id: 'organizations-container', file: 'organizations.html' },
+  ];
 
-  // Leadership
-  fetch('src/components/content-components/leadership.html')
-    .then(response => response.text())
-    .then(data => {
-      data = data.replace(/src="images\//g, 'src="src/images/');
-      document.getElementById('leadership-container').innerHTML = data;
-      animateBoxedSections();
-    });
+  const promises = sections.map(({ id, file, setup }) =>
+    fetch(base + file)
+      .then(r => r.text())
+      .then(html => {
+        document.getElementById(id).innerHTML = fixPaths(html);
+        if (setup) setup();
+      })
+  );
 
-  // Coursework
-  fetch('src/components/content-components/coursework.html')
-    .then(response => response.text())
-    .then(data => {
-      document.getElementById('coursework-container').innerHTML = data;
-      setupCourseworkAccordion();
-      animateBoxedSections();
-    });
-
-  // Personal projects
-  fetch('src/components/content-components/projects.html')
-    .then(response => response.text())
-    .then(data => {
-      data = data.replace(/src="images\//g, 'src="src/images/');
-      document.getElementById('projects-container').innerHTML = data;
-      setupProjectsTabs();
-      animateBoxedSections();
-      setupProjectModals();
-    });
-
-  // Hackathons (fix image paths)
-  fetch('src/components/content-components/hackathons.html')
-    .then(response => response.text())
-    .then(data => {
-      data = data.replace(/src="\.\.\/\.\.\/images\//g, 'src="src/images/');
-      data = data.replace(/src="images\//g, 'src="src/images/');
-      document.getElementById('hackathons-container').innerHTML = data;
-      animateBoxedSections();
-    });
-
-  // Organizations (fix image paths)
-  fetch('src/components/content-components/organizations.html')
-    .then(response => response.text())
-    .then(data => {
-      data = data.replace(/src="\.\.\/\.\.\/images\//g, 'src="src/images/');
-      data = data.replace(/src="images\//g, 'src="src/images/');
-      document.getElementById('organizations-container').innerHTML = data;
-      animateBoxedSections();
-    });
+  // Single animation pass after all sections are in the DOM
+  Promise.allSettled(promises).then(animateBoxedSections);
 }
 
-// After components and content are injected, attach interactions
+// After components are injected, attach interactions
 function setupInteractions() {
   // Profile image -> About Me modal
   const profileImg = document.getElementById('profile-img-click');
   if (profileImg) {
-    profileImg.addEventListener('click', function (event) {
-      event.preventDefault();
+    profileImg.addEventListener('click', (e) => {
+      e.preventDefault();
       const modal = document.getElementById('about-me-modal');
       if (modal) {
         modal.classList.remove('fade-out');
@@ -115,8 +66,8 @@ function setupInteractions() {
   // Email link -> show email popup
   const emailLink = document.getElementById('email-link');
   if (emailLink) {
-    emailLink.addEventListener('click', function (event) {
-      event.preventDefault();
+    emailLink.addEventListener('click', (e) => {
+      e.preventDefault();
       const popup = document.getElementById('email-popup');
       if (popup) {
         popup.classList.remove('fade-out');
@@ -125,108 +76,74 @@ function setupInteractions() {
       }
     });
   }
-
-  // Navbar links are handled by SmoothScroll utility
 }
 
-// Setup project modal functionality
-function setupProjectModals() {
-  document.querySelectorAll('.project-card').forEach(card => {
-    card.addEventListener('click', function() {
-      const projectId = this.getAttribute('data-project');
-      const modal = document.getElementById(projectId + '-modal');
-      if (modal) {
-        modal.classList.remove('fade-out');
-        modal.style.display = 'flex';
-        modal.style.animation = 'fadeIn 0.3s ease';
-      }
-    });
-  });
-}
-
-// Update scroll progress bar based on current scroll position
+// Scroll progress bar
 function updateScrollProgress() {
-  const scrollProgress = document.getElementById('scroll-progress');
-  if (!scrollProgress) return;
-  const scrollTop = window.pageYOffset;
-  const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-  const scrollPercent = Math.max(0, Math.min(1, scrollTop / docHeight));
-  scrollProgress.style.transform = `scaleX(${scrollPercent})`;
+  const bar = document.getElementById('scroll-progress');
+  if (!bar) return;
+  const scrollTop  = window.pageYOffset;
+  const docHeight  = document.documentElement.scrollHeight - window.innerHeight;
+  bar.style.transform = `scaleX(${Math.max(0, Math.min(1, scrollTop / docHeight))})`;
 }
 
-// Watch for any height changes in the page and immediately resync the progress bar
 function initProgressBarResizeObserver() {
   const target = document.querySelector('.right-side') || document.body;
-  const observer = new ResizeObserver(() => {
-    updateScrollProgress();
-  });
-  observer.observe(target);
+  new ResizeObserver(updateScrollProgress).observe(target);
 }
 
-// Setup coursework accordion functionality
+// Coursework accordion
 function setupCourseworkAccordion() {
-  const accordionHeaders = document.querySelectorAll('.accordion-header');
-  accordionHeaders.forEach(header => {
-    header.addEventListener('click', function() {
-      const item = this.parentElement;
-      item.classList.toggle('open');
+  document.querySelectorAll('.accordion-header').forEach(header => {
+    header.addEventListener('click', function () {
+      this.parentElement.classList.toggle('open');
+      // Course cards appear instantly — only the tab container itself animates on scroll
     });
   });
 
-  // Watch each accordion-item: when it re-enters the viewport while open,
-  // reset inline styles and re-trigger animate — same logic as projects tabs
-  const accordionItems = document.querySelectorAll('.accordion-item');
-  const reentryObserver = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting && entry.target.classList.contains('open')) {
-        const el = entry.target;
-        // Disable transition temporarily so the class cycle doesn't cause a flash
-        el.style.transition = 'none';
-        el.style.opacity = '';
-        el.style.transform = '';
-        el.classList.remove('animate');
-        void el.offsetWidth;
-        el.style.transition = '';
-        // Use same stagger timing as main scroll observer (dataset.index * 20)
-        setTimeout(() => {
-          el.classList.add('animate');
-        }, el.dataset.index * 20);
+}
+
+// Hackathon accordion
+function setupHackathonAccordion() {
+  document.querySelectorAll('.hackathon-header').forEach(header => {
+    header.addEventListener('click', function () {
+      const item = this.parentElement;
+      const opening = !item.classList.contains('open');
+      item.classList.toggle('open');
+      if (opening) {
+        // Snap inner timeline items visible instantly — no animation, just appear
+        item.querySelectorAll('.timeline-item').forEach(ti => {
+          ti.style.opacity   = '1';
+          ti.style.transform = 'translateY(0)';
+          ti.classList.add('animate');
+        });
       }
     });
-  }, { threshold: 0.05 });
-
-  accordionItems.forEach(item => reentryObserver.observe(item));
+  });
 }
 
-// Setup projects tab functionality
+// Projects tabs
 function setupProjectsTabs() {
-  const tabHeaders = document.querySelectorAll('.projects-tab-header');
-  tabHeaders.forEach(header => {
-    header.addEventListener('click', function() {
-      const targetContent = this.nextElementSibling;
+  document.querySelectorAll('.projects-tab-header').forEach(header => {
+    header.addEventListener('click', function () {
+      const content   = this.nextElementSibling;
+      const item      = this.closest('.projects-accordion-item');
       const isOpening = !this.classList.contains('active');
       this.classList.toggle('active');
-      if (targetContent) {
-        targetContent.classList.toggle('active');
-        if (isOpening) {
-          const tab = this.getAttribute('data-tab');
-          if (tab === 'personal') {
-            // Carousel handles its own animation
-            setupPersonalProjectsCarousel();
-          } else {
-            // Stagger academic timeline items
-            const items = targetContent.querySelectorAll('.academic-timeline-item');
-            items.forEach((item, i) => {
-              item.classList.remove('animate');
-              item.style.opacity = '0';
-              item.style.transform = 'translateY(20px)';
-              setTimeout(() => {
-                item.style.opacity = '';
-                item.style.transform = '';
-                item.classList.add('animate');
-              }, i * 90 + 30);
-            });
-          }
+      if (content) content.classList.toggle('active');
+      if (item) item.classList.toggle('open', isOpening);
+
+      if (isOpening) {
+        const tab = this.getAttribute('data-tab');
+        if (tab === 'personal') {
+          setupPersonalProjectsCarousel();
+        } else {
+          // Snap academic timeline items visible instantly — only the tab container animates on scroll
+          content.querySelectorAll('.academic-timeline-item').forEach(item => {
+            item.style.opacity   = '1';
+            item.style.transform = 'translateY(0)';
+            item.classList.add('animate');
+          });
         }
       }
     });
@@ -238,8 +155,8 @@ function setupPersonalProjectsCarousel() {
   const viewport = document.querySelector('#personal-projects .carousel-viewport');
   const track    = document.querySelector('#personal-projects .carousel-track');
   const slides   = Array.from(document.querySelectorAll('#personal-projects .carousel-slide'));
-  const prevBtn  = document.querySelector('#personal-projects .carousel-prev'); // ← left arrow
-  const nextBtn  = document.querySelector('#personal-projects .carousel-next'); // → right arrow
+  const prevBtn  = document.querySelector('#personal-projects .carousel-prev');
+  const nextBtn  = document.querySelector('#personal-projects .carousel-next');
   const counter  = document.querySelector('#personal-projects .carousel-counter-badge');
 
   if (!viewport || !track || slides.length === 0) return;
@@ -247,13 +164,10 @@ function setupPersonalProjectsCarousel() {
   let current = 0;
   const total = slides.length;
 
-  // CSS Grid handles slide widths; we only need pixel translate for positioning.
   function goTo(index) {
     current = ((index % total) + total) % total;
     track.style.transform = `translateX(-${current * viewport.offsetWidth}px)`;
     if (counter) counter.textContent = `${current + 1} / ${total}`;
-
-    // Re-trigger entrance animation on incoming slide
     const slide = slides[current];
     slide.classList.remove('animate');
     slide.style.opacity = '';
@@ -261,70 +175,36 @@ function setupPersonalProjectsCarousel() {
     setTimeout(() => slide.classList.add('animate'), 20);
   }
 
-  // LEFT arrow (←) swipes LEFT → advance to next slide
   if (prevBtn) prevBtn.addEventListener('click', (e) => { e.stopPropagation(); goTo(current + 1); });
-  // RIGHT arrow (→) swipes RIGHT → go back to previous slide
   if (nextBtn) nextBtn.addEventListener('click', (e) => { e.stopPropagation(); goTo(current - 1); });
 
-  // Touch / swipe support for mobile
   let touchX = 0;
   track.addEventListener('touchstart', (e) => { touchX = e.touches[0].clientX; }, { passive: true });
-  track.addEventListener('touchend', (e) => {
+  track.addEventListener('touchend',   (e) => {
     const diff = touchX - e.changedTouches[0].clientX;
     if (Math.abs(diff) > 40) goTo(diff > 0 ? current + 1 : current - 1);
   }, { passive: true });
 
-  // Reposition on resize without animation
   window.addEventListener('resize', () => {
     track.style.transition = 'none';
-    track.style.transform = `translateX(-${current * viewport.offsetWidth}px)`;
+    track.style.transform  = `translateX(-${current * viewport.offsetWidth}px)`;
     requestAnimationFrame(() => { track.style.transition = ''; });
   }, { passive: true });
 
-  // Double RAF: wait for the accordion's CSS transition to push the viewport
-  // to its real width before computing the initial pixel offset.
   requestAnimationFrame(() => requestAnimationFrame(() => goTo(0)));
 }
 
-// Animate academic timeline items
-function animateAcademicTimelineItems() {
-  const items = document.querySelectorAll('.academic-timeline-item');
-  items.forEach((item, index) => {
-    setTimeout(() => {
-      item.classList.add('animate');
-    }, index * 100);
-  });
-}
-
-// Animate personal project cards
-function animatePersonalProjectCards() {
-  const cards = document.querySelectorAll('#personal-projects .project-card');
-  cards.forEach((card, index) => {
-    setTimeout(() => {
-      card.classList.add('animate');
-    }, index * 100);
-  });
-}
-
-// Setup AWS internship tabs
+// AWS internship year tabs
 function setupAwsInternshipTabs() {
-  const tabButtons = document.querySelectorAll('.internship-tab-btn');
-  const tabContents = document.querySelectorAll('.internship-content');
-
-  tabButtons.forEach(button => {
-    button.addEventListener('click', function() {
-      const year = this.getAttribute('data-year');
-      
-      // Remove active class from all buttons and contents
-      tabButtons.forEach(btn => btn.classList.remove('active'));
-      tabContents.forEach(content => content.classList.remove('active'));
-      
-      // Add active class to clicked button and corresponding content
+  const buttons  = document.querySelectorAll('.internship-tab-btn');
+  const contents = document.querySelectorAll('.internship-content');
+  buttons.forEach(btn => {
+    btn.addEventListener('click', function () {
+      buttons.forEach(b  => b.classList.remove('active'));
+      contents.forEach(c => c.classList.remove('active'));
       this.classList.add('active');
-      const targetContent = document.getElementById('internship-' + year);
-      if (targetContent) {
-        targetContent.classList.add('active');
-      }
+      const target = document.getElementById('internship-' + this.getAttribute('data-year'));
+      if (target) target.classList.add('active');
     });
   });
 }

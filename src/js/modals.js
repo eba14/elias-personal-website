@@ -27,14 +27,3 @@ function closePopup() {
   }, 240);
 }
 
-// Close project modals
-function closeProjectModal(modalId) {
-  const modal = document.getElementById(modalId);
-  if (!modal) return;
-  modal.style.animation = '';
-  modal.classList.add('fade-out');
-  setTimeout(() => {
-    modal.style.display = 'none';
-    modal.classList.remove('fade-out');
-  }, 240);
-}

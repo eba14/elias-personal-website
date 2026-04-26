@@ -22,10 +22,17 @@ function observeBoxes() {
         const section = entry.target.closest('section');
         if (section) section.classList.add('animate');
       } else {
-        const insideOpen = entry.target.closest(
-          '.accordion-item.open, .projects-tab-content.active'
-        );
-        if (insideOpen) return;
+        // On tablet/mobile (single-column layout) sections re-enter the
+        // viewport constantly while scrolling — don't reset their animation
+        // or every section flashes on every scroll pass.
+        if (window.innerWidth <= 992) return;
+        // Protect elements *inside* an open accordion from resetting,
+        // but let the accordion container itself reset so it re-animates on scroll-back.
+        const isInsideOpen = entry.target.parentElement &&
+          entry.target.parentElement.closest(
+            '.accordion-item.open, .projects-accordion-item.open, .projects-tab-content.active'
+          );
+        if (isInsideOpen) return;
         entry.target.classList.remove('animate');
         entry.target.style.opacity = '0';
         entry.target.style.transform = 'translateY(20px)';
@@ -40,17 +47,3 @@ function observeBoxes() {
   });
 }
 
-// Enhanced scroll functionality
-window.addEventListener('scroll', function() {
-  // Footer show/hide
-  const footer = document.getElementById('footer');
-  if (footer) {
-    const scrollPosition = window.scrollY + window.innerHeight;
-    const documentHeight = document.documentElement.scrollHeight;
-    if (scrollPosition >= documentHeight - 10) {
-      footer.classList.add('show');
-    } else {
-      footer.classList.remove('show');
-    }
-  }
-});
