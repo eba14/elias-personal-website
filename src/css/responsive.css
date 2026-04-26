@@ -259,9 +259,9 @@
     .profile-name {
         font-size: 1.3rem;
         text-align: left;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
+        white-space: normal;
+        overflow: visible;
+        word-break: break-word;
     }
 
     .profile-location {
