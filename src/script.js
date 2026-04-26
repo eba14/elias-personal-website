@@ -12,9 +12,15 @@ document.addEventListener('DOMContentLoaded', function() {
       ls.classList.add('fade-out');
       setTimeout(() => {
         ls.remove();
+        // Correct footer state now that the full document height is known
+        const footer = document.getElementById('footer');
+        if (footer) {
+          const atBottom = window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 10;
+          footer.classList.toggle('show', atBottom);
+        }
         initializeHeroSection(); // start typewriter only after loader is fully gone
       }, 500);
-    }, Math.max(0, 1600 - elapsed));
+    }, Math.max(0, 2200 - elapsed)); // 2 × 1.1 s bar iterations
   }
 
   loadComponents()
@@ -33,17 +39,14 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-// Enhanced scroll functionality
+// Footer show/hide — skipped while loading screen is present
+// (document height is unreliable until all sections have injected their HTML)
 window.addEventListener('scroll', function() {
+  if (document.getElementById('loading-screen')) return;
   const footer = document.getElementById('footer');
   if (footer) {
-    const scrollPosition = window.scrollY + window.innerHeight;
-    const documentHeight = document.documentElement.scrollHeight;
-    if (scrollPosition >= documentHeight - 10) {
-      footer.classList.add('show');
-    } else {
-      footer.classList.remove('show');
-    }
+    const atBottom = window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 10;
+    footer.classList.toggle('show', atBottom);
   }
 });
 
