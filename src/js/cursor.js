@@ -40,6 +40,7 @@
     '.project-card, .academic-timeline-item, ' +
     '.accordion-header, .hackathon-header, .projects-tab-header, ' +
     '.carousel-btn, .carousel-counter-badge, .skill-tag, ' +
+    '.hero-section, ' +
     '.footer-content, .popup-content, .scroll-progress';
 
   document.addEventListener('mouseover', (e) => {
