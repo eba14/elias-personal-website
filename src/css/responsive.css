@@ -218,10 +218,13 @@
         box-sizing: border-box;
     }
 
-    /* Profile: horizontal row to save vertical space, fully centred */
+    /* Profile: horizontal row to save vertical space */
+    /* Reduce header clearance — landscape header is ~50px, not 100px */
+    #main-content { margin-top: 62px; }
+
     .left-side {
-        padding-top: 70px;
-        padding-bottom: 10px;
+        padding-top: 6px;
+        padding-bottom: 6px;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -231,41 +234,45 @@
     .profile {
         flex-direction: row;
         flex-wrap: nowrap;
-        gap: 16px;
+        gap: 14px;
         align-items: center;
-        justify-content: center;
+        justify-content: flex-start;
         transform: none;
-        padding: 0 20px;
+        padding: 0 16px;
         width: 100%;
-        max-width: 600px;
+        max-width: 700px;
         margin: 0 auto;
     }
 
     .profile-avatar {
-        width: 90px;
-        height: 90px;
+        width: 80px;
         flex-shrink: 0;
     }
 
     .profile-body {
         align-items: flex-start;
         gap: 4px;
-        flex-shrink: 1;
+        flex: 1;
         min-width: 0;
     }
 
     .profile-name {
-        font-size: 1.3rem;
+        font-size: 1.2rem;
         text-align: left;
         white-space: normal;
         overflow: visible;
-        word-break: break-word;
+        word-break: normal;          /* break at spaces only — no mid-word splits */
+        overflow-wrap: break-word;   /* last resort if a single word truly overflows */
     }
 
+    /* Both pills: identical size, fill the profile-body width */
+    .profile-tagline,
     .profile-location {
-        font-size: 0.8rem;
+        font-size: 0.78rem;
         padding: 5px 12px;
-        min-width: unset;
+        width: 100%;
+        box-sizing: border-box;
+        text-align: center;
     }
 
     .social-media {
