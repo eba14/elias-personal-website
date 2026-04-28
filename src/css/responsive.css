@@ -236,7 +236,7 @@
         flex-wrap: nowrap;
         gap: 14px;
         align-items: center;
-        justify-content: flex-start;
+        justify-content: center;
         transform: none;
         padding: 0 16px;
         width: 100%;
@@ -252,7 +252,7 @@
     .profile-body {
         align-items: flex-start;
         gap: 4px;
-        flex: 1;
+        flex: 0 0 auto;
         min-width: 0;
     }
 
