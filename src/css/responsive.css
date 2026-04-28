@@ -73,8 +73,7 @@
         padding: 0;
     }
 
-    /* Tablet-size avatar step-down (desktop is 250px) */
-    .profile-avatar { width: 210px; height: 210px; }
+    .profile-avatar { width: 210px; }
 
     .profile-body {
         align-items: center;
@@ -91,9 +90,8 @@
         width: 100%;
     }
 
-    /* Release fixed widths on pills so they shrink to content */
-    .profile-tagline  { min-width: unset; width: auto; }
-    .profile-location { min-width: unset; width: auto; }
+    /* Name — explicit size for the full tablet range (769–992px) */
+    .profile-name     { font-size: 1.8rem; }
 
     .social-media {
         margin-top: 10px;
@@ -149,7 +147,7 @@
 
     /* Profile */
     .left-side       { padding-top: 22px; padding-bottom: 22px; }
-    .profile-avatar  { width: 185px; height: 185px; }
+    .profile-avatar  { width: 185px; }
     .profile-name    { font-size: 1.8rem; }
     .profile-tagline, .profile-location { padding: 9px 20px; font-size: 0.85rem; }
     .social-btn      { width: 52px; height: 52px; }
@@ -422,7 +420,7 @@
     /* Profile */
     .left-side       { padding-top: 18px; padding-bottom: 18px; }
     .profile         { gap: 4px; }
-    .profile-avatar  { width: 145px; height: 145px; }
+    .profile-avatar  { width: 145px; }
     .profile-name    { font-size: 1.5rem; }
     .profile-tagline, .profile-location { padding: 8px 16px; font-size: 0.8rem; }
     .social-btn      { width: 46px; height: 46px; }
