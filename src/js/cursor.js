@@ -34,7 +34,7 @@
   const CONTENT =
     'a, button, input, select, textarea, label, ' +
     '.nav-link, .nav-divider, .elias-a, .mobile-menu-toggle, .mobile-nav-link, ' +
-    '.profile-img, .profile-name, .profile-tagline, .social-btn, ' +
+    '.profile-img, .profile-name, .profile-tagline, .profile-location, .social-btn, ' +
     '.section-title, ' +
     '.timeline-item, .boxed-section, .org-card, .course-card, ' +
     '.project-card, .academic-timeline-item, ' +

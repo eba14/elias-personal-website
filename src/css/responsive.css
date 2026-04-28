@@ -265,15 +265,16 @@
         overflow-wrap: break-word;   /* last resort if a single word truly overflows */
     }
 
-    /* Both pills: identical size, fill the profile-body width */
+    /* Both pills: identical compact size in landscape */
     .profile-tagline,
     .profile-location {
         font-size: 0.78rem;
         padding: 5px 12px;
-        width: 100%;
-        box-sizing: border-box;
         text-align: center;
     }
+
+    /* Left-align the location wrapper to match tagline above it */
+    .profile-info { justify-content: flex-start; }
 
     .social-media {
         margin-top: 6px;
