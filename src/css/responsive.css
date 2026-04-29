@@ -259,11 +259,11 @@
 
     .profile-name {
         font-size: 1.2rem;
-        text-align: left;
+        text-align: center;
         white-space: normal;
         overflow: visible;
-        word-break: normal;          /* break at spaces only — no mid-word splits */
-        overflow-wrap: break-word;   /* last resort if a single word truly overflows */
+        word-break: normal;
+        overflow-wrap: break-word;
     }
 
     /* Both pills: identical compact size in landscape */
@@ -280,7 +280,7 @@
     .social-media {
         margin-top: 0;
         gap: 6px;
-        justify-content: flex-start;
+        justify-content: center;
         flex-wrap: nowrap;
     }
 
