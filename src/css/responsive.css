@@ -245,7 +245,7 @@
     }
 
     .profile-avatar {
-        width: 80px;
+        width: 100px;
         flex-shrink: 0;
     }
 
@@ -254,7 +254,7 @@
         gap: 4px;
         flex: 0 0 auto;
         width: auto;
-        min-width: 0;
+        min-width: 240px;
     }
 
     .profile-name {
@@ -278,7 +278,7 @@
     .profile-info { justify-content: flex-start; }
 
     .social-media {
-        margin-top: 6px;
+        margin-top: 0;
         gap: 6px;
         justify-content: flex-start;
         flex-wrap: nowrap;
