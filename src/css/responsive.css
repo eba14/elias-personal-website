@@ -252,9 +252,8 @@
     .profile-body {
         align-items: flex-start;
         gap: 4px;
-        flex: 0 0 auto;
-        width: auto;
-        min-width: 240px;
+        flex: 0 0 220px;
+        width: 220px;
     }
 
     .profile-name {
