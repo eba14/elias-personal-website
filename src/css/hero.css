@@ -8,7 +8,7 @@
     backdrop-filter: blur(10px);
     border: 2px solid rgba(110, 181, 255, 0.3);
     box-shadow: 0 0 20px rgba(110, 181, 255, 0.2), 0 4px 20px rgba(0, 0, 0, 0.3);
-    transition: all 0.3s ease;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
 }
 
 .hero-section:hover {
@@ -29,7 +29,6 @@
     margin: 0;
     line-height: 1.1;
     letter-spacing: -0.02em;
-    transition: all 0.3s ease;
 }
 
 /* Text-only flex item — smiley lives in .hero-icons now */
@@ -51,7 +50,7 @@
 }
 
 .hero-section:hover .rotating-emoji {
-    filter: drop-shadow(0 0 12px rgba(110, 181, 255, 0.8)) drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+    text-shadow: 0 0 16px rgba(110, 181, 255, 0.9), 0 0 32px rgba(110, 181, 255, 0.5);
 }
 
 /* Smiley turns blue on hover — matching text and emoji */
@@ -72,16 +71,22 @@
     position: relative;
     color: #fff;
     font-weight: 700;
+    white-space: nowrap;   /* prevents inline-block .char spans from breaking mid-word */
+    line-height: 1.3;      /* matches cursor height so line box is stable before first char */
     transition: color 0.3s ease, text-shadow 0.3s ease;
 }
 
 #typewriter-text::after {
-    content: '|';
-    color: #f4b400;
-    animation: blink 1.2s infinite;
-    margin-left: 3px;
-    -webkit-text-fill-color: #f4b400;
-    font-weight: 200;
+    content: '';
+    display: inline-block;
+    width: 3px;
+    height: 1.3em;
+    background: linear-gradient(180deg, #f9c832 0%, #f4b400 50%, #ebb000 100%);
+    border-radius: 2px;
+    margin-left: 4px;
+    vertical-align: -0.3em;
+    box-shadow: 0 0 8px rgba(244, 180, 0, 0.8), 0 0 18px rgba(244, 180, 0, 0.35);
+    animation: cursorBlink 1.0s step-end infinite;
 }
 
 /* Each typed character gets a tiny drop-in */
@@ -95,9 +100,9 @@
     to   { opacity: 1; transform: translateY(0); }
 }
 
-@keyframes blink {
-    0%, 45% { opacity: 1; }
-    46%, 100% { opacity: 0; }
+@keyframes cursorBlink {
+    0%, 100% { opacity: 1; }
+    50%       { opacity: 0; }
 }
 
 /* Cursor fades out via class added by JS */
@@ -186,7 +191,7 @@
     font-size: 4rem;
     display: inline-block;
     opacity: 0;
-    transition: filter 0.3s ease;
+    transition: text-shadow 0.3s ease;
 }
 
 /* Entrance: spring pop-in (scale 0 → overshoot → settle) */
@@ -201,7 +206,7 @@
    and enables the CSS transition for all future fades */
 .emoji-active {
     opacity: 1;
-    transition: opacity 0.22s ease, transform 0.22s ease, filter 0.3s ease;
+    transition: opacity 0.22s ease, transform 0.22s ease, text-shadow 0.3s ease;
 }
 
 /* Fade state: invisible + slightly scaled down while swapping */
