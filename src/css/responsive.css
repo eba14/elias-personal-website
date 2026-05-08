@@ -138,9 +138,7 @@
     /* Hero */
     .hero-text {
         font-size: 2.4rem;
-        gap: 12px;
-        flex-wrap: wrap;
-        justify-content: center;
+        gap: 10px;
     }
 
     .rotating-emoji { font-size: 2.6rem; }
