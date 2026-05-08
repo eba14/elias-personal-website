@@ -32,15 +32,34 @@
     transition: all 0.3s ease;
 }
 
+/* Keeps typewriter text and smiley inline as one flex item */
+.hero-greeting {
+    display: inline-flex;
+    align-items: center;
+}
+
 .hero-section:hover #typewriter-text {
     color: #6eb5ff;
     text-shadow: 0 0 20px rgba(110, 181, 255, 0.8), 0 0 40px rgba(110, 181, 255, 0.5), 0 0 60px rgba(110, 181, 255, 0.3);
 }
 
 .hero-section:hover .rotating-emoji {
-    color: #6eb5ff;
-    text-shadow: 0 0 20px rgba(110, 181, 255, 0.8), 0 0 40px rgba(110, 181, 255, 0.5), 0 0 60px rgba(110, 181, 255, 0.3);
+    filter: drop-shadow(0 0 12px rgba(110, 181, 255, 0.8)) drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
 }
+
+/* Smiley turns blue on hover — matching text and emoji */
+.hero-section:hover .smiley-face,
+.hero-section:hover .smiley-mouth {
+    stroke: #6eb5ff;
+}
+.hero-section:hover .smiley-eye {
+    fill: #6eb5ff;
+}
+.hero-section:hover .smiley-svg {
+    filter: drop-shadow(0 0 10px rgba(110, 181, 255, 0.7));
+}
+
+/* ─── Typewriter text ─────────────────────────────────────────── */
 
 #typewriter-text {
     position: relative;
@@ -56,16 +75,17 @@
     margin-left: 3px;
     -webkit-text-fill-color: #f4b400;
     font-weight: 200;
-    transform: scaleX(0.5);
 }
 
-.rotating-emoji {
-    font-size: 4rem;
+/* Each typed character gets a tiny drop-in */
+#typewriter-text .char {
     display: inline-block;
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
-    opacity: 0;
-    transform: scale(1);
+    animation: charDrop 0.12s ease-out both;
+}
+
+@keyframes charDrop {
+    from { opacity: 0; transform: translateY(-4px); }
+    to   { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes blink {
@@ -73,8 +93,130 @@
     46%, 100% { opacity: 0; }
 }
 
-@keyframes emojiRotate {
-    0% { transform: rotateY(0deg) scale(1); }
-    50% { transform: rotateY(180deg) scale(0.8); }
-    100% { transform: rotateY(360deg) scale(1); }
+/* Cursor fades out via class added by JS */
+#typewriter-text.cursor-done::after {
+    animation: cursorFade 0.6s ease forwards;
+}
+
+@keyframes cursorFade {
+    0%   { opacity: 1; }
+    60%  { opacity: 0.4; }
+    100% { opacity: 0; }
+}
+
+/* ─── Self-drawing SVG smiley ──────────────────────────────────── */
+
+.smiley-svg-wrapper {
+    display: inline-flex;
+    align-items: center;
+    opacity: 0;
+    line-height: 1;
+    margin-left: 14px;   /* explicit gap between typed text and smiley */
+}
+
+.smiley-svg {
+    /* em-based so it scales at every responsive breakpoint */
+    width: 0.82em;
+    height: 0.82em;
+    display: block;
+    overflow: visible;
+    transition: filter 0.3s ease;
+}
+
+/* ── All parts start invisible (drawn in via stroke-dashoffset) ── */
+.smiley-face {
+    stroke-dasharray: 127;   /* ≥ 2π·20 = 125.66  */
+    stroke-dashoffset: 127;
+    transition: stroke 0.3s ease;
+}
+
+/* Open dot eyes — hidden until face finishes drawing */
+.smiley-eye {
+    opacity: 0;
+    transform-origin: center;
+    transform: scale(0);
+    transition: fill 0.3s ease;
+}
+
+.smiley-mouth {
+    stroke-dasharray: 27;    /* ≥ arc length ≈ 25.25 px */
+    stroke-dashoffset: 27;
+    transition: stroke 0.3s ease;
+}
+
+/* JS adds .is-drawing to kick off the sequence */
+.smiley-svg-wrapper.is-drawing {
+    opacity: 1;
+}
+
+/* 1. Face traces in */
+.smiley-svg-wrapper.is-drawing .smiley-face {
+    animation: drawStroke 0.75s ease-out forwards;
+}
+
+/* 2. Dot eyes spring-pop after face finishes */
+.smiley-svg-wrapper.is-drawing .smiley-eye {
+    animation: eyePop 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) 0.65s forwards;
+}
+
+/* 3. Smile sweeps in after eyes */
+.smiley-svg-wrapper.is-drawing .smiley-mouth {
+    animation: drawStroke 0.5s ease-out 0.82s forwards;
+}
+
+@keyframes eyePop {
+    from { opacity: 0; transform: scale(0); }
+    to   { opacity: 1; transform: scale(1); }
+}
+
+@keyframes drawStroke {
+    to { stroke-dashoffset: 0; }
+}
+
+/* ─── Rotating emoji ───────────────────────────────────────────── */
+
+.rotating-emoji {
+    font-size: 4rem;
+    display: inline-block;
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+    opacity: 0;
+    transition: filter 0.3s ease;
+}
+
+/* Entrance: spring pop-in (scale 0 → overshoot → settle) */
+@keyframes emojiPopIn {
+    0%   { opacity: 0; transform: scale(0) rotate(-20deg); }
+    55%  { opacity: 1; transform: scale(1.2) rotate(8deg); }
+    78%  { transform: scale(0.93) rotate(-3deg); }
+    100% { opacity: 1; transform: scale(1) rotate(0deg); }
+}
+
+/* After entrance animation, this class keeps the emoji visible
+   and enables the CSS transition for all future fades */
+.emoji-active {
+    opacity: 1;
+    transition: opacity 0.22s ease, transform 0.22s ease, filter 0.3s ease;
+}
+
+/* Fade state: invisible + slightly scaled down while swapping */
+.emoji-active.emoji-fade-out {
+    opacity: 0;
+    transform: scale(0.75);
+}
+
+.emoji-pop-in { animation: emojiPopIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; }
+
+/* ─── Reduced motion ───────────────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+    .emoji-pop-in  { animation: none; opacity: 1; }
+    .emoji-active  { transition: opacity 0.15s ease; }
+
+    .smiley-svg-wrapper.is-drawing .smiley-face  { animation: none; stroke-dashoffset: 0; }
+    .smiley-svg-wrapper.is-drawing .smiley-eye   { animation: none; opacity: 1; transform: scale(1); }
+    .smiley-svg-wrapper.is-drawing .smiley-mouth { animation: none; stroke-dashoffset: 0; }
+
+    #typewriter-text::after            { animation: none; opacity: 1; }
+    #typewriter-text.cursor-done::after { opacity: 0; }
+    #typewriter-text .char             { animation: none; }
 }

@@ -383,8 +383,9 @@
         transform: none;
     }
     .hero-section:hover  { transform: none; }
-    .profile-tagline:hover { transform: none; }
     .elias-a:hover       { transform: none; }
+    /* profile-tagline and profile-location intentionally excluded:
+       both should respond to tap with translateY(-2px) on touch devices */
 }
 
 /* =============================================

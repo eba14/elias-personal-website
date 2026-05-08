@@ -4,8 +4,8 @@ class EmojiRotator {
         this.element = element;
         this.emojis = emojis;
         this.options = {
-            rotationSpeed: 2500,
-            fadeSpeed: 300,
+            rotationSpeed: 2800,
+            fadeDuration: 220,   // ms — must match CSS transition duration
             ...options
         };
         this.currentIndex = 0;
@@ -13,24 +13,29 @@ class EmojiRotator {
     }
 
     start(delay = 0) {
-        this.element.style.opacity = '0';
-        
         setTimeout(() => {
-            this.element.style.opacity = '1';
-            this.intervalId = setInterval(() => this.rotate(), this.options.rotationSpeed);
+            // Spring pop-in entrance animation
+            this.element.classList.add('emoji-pop-in');
+            this.element.addEventListener('animationend', () => {
+                this.element.classList.remove('emoji-pop-in');
+                // emoji-active enables opacity:1 + the CSS transition for future fades
+                this.element.classList.add('emoji-active');
+                this.intervalId = setInterval(() => this._rotate(), this.options.rotationSpeed);
+            }, { once: true });
         }, delay);
     }
 
-    rotate() {
-        this.element.style.opacity = '0';
-        this.element.style.transform = 'scale(0.8)';
-        
+    _rotate() {
+        // Fade out
+        this.element.classList.add('emoji-fade-out');
+
         setTimeout(() => {
+            // Swap while invisible
             this.currentIndex = (this.currentIndex + 1) % this.emojis.length;
             this.element.textContent = this.emojis[this.currentIndex];
-            this.element.style.opacity = '1';
-            this.element.style.transform = 'scale(1)';
-        }, this.options.fadeSpeed);
+            // Fade back in (removing the class triggers the CSS transition)
+            this.element.classList.remove('emoji-fade-out');
+        }, this.options.fadeDuration);
     }
 
     stop() {

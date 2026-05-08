@@ -4,9 +4,12 @@ class TypewriterEffect {
         this.element = element;
         this.text = text;
         this.options = {
-            speed: 80,
-            pauseAfterComma: 600,
-            cursorRemoveDelay: 1500,
+            speed: 75,
+            pauseAfterComma: 550,
+            pauseAfterPeriod: 700,
+            pauseAfterExclaim: 700,
+            cursorFadeDelay: 800,   // extra blinks before fading
+            onComplete: null,
             ...options
         };
         this.currentIndex = 0;
@@ -21,24 +24,38 @@ class TypewriterEffect {
 
     type() {
         if (this.currentIndex < this.text.length) {
-            this.element.textContent += this.text.charAt(this.currentIndex);
+            const ch = this.text.charAt(this.currentIndex);
+            if (ch === ' ') {
+                // Space inside an inline-block span collapses — use a text node
+                this.element.appendChild(document.createTextNode(' '));
+            } else {
+                const span = document.createElement('span');
+                span.className = 'char';
+                span.textContent = ch;
+                this.element.appendChild(span);
+            }
             this.currentIndex++;
-            
-            const delay = this.text.charAt(this.currentIndex - 1) === ',' 
-                ? this.options.pauseAfterComma 
-                : this.options.speed;
-            
+
+            let delay = this.options.speed;
+            if (ch === ',')  delay = this.options.pauseAfterComma;
+            if (ch === '.')  delay = this.options.pauseAfterPeriod;
+            if (ch === '!')  delay = this.options.pauseAfterExclaim;
+            // spaces feel snappier
+            if (ch === ' ')  delay = this.options.speed * 0.6;
+
             setTimeout(() => this.type(), delay);
         } else {
-            this.removeCursor();
+            this._finishCursor();
         }
     }
 
-    removeCursor() {
+    _finishCursor() {
+        // Let cursor blink a couple more times, then fade out via CSS class
         setTimeout(() => {
-            const style = document.createElement('style');
-            style.textContent = '#typewriter-text::after { display: none; }';
-            document.head.appendChild(style);
-        }, this.options.cursorRemoveDelay);
+            this.element.classList.add('cursor-done');
+            if (typeof this.options.onComplete === 'function') {
+                this.options.onComplete();
+            }
+        }, this.options.cursorFadeDelay);
     }
 }

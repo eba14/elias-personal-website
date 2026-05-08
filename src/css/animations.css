@@ -31,21 +31,7 @@
     }
 }
 
-@keyframes blink {
-    0%, 45% { opacity: 1; }
-    46%, 100% { opacity: 0; }
-}
-
-/* Typewriter Animation */
-#typewriter-text::after {
-    content: '|';
-    color: #f4b400;
-    animation: blink 1.2s infinite;
-    margin-left: 3px;
-    -webkit-text-fill-color: #f4b400;
-    font-weight: 200;
-    transform: scaleX(0.5);
-}
+/* blink + cursor-done are defined in hero.css — no duplicate here */
 
 /* Animation Classes */
 .boxed-section, .project-card, .timeline-item {
