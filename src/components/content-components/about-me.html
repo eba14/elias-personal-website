@@ -1,20 +1,20 @@
 <div class="hero-section">
     <h1 class="hero-text">
-        <!-- Greeting text + self-drawing smiley grouped together -->
         <span class="hero-greeting">
-            <span id="typewriter-text"></span><span class="smiley-svg-wrapper" id="smiley-wrapper" aria-hidden="true">
+            <span id="typewriter-text"></span>
+        </span>
+        <!-- Smiley + rotating emoji grouped so they drop to the same line on mobile wrap -->
+        <span class="hero-icons">
+            <span class="smiley-svg-wrapper" id="smiley-wrapper" aria-hidden="true">
                 <svg class="smiley-svg" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <!-- Face outline — traced via stroke-dashoffset -->
                     <circle class="smiley-face" cx="24" cy="24" r="20" stroke="#f4b400" stroke-width="2.5" stroke-linecap="round"/>
-                    <!-- Open dot eyes — pop in via scale after face draws -->
                     <circle class="smiley-eye" cx="16" cy="19" r="2.5" fill="#f4b400"/>
                     <circle class="smiley-eye" cx="32" cy="19" r="2.5" fill="#f4b400"/>
-                    <!-- Wide smile arc — drawn last -->
                     <path class="smiley-mouth" d="M 13 29 Q 24 41 35 29" stroke="#f4b400" stroke-width="2.5" stroke-linecap="round" fill="none"/>
                 </svg>
             </span>
+            <span class="rotating-emoji" id="rotating-emoji">💻</span>
         </span>
-        <span class="rotating-emoji" id="rotating-emoji">💻</span>
     </h1>
 </div>
 

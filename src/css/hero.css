@@ -32,10 +32,17 @@
     transition: all 0.3s ease;
 }
 
-/* Keeps typewriter text and smiley inline as one flex item */
+/* Text-only flex item — smiley lives in .hero-icons now */
 .hero-greeting {
     display: inline-flex;
     align-items: center;
+}
+
+/* Smiley + emoji grouped — drops to line 2 together on mobile wrap */
+.hero-icons {
+    display: inline-flex;
+    align-items: center;
+    gap: 16px;
 }
 
 .hero-section:hover #typewriter-text {
@@ -111,7 +118,7 @@
     align-items: center;
     opacity: 0;
     line-height: 1;
-    margin-left: 14px;   /* explicit gap between typed text and smiley */
+    /* gap inside .hero-icons handles spacing — no margin needed */
 }
 
 .smiley-svg {
@@ -178,7 +185,6 @@
 .rotating-emoji {
     font-size: 4rem;
     display: inline-block;
-    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
     opacity: 0;
     transition: filter 0.3s ease;
 }
