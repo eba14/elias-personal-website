@@ -139,6 +139,7 @@
     .hero-text {
         font-size: 2.4rem;
         gap: 10px;
+        flex-direction: column;
     }
 
     .rotating-emoji { font-size: 2.6rem; }
@@ -285,7 +286,7 @@
 
     /* Hero */
     .hero-section { margin: 16px 0 20px; padding: 18px 16px; }
-    .hero-text { font-size: 1.7rem; gap: 8px; }
+    .hero-text { font-size: 1.7rem; gap: 8px; flex-direction: column; }
     .rotating-emoji { font-size: 1.9rem; }
 
     /* Section titles */
@@ -356,7 +357,7 @@
 
     .profile { transform: none; }
 
-    .hero-text { font-size: 2.4rem; }
+    .hero-text { font-size: 2.4rem; flex-direction: column; }
 
     .courses-grid { grid-template-columns: repeat(3, 1fr); }
     .projects-grid { grid-template-columns: repeat(2, 1fr); }
@@ -421,7 +422,7 @@
     .section-title { font-size: 1.3rem; }
 
     /* Hero */
-    .hero-text { font-size: 1.9rem; gap: 8px; }
+    .hero-text { font-size: 1.9rem; gap: 8px; flex-direction: column; }
     .rotating-emoji { font-size: 2.1rem; }
 
     /* Profile */
