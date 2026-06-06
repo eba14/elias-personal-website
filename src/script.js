@@ -26,6 +26,7 @@ document.addEventListener('DOMContentLoaded', function() {
   loadComponents()
     .then(() => {
       setupInteractions();
+      initGalleryModal();
       initializeHeader();
       initializeMobileNavigation();
       initializeScrollEffects();

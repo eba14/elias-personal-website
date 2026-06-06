@@ -29,7 +29,7 @@ function loadContentComponents() {
     { id: 'work-history-container',  file: 'work-history.html',  setup: setupAwsInternshipTabs },
     { id: 'leadership-container',    file: 'leadership.html' },
     { id: 'coursework-container',    file: 'coursework.html',    setup: setupCourseworkAccordion },
-    { id: 'projects-container',      file: 'projects.html',      setup: () => { setupProjectsTabs(); } },
+    { id: 'projects-container',      file: 'projects.html',      setup: () => { setupProjectsTabs(); setupGalleryButtons(); } },
     { id: 'hackathons-container',    file: 'hackathons.html',    setup: setupHackathonAccordion },
     { id: 'organizations-container', file: 'organizations.html' },
   ];
@@ -192,6 +192,16 @@ function setupPersonalProjectsCarousel() {
   }, { passive: true });
 
   requestAnimationFrame(() => requestAnimationFrame(() => goTo(0)));
+}
+
+// Gallery trigger buttons
+function setupGalleryButtons() {
+    document.querySelectorAll('.gallery-btn[data-gallery]').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            if (btn.dataset.gallery === 'robot') openRobotGallery();
+        });
+    });
 }
 
 // AWS internship year tabs

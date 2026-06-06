@@ -623,3 +623,227 @@ img[src*="UWECE"] {
     0%, 100% { transform: translate(0, 0); }
     50% { transform: translate(2px, -2px); }
 }
+
+/* ─── Gallery button (absolute top-right of card) ───────────── */
+.gallery-btn {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    z-index: 3;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 12px;
+    background: rgba(110, 181, 255, 0.08);
+    border: 1px solid rgba(110, 181, 255, 0.3);
+    border-radius: 20px;
+    color: #6eb5ff;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    cursor: pointer;
+    transition: background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.gallery-btn:hover {
+    background: rgba(110, 181, 255, 0.18);
+    border-color: rgba(110, 181, 255, 0.6);
+    box-shadow: 0 0 14px rgba(110, 181, 255, 0.22);
+    transform: translateY(-1px);
+}
+
+/* ─── Gallery lightbox modal ────────────────────────────────── */
+.gallery-modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.82);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    animation: fadeIn 0.25s ease;
+    padding: 20px;
+}
+
+.gallery-modal-overlay.active {
+    display: flex;
+}
+
+.gallery-modal-content {
+    background: linear-gradient(135deg, rgba(44, 62, 80, 0.97) 0%, rgba(52, 73, 94, 0.97) 100%);
+    border: 1px solid rgba(110, 181, 255, 0.2);
+    border-radius: 18px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5), 0 0 40px rgba(110, 181, 255, 0.1);
+    width: 100%;
+    max-width: 820px;
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    animation: slideIn 0.3s ease;
+}
+
+.gallery-modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 22px 14px;
+    border-bottom: 1px solid rgba(110, 181, 255, 0.12);
+    flex-shrink: 0;
+}
+
+.gallery-modal-title {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: #6eb5ff;
+    margin: 0;
+    letter-spacing: 0.3px;
+}
+
+.gallery-close-btn {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 8px;
+    color: #ccc;
+    width: 34px;
+    height: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.2s ease, color 0.2s ease;
+    flex-shrink: 0;
+}
+
+.gallery-close-btn:hover {
+    background: rgba(231, 76, 60, 0.2);
+    border-color: rgba(231, 76, 60, 0.4);
+    color: #e74c3c;
+}
+
+.gallery-main-view {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 16px 14px 8px;
+    flex: 1;
+    min-height: 0;
+}
+
+.gallery-main-img-wrap {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    min-width: 0;
+    min-height: 0;
+}
+
+.gallery-main-img {
+    width: 100%;
+    max-height: 400px;
+    object-fit: contain;
+    border-radius: 10px;
+    border: 1px solid rgba(110, 181, 255, 0.15);
+    background: rgba(0,0,0,0.3);
+    display: block;
+    cursor: zoom-in;
+    transition: opacity 0.18s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.gallery-main-img:hover {
+    border-color: rgba(110, 181, 255, 0.45);
+    box-shadow: 0 0 24px rgba(110, 181, 255, 0.22), 0 0 48px rgba(110, 181, 255, 0.08);
+}
+
+.gallery-caption {
+    font-family: 'Source Sans Pro', sans-serif;
+    font-size: 0.85rem;
+    color: rgba(255,255,255,0.55);
+    margin: 0;
+    text-align: center;
+    font-style: italic;
+    min-height: 1.2em;
+}
+
+.gallery-nav-btn {
+    flex-shrink: 0;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: rgba(110, 181, 255, 0.08);
+    border: 1.5px solid rgba(110, 181, 255, 0.3);
+    color: #6eb5ff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+    outline: none;
+}
+
+.gallery-nav-btn:hover {
+    background: rgba(110, 181, 255, 0.18);
+    border-color: rgba(110, 181, 255, 0.6);
+    box-shadow: 0 0 16px rgba(110, 181, 255, 0.2);
+    transform: scale(1.08);
+}
+
+.gallery-counter {
+    align-self: center;
+    background: rgba(110, 181, 255, 0.08);
+    border: 1px solid rgba(110, 181, 255, 0.22);
+    border-radius: 20px;
+    padding: 4px 14px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: #6eb5ff;
+    margin-bottom: 8px;
+    flex-shrink: 0;
+    pointer-events: none;
+}
+
+.gallery-thumbnails {
+    display: flex;
+    gap: 8px;
+    padding: 10px 18px 16px;
+    overflow-x: auto;
+    flex-shrink: 0;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.gallery-thumb {
+    width: 64px;
+    height: 64px;
+    object-fit: cover;
+    border-radius: 8px;
+    cursor: pointer;
+    border: 2px solid rgba(255,255,255,0.08);
+    transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+    background: rgba(0,0,0,0.3);
+    flex-shrink: 0;
+}
+
+.gallery-thumb:hover {
+    border-color: rgba(110, 181, 255, 0.5);
+    transform: scale(1.06);
+}
+
+.gallery-thumb.active {
+    border-color: #6eb5ff;
+    box-shadow: 0 0 12px rgba(110, 181, 255, 0.35);
+}
+
+@media (max-width: 600px) {
+    .gallery-main-img { max-height: 240px; }
+    .gallery-modal-content { max-height: 95vh; }
+    .gallery-nav-btn { width: 34px; height: 34px; }
+    .gallery-thumb { width: 52px; height: 52px; }
+}

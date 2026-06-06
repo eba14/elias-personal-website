@@ -69,7 +69,33 @@
     </div>
 
     <div id="email-popup-container"></div>
-  
+
+    <!-- Robot Car Gallery Modal (body-level so position:fixed is always viewport-relative) -->
+    <div id="robot-gallery-modal" class="popup gallery-modal-overlay" role="dialog" aria-modal="true" aria-label="Robot car photo gallery">
+        <div class="gallery-modal-content">
+            <div class="gallery-modal-header">
+                <h3 class="gallery-modal-title">Line-Following Robot Car</h3>
+                <button class="gallery-close-btn" id="gallery-close-btn" aria-label="Close gallery">
+                    <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                </button>
+            </div>
+            <div class="gallery-main-view">
+                <button class="gallery-nav-btn gallery-prev-btn" id="gallery-prev-btn" aria-label="Previous photo">
+                    <svg viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+                </button>
+                <div class="gallery-main-img-wrap">
+                    <img id="gallery-main-img" src="" alt="Robot photo" class="gallery-main-img">
+                    <p id="gallery-main-caption" class="gallery-caption"></p>
+                </div>
+                <button class="gallery-nav-btn gallery-next-btn" id="gallery-next-btn" aria-label="Next photo">
+                    <svg viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 6 15 12 9 18"/></svg>
+                </button>
+            </div>
+            <div class="gallery-counter" id="gallery-counter">1 / 1</div>
+            <div class="gallery-thumbnails" id="gallery-thumbnails"></div>
+        </div>
+    </div>
+
   <!-- Load utility classes first -->
   <script src="src/js/utils/typewriter.js"></script>
   <script src="src/js/utils/emoji-rotator.js"></script>
