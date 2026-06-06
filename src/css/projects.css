@@ -653,6 +653,11 @@ img[src*="UWECE"] {
     transform: translateY(-1px);
 }
 
+/* Reserve space so title text never runs under the absolute button */
+.academic-project-content:has(.gallery-btn) h3 {
+    padding-right: 90px;
+}
+
 /* ─── Gallery lightbox modal ────────────────────────────────── */
 .gallery-modal-overlay {
     display: none;
