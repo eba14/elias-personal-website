@@ -22,6 +22,7 @@ const ROBOT_GALLERY = [
 ];
 
 let galleryIndex = 0;
+let galleryNavLocked = false;
 
 function initGalleryModal() {
     const modal   = document.getElementById('robot-gallery-modal');
@@ -58,18 +59,23 @@ function closeRobotGallery() {
 }
 
 function galleryNav(dir) {
-    if (!ROBOT_GALLERY.length) return;
+    if (!ROBOT_GALLERY.length || galleryNavLocked) return;
+    galleryNavLocked = true;
     const mainImg = document.getElementById('gallery-main-img');
     if (mainImg) {
         mainImg.style.opacity = '0';
         setTimeout(() => {
             galleryIndex = (galleryIndex + dir + ROBOT_GALLERY.length) % ROBOT_GALLERY.length;
             renderGallery();
-            requestAnimationFrame(() => requestAnimationFrame(() => { mainImg.style.opacity = '1'; }));
+            requestAnimationFrame(() => requestAnimationFrame(() => {
+                mainImg.style.opacity = '1';
+                galleryNavLocked = false;
+            }));
         }, 180);
     } else {
         galleryIndex = (galleryIndex + dir + ROBOT_GALLERY.length) % ROBOT_GALLERY.length;
         renderGallery();
+        galleryNavLocked = false;
     }
 }
 

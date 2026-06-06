@@ -193,16 +193,6 @@
         box-sizing: border-box;
     }
 
-    /* Gallery button flows above the title instead of floating over it */
-    .gallery-btn {
-        position: static;
-        display: inline-flex;
-        width: fit-content;
-        margin-bottom: 10px;
-    }
-    .academic-project-content:has(.gallery-btn) h3 {
-        padding-right: 0;
-    }
 
     /* Personal projects grid */
     .projects-grid { grid-template-columns: 1fr; }

@@ -624,16 +624,13 @@ img[src*="UWECE"] {
     50% { transform: translate(2px, -2px); }
 }
 
-/* ─── Gallery button (absolute top-right of card) ───────────── */
+/* ─── Gallery button ────────────────────────────────────────── */
 .gallery-btn {
-    position: absolute;
-    top: 16px;
-    right: 16px;
-    z-index: 3;
     display: inline-flex;
     align-items: center;
     gap: 6px;
     padding: 5px 12px;
+    margin-bottom: 12px;
     background: rgba(110, 181, 255, 0.08);
     border: 1px solid rgba(110, 181, 255, 0.3);
     border-radius: 20px;
@@ -653,9 +650,18 @@ img[src*="UWECE"] {
     transform: translateY(-1px);
 }
 
-/* Reserve space so title text never runs under the absolute button */
-.academic-project-content:has(.gallery-btn) h3 {
-    padding-right: 90px;
+/* Desktop: float to top-right corner, clear of the title */
+@media (min-width: 769px) {
+    .gallery-btn {
+        position: absolute;
+        top: 16px;
+        right: 16px;
+        margin-bottom: 0;
+        z-index: 3;
+    }
+    .academic-project-content:has(.gallery-btn) h3 {
+        padding-right: 90px;
+    }
 }
 
 /* ─── Gallery lightbox modal ────────────────────────────────── */
@@ -790,6 +796,7 @@ img[src*="UWECE"] {
     cursor: pointer;
     transition: background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
     outline: none;
+    -webkit-tap-highlight-color: transparent;
 }
 
 .gallery-nav-btn:hover {
