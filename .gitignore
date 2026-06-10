@@ -20,7 +20,7 @@ Thumbs.db
 # Logs
 *.log
 
-# Large media files (accessed locally only, not pushed to GitHub)
+# Media files (accessed locally only, not pushed to GitHub)
 src/videos/
 src/images/LineFollowingRobot1.webp
 src/images/LineFollowingRobot2.png
