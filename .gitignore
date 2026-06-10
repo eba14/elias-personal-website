@@ -20,5 +20,8 @@ Thumbs.db
 # Logs
 *.log
 
-# Large video files (served locally only)
+# Large media files (served locally only, not pushed to GitHub)
 src/videos/
+src/images/LineFollowingRobot1.webp
+src/images/LineFollowingRobot2.png
+src/images/FPGAConnect4_1.PNG
