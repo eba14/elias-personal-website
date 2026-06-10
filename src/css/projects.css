@@ -629,7 +629,7 @@ img[src*="UWECE"] {
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    padding: 5px 12px;
+    padding: 9px 14px;
     margin-bottom: 12px;
     background: rgba(110, 181, 255, 0.08);
     border: 1px solid rgba(110, 181, 255, 0.3);
@@ -753,6 +753,7 @@ img[src*="UWECE"] {
     gap: 8px;
     min-width: 0;
     min-height: 0;
+    transition: opacity 0.18s ease;
 }
 
 .gallery-main-img {
@@ -764,12 +765,48 @@ img[src*="UWECE"] {
     background: rgba(0,0,0,0.3);
     display: block;
     cursor: zoom-in;
-    transition: opacity 0.18s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+    transition: border-color 0.25s ease, box-shadow 0.25s ease;
 }
 
 .gallery-main-img:hover {
     border-color: rgba(110, 181, 255, 0.45);
     box-shadow: 0 0 24px rgba(110, 181, 255, 0.22), 0 0 48px rgba(110, 181, 255, 0.08);
+}
+
+.gallery-main-video {
+    width: 100%;
+    max-height: 400px;
+    border-radius: 10px;
+    border: 1px solid rgba(110, 181, 255, 0.15);
+    background: #000;
+    display: block;
+    outline: none;
+}
+
+.gallery-thumb-video {
+    width: 64px;
+    height: 64px;
+    border-radius: 8px;
+    cursor: pointer;
+    border: 2px solid rgba(255,255,255,0.08);
+    background: rgba(0,0,0,0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(110, 181, 255, 0.7);
+    flex-shrink: 0;
+    transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.gallery-thumb-video:hover {
+    border-color: rgba(110, 181, 255, 0.5);
+    transform: scale(1.06);
+}
+
+.gallery-thumb-video.active {
+    border-color: #6eb5ff;
+    box-shadow: 0 0 12px rgba(110, 181, 255, 0.35);
+    color: #6eb5ff;
 }
 
 .gallery-caption {
@@ -854,8 +891,8 @@ img[src*="UWECE"] {
 }
 
 @media (max-width: 600px) {
-    .gallery-main-img { max-height: 240px; }
+    .gallery-main-img, .gallery-main-video { max-height: 240px; }
     .gallery-modal-content { max-height: 95vh; }
     .gallery-nav-btn { width: 34px; height: 34px; }
-    .gallery-thumb { width: 52px; height: 52px; }
+    .gallery-thumb, .gallery-thumb-video { width: 52px; height: 52px; }
 }

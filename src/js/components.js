@@ -200,6 +200,7 @@ function setupGalleryButtons() {
         btn.addEventListener('click', (e) => {
             e.stopPropagation();
             if (btn.dataset.gallery === 'robot') openRobotGallery();
+            else if (btn.dataset.gallery === 'fpga') openFpgaGallery();
         });
     });
 }

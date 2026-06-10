@@ -14,41 +14,57 @@ function closeAboutMeModal() {
   }, 240);
 }
 
-// ─── Robot Car Gallery ──────────────────────────────────────────────────────
+// ─── Shared project gallery lightbox ────────────────────────────────────────
 
 const ROBOT_GALLERY = [
     { src: 'src/images/LineFollowingRobot1.webp', caption: '' },
-    { src: 'src/images/LineFollowingRobot2.png', caption: '' },
+    { src: 'src/images/LineFollowingRobot2.png',  caption: '' },
+    { src: 'src/videos/EE201FinalProject.mp4',    caption: 'Robot competition course run', type: 'video' },
 ];
 
-let galleryIndex = 0;
+const FPGA_GALLERY = [
+    { src: 'src/images/FPGAConnect4_1.PNG',     caption: '' },
+    { src: 'src/videos/EE271FinalProject.mp4',  caption: 'Live gameplay demo', type: 'video' },
+];
+
+let currentGallery   = [];
+let galleryIndex     = 0;
 let galleryNavLocked = false;
 
 function initGalleryModal() {
-    const modal   = document.getElementById('robot-gallery-modal');
+    const modal    = document.getElementById('robot-gallery-modal');
     const closeBtn = document.getElementById('gallery-close-btn');
     const prevBtn  = document.getElementById('gallery-prev-btn');
     const nextBtn  = document.getElementById('gallery-next-btn');
     if (!modal) return;
-    modal.addEventListener('click',   (e) => { if (e.target === modal) closeRobotGallery(); });
-    if (closeBtn) closeBtn.addEventListener('click', closeRobotGallery);
+    modal.addEventListener('click', (e) => { if (e.target === modal) closeGallery(); });
+    if (closeBtn) closeBtn.addEventListener('click', closeGallery);
     if (prevBtn)  prevBtn.addEventListener('click',  () => galleryNav(-1));
     if (nextBtn)  nextBtn.addEventListener('click',  () => galleryNav(1));
 }
 
-function openRobotGallery() {
-    const modal = document.getElementById('robot-gallery-modal');
+function openGallery(items, title) {
+    const modal   = document.getElementById('robot-gallery-modal');
+    const titleEl = document.querySelector('#robot-gallery-modal .gallery-modal-title');
     if (!modal) return;
-    galleryIndex = 0;
+    currentGallery   = items;
+    galleryIndex     = 0;
+    galleryNavLocked = false;
+    if (titleEl) titleEl.textContent = title;
     renderGallery();
     modal.style.animation = 'fadeIn 0.25s ease';
-    modal.style.display = 'flex';
+    modal.style.display   = 'flex';
     document.addEventListener('keydown', galleryKeyHandler);
 }
 
-function closeRobotGallery() {
+function openRobotGallery() { openGallery(ROBOT_GALLERY, 'Line-Following Robot Car'); }
+function openFpgaGallery()  { openGallery(FPGA_GALLERY,  'FPGA Connect 4'); }
+function closeRobotGallery() { closeGallery(); }
+
+function closeGallery() {
     const modal = document.getElementById('robot-gallery-modal');
     if (!modal) return;
+    pauseGalleryVideo();
     modal.style.animation = '';
     modal.classList.add('fade-out');
     document.removeEventListener('keydown', galleryKeyHandler);
@@ -58,80 +74,84 @@ function closeRobotGallery() {
     }, 240);
 }
 
-function galleryNav(dir) {
-    if (!ROBOT_GALLERY.length || galleryNavLocked) return;
+function pauseGalleryVideo() {
+    const v = document.getElementById('gallery-main-video');
+    if (v && !v.paused) v.pause();
+}
+
+function galleryNavWithFade(newIndex) {
+    if (galleryNavLocked) return;
     galleryNavLocked = true;
-    const mainImg = document.getElementById('gallery-main-img');
-    if (mainImg) {
-        mainImg.style.opacity = '0';
+    pauseGalleryVideo();
+    const wrap = document.querySelector('.gallery-main-img-wrap');
+    if (wrap) {
+        wrap.style.opacity = '0';
         setTimeout(() => {
-            galleryIndex = (galleryIndex + dir + ROBOT_GALLERY.length) % ROBOT_GALLERY.length;
+            galleryIndex = newIndex;
             renderGallery();
             requestAnimationFrame(() => requestAnimationFrame(() => {
-                mainImg.style.opacity = '1';
+                wrap.style.opacity = '1';
                 galleryNavLocked = false;
             }));
         }, 180);
     } else {
-        galleryIndex = (galleryIndex + dir + ROBOT_GALLERY.length) % ROBOT_GALLERY.length;
+        galleryIndex = newIndex;
         renderGallery();
         galleryNavLocked = false;
     }
 }
 
-function renderGallery() {
-    const mainImg = document.getElementById('gallery-main-img');
-    const caption = document.getElementById('gallery-main-caption');
-    const counter = document.getElementById('gallery-counter');
-    const thumbsEl = document.getElementById('gallery-thumbnails');
-    const wrap = mainImg ? mainImg.closest('.gallery-main-img-wrap') : null;
+function galleryNav(dir) {
+    if (!currentGallery.length || galleryNavLocked) return;
+    galleryNavWithFade((galleryIndex + dir + currentGallery.length) % currentGallery.length);
+}
 
-    if (!ROBOT_GALLERY.length) {
-        if (mainImg) mainImg.style.display = 'none';
-        if (wrap && !wrap.querySelector('.gallery-placeholder')) {
-            const ph = document.createElement('div');
-            ph.className = 'gallery-placeholder';
-            ph.innerHTML = `
-                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
-                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/>
-                </svg>
-                <span>Photos coming soon</span>`;
-            wrap.appendChild(ph);
-        }
-        if (caption) caption.textContent = '';
-        if (counter) counter.style.visibility = 'hidden';
-        const modal = document.getElementById('robot-gallery-modal');
-        if (modal) modal.querySelectorAll('.gallery-nav-btn').forEach(b => { b.style.opacity = '0'; b.style.pointerEvents = 'none'; });
-        if (thumbsEl) thumbsEl.innerHTML = '';
-        return;
+function renderGallery() {
+    const mainImg   = document.getElementById('gallery-main-img');
+    const mainVideo = document.getElementById('gallery-main-video');
+    const caption   = document.getElementById('gallery-main-caption');
+    const counter   = document.getElementById('gallery-counter');
+    const thumbsEl  = document.getElementById('gallery-thumbnails');
+
+    const item    = currentGallery[galleryIndex];
+    const isVideo = item && item.type === 'video';
+
+    if (mainImg) {
+        mainImg.style.display = isVideo ? 'none' : '';
+        if (!isVideo && item) { mainImg.src = item.src; mainImg.alt = item.caption || ''; }
+    }
+    if (mainVideo) {
+        mainVideo.style.display = isVideo ? '' : 'none';
+        if (isVideo && item) { mainVideo.src = item.src; mainVideo.load(); }
     }
 
-    if (wrap) { const ph = wrap.querySelector('.gallery-placeholder'); if (ph) ph.remove(); }
-    const modal = document.getElementById('robot-gallery-modal');
-    if (modal) modal.querySelectorAll('.gallery-nav-btn').forEach(b => { b.style.opacity = ''; b.style.pointerEvents = ''; });
-
-    const item = ROBOT_GALLERY[galleryIndex];
-    if (mainImg) { mainImg.src = item.src; mainImg.alt = item.caption || ''; mainImg.style.display = ''; }
-    if (caption) caption.textContent = item.caption || '';
-    if (counter) { counter.style.visibility = ''; counter.textContent = `${galleryIndex + 1} / ${ROBOT_GALLERY.length}`; }
+    if (caption) caption.textContent = (item && item.caption) || '';
+    if (counter) { counter.style.visibility = ''; counter.textContent = `${galleryIndex + 1} / ${currentGallery.length}`; }
 
     if (thumbsEl) {
-        thumbsEl.innerHTML = ROBOT_GALLERY.map((img, i) =>
-            `<img src="${img.src}" alt="${img.caption || ''}" class="gallery-thumb${i === galleryIndex ? ' active' : ''}" data-index="${i}">`
-        ).join('');
-        thumbsEl.querySelectorAll('.gallery-thumb').forEach(thumb => {
-            thumb.addEventListener('click', () => {
-                galleryIndex = parseInt(thumb.dataset.index, 10);
-                renderGallery();
+        thumbsEl.innerHTML = currentGallery.map((it, i) => {
+            const active = i === galleryIndex ? ' active' : '';
+            if (it.type === 'video') {
+                return `<div class="gallery-thumb gallery-thumb-video${active}" data-index="${i}" role="button" tabindex="0" aria-label="Video clip">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                </div>`;
+            }
+            return `<img src="${it.src}" alt="${it.caption || ''}" class="gallery-thumb${active}" data-index="${i}">`;
+        }).join('');
+        thumbsEl.querySelectorAll('[data-index]').forEach(el => {
+            el.addEventListener('click', () => {
+                const idx = parseInt(el.dataset.index, 10);
+                if (idx === galleryIndex || galleryNavLocked) return;
+                galleryNavWithFade(idx);
             });
         });
     }
 }
 
 function galleryKeyHandler(e) {
-    if (e.key === 'ArrowLeft') galleryNav(-1);
+    if (e.key === 'ArrowLeft')  galleryNav(-1);
     else if (e.key === 'ArrowRight') galleryNav(1);
-    else if (e.key === 'Escape') closeRobotGallery();
+    else if (e.key === 'Escape') closeGallery();
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
