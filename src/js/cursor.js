@@ -16,12 +16,10 @@
     dot.style.top  = ty + 'px';
     if (!started) {
       started = true; rx = tx; ry = ty;
-      ring.style.opacity = '1';
-      dot.style.opacity  = '1';
+      showCursor();
     } else if (inIframe) {
       inIframe = false;
-      ring.style.opacity = '1';
-      dot.style.opacity  = '1';
+      showCursor();
     }
   }, { passive: true });
 
@@ -48,11 +46,28 @@
     '.footer-content, .popup-content, .scroll-progress, ' +
     '.gallery-modal-content, .gallery-thumb, .gallery-main-img, .gallery-main-iframe';
 
+  // Transitions to remove opacity animation (used when hiding instantly)
+  const RING_TRANSITION_NO_OPACITY = 'width 0.18s ease, height 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease, transform 0.1s ease';
+  const DOT_TRANSITION_NO_OPACITY  = 'background 0.18s ease';
+
+  function hideCursorInstant() {
+    ring.style.transition = RING_TRANSITION_NO_OPACITY;
+    dot.style.transition  = DOT_TRANSITION_NO_OPACITY;
+    ring.style.opacity = '0';
+    dot.style.opacity  = '0';
+  }
+
+  function showCursor() {
+    ring.style.transition = '';
+    dot.style.transition  = '';
+    ring.style.opacity = '1';
+    dot.style.opacity  = '1';
+  }
+
   document.addEventListener('mouseover', (e) => {
     if (e.target.tagName === 'IFRAME') {
       inIframe = true;
-      dot.style.opacity  = '0';
-      ring.style.opacity = '0';
+      hideCursorInstant();
       return;
     }
     inIframe = false;
@@ -71,9 +86,9 @@
     ring.style.transform = 'translate(-50%,-50%) scale(1)';
   });
   document.addEventListener('mouseleave', () => {
-    ring.style.opacity = '0'; dot.style.opacity = '0';
+    hideCursorInstant();
   });
   document.addEventListener('mouseenter', () => {
-    if (started) { ring.style.opacity = '1'; dot.style.opacity = '1'; }
+    if (started) showCursor();
   });
 })();
