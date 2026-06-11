@@ -753,6 +753,7 @@ img[src*="UWECE"] {
     gap: 8px;
     min-width: 0;
     min-height: 0;
+    overflow: hidden;
     transition: opacity 0.18s ease;
 }
 
@@ -786,11 +787,13 @@ img[src*="UWECE"] {
 .gallery-main-iframe {
     width: 100%;
     aspect-ratio: 16 / 9;
+    max-height: 400px;
     border-radius: 10px;
     border: 1px solid rgba(110, 181, 255, 0.15);
     background: #000;
     display: block;
 }
+
 
 .gallery-thumb-video {
     width: 64px;

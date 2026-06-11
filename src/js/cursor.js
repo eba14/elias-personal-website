@@ -8,7 +8,7 @@
 
   document.documentElement.classList.add('cursor-active');
 
-  let tx = -200, ty = -200, rx = -200, ry = -200, started = false;
+  let tx = -200, ty = -200, rx = -200, ry = -200, started = false, inIframe = false;
 
   document.addEventListener('mousemove', (e) => {
     tx = e.clientX; ty = e.clientY;
@@ -16,6 +16,10 @@
     dot.style.top  = ty + 'px';
     if (!started) {
       started = true; rx = tx; ry = ty;
+      ring.style.opacity = '1';
+      dot.style.opacity  = '1';
+    } else if (inIframe) {
+      inIframe = false;
       ring.style.opacity = '1';
       dot.style.opacity  = '1';
     }
@@ -45,6 +49,13 @@
     '.gallery-modal-content, .gallery-thumb, .gallery-main-img, .gallery-main-iframe';
 
   document.addEventListener('mouseover', (e) => {
+    if (e.target.tagName === 'IFRAME') {
+      inIframe = true;
+      dot.style.opacity  = '0';
+      ring.style.opacity = '0';
+      return;
+    }
+    inIframe = false;
     const hit = !!e.target.closest(CONTENT);
     dot.style.background   = hit ? 'rgba(110,181,255,0.9)'  : 'rgba(255,255,255,0.9)';
     ring.style.borderColor = hit ? 'rgba(110,181,255,0.85)' : 'rgba(255,255,255,0.5)';
