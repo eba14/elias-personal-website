@@ -41,7 +41,8 @@
     '.accordion-header, .hackathon-header, .projects-tab-header, ' +
     '.carousel-btn, .carousel-counter-badge, .skill-tag, ' +
     '.hero-section, ' +
-    '.footer-content, .popup-content, .scroll-progress';
+    '.footer-content, .popup-content, .scroll-progress, ' +
+    '.gallery-modal-content, .gallery-thumb, .gallery-main-img, .gallery-main-iframe';
 
   document.addEventListener('mouseover', (e) => {
     const hit = !!e.target.closest(CONTENT);
