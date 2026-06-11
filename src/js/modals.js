@@ -19,12 +19,12 @@ function closeAboutMeModal() {
 const ROBOT_GALLERY = [
     { src: 'src/images/LineFollowingRobot1.webp', caption: '' },
     { src: 'src/images/LineFollowingRobot2.png',  caption: '' },
-    { src: 'src/videos/EE201FinalProject.mp4',    caption: 'Robot competition course run', type: 'video' },
+    { src: 'https://drive.google.com/file/d/1OHkB4vs5yseRZV7F8Z8k-tFbP-PNSEqO/preview', caption: 'Robot competition course run', type: 'gdrive' },
 ];
 
 const FPGA_GALLERY = [
     { src: 'src/images/FPGAConnect4_1.PNG',     caption: '' },
-    { src: 'src/videos/EE271FinalProject.mp4',  caption: 'Live gameplay demo', type: 'video' },
+    { src: 'https://drive.google.com/file/d/1N5apfk54jVyQX7ps_Fiwr2bFVogu38_g/preview', caption: 'Live gameplay demo', type: 'gdrive' },
 ];
 
 let currentGallery   = [];
@@ -77,6 +77,8 @@ function closeGallery() {
 function pauseGalleryVideo() {
     const v = document.getElementById('gallery-main-video');
     if (v && !v.paused) v.pause();
+    const iframe = document.getElementById('gallery-main-iframe');
+    if (iframe) iframe.src = '';
 }
 
 function galleryNavWithFade(newIndex) {
@@ -107,22 +109,30 @@ function galleryNav(dir) {
 }
 
 function renderGallery() {
-    const mainImg   = document.getElementById('gallery-main-img');
-    const mainVideo = document.getElementById('gallery-main-video');
-    const caption   = document.getElementById('gallery-main-caption');
-    const counter   = document.getElementById('gallery-counter');
-    const thumbsEl  = document.getElementById('gallery-thumbnails');
+    const mainImg    = document.getElementById('gallery-main-img');
+    const mainVideo  = document.getElementById('gallery-main-video');
+    const mainIframe = document.getElementById('gallery-main-iframe');
+    const caption    = document.getElementById('gallery-main-caption');
+    const counter    = document.getElementById('gallery-counter');
+    const thumbsEl   = document.getElementById('gallery-thumbnails');
 
-    const item    = currentGallery[galleryIndex];
-    const isVideo = item && item.type === 'video';
+    const item     = currentGallery[galleryIndex];
+    const isVideo  = item && item.type === 'video';
+    const isGdrive = item && item.type === 'gdrive';
 
     if (mainImg) {
-        mainImg.style.display = isVideo ? 'none' : '';
-        if (!isVideo && item) { mainImg.src = item.src; mainImg.alt = item.caption || ''; }
+        mainImg.style.display = (!isVideo && !isGdrive) ? '' : 'none';
+        if (!isVideo && !isGdrive && item) { mainImg.src = item.src; mainImg.alt = item.caption || ''; }
     }
     if (mainVideo) {
         mainVideo.style.display = isVideo ? '' : 'none';
         if (isVideo && item) { mainVideo.src = item.src; mainVideo.load(); }
+        else mainVideo.src = '';
+    }
+    if (mainIframe) {
+        mainIframe.style.display = isGdrive ? '' : 'none';
+        if (isGdrive && item) mainIframe.src = item.src;
+        else mainIframe.src = '';
     }
 
     if (caption) caption.textContent = (item && item.caption) || '';
@@ -131,7 +141,7 @@ function renderGallery() {
     if (thumbsEl) {
         thumbsEl.innerHTML = currentGallery.map((it, i) => {
             const active = i === galleryIndex ? ' active' : '';
-            if (it.type === 'video') {
+            if (it.type === 'video' || it.type === 'gdrive') {
                 return `<div class="gallery-thumb gallery-thumb-video${active}" data-index="${i}" role="button" tabindex="0" aria-label="Video clip">
                     <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
                 </div>`;

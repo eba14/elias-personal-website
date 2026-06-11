@@ -783,6 +783,15 @@ img[src*="UWECE"] {
     outline: none;
 }
 
+.gallery-main-iframe {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border-radius: 10px;
+    border: 1px solid rgba(110, 181, 255, 0.15);
+    background: #000;
+    display: block;
+}
+
 .gallery-thumb-video {
     width: 64px;
     height: 64px;
