@@ -160,6 +160,16 @@ function setupPersonalProjectsCarousel() {
   const counter  = document.querySelector('#personal-projects .carousel-counter-badge');
 
   if (!viewport || !track || slides.length === 0) return;
+  if (viewport.dataset.carouselReady) return;
+  viewport.dataset.carouselReady = 'true';
+
+  // Clear any inline opacity/transform set by animateBoxedSections so the
+  // carousel controls opacity entirely via the animate class
+  slides.forEach(slide => {
+    slide.style.opacity = '';
+    slide.style.transform = '';
+    slide.classList.add('animate');
+  });
 
   let current = 0;
   const total = slides.length;
@@ -168,15 +178,10 @@ function setupPersonalProjectsCarousel() {
     current = ((index % total) + total) % total;
     track.style.transform = `translateX(-${current * viewport.offsetWidth}px)`;
     if (counter) counter.textContent = `${current + 1} / ${total}`;
-    const slide = slides[current];
-    slide.classList.remove('animate');
-    slide.style.opacity = '';
-    void slide.offsetWidth;
-    setTimeout(() => slide.classList.add('animate'), 20);
   }
 
-  if (prevBtn) prevBtn.addEventListener('click', (e) => { e.stopPropagation(); goTo(current + 1); });
-  if (nextBtn) nextBtn.addEventListener('click', (e) => { e.stopPropagation(); goTo(current - 1); });
+  if (prevBtn) prevBtn.addEventListener('click', (e) => { e.stopPropagation(); goTo(current - 1); });
+  if (nextBtn) nextBtn.addEventListener('click', (e) => { e.stopPropagation(); goTo(current + 1); });
 
   let touchX = 0;
   track.addEventListener('touchstart', (e) => { touchX = e.touches[0].clientX; }, { passive: true });
@@ -191,7 +196,9 @@ function setupPersonalProjectsCarousel() {
     requestAnimationFrame(() => { track.style.transition = ''; });
   }, { passive: true });
 
-  requestAnimationFrame(() => requestAnimationFrame(() => goTo(0)));
+  // Use a small delay to ensure the tab's max-height transition has
+  // finished and viewport.offsetWidth is non-zero before positioning
+  setTimeout(() => goTo(0), 50);
 }
 
 // Gallery trigger buttons
