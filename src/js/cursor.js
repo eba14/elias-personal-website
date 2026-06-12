@@ -44,7 +44,8 @@
     '.carousel-btn, .carousel-counter-badge, .skill-tag, ' +
     '.hero-section, ' +
     '.footer-content, .popup-content, .scroll-progress, ' +
-    '.gallery-modal-content, .gallery-thumb, .gallery-main-img, .gallery-main-iframe';
+    '.gallery-modal-content, .gallery-thumb, .gallery-main-img, .gallery-main-iframe, ' +
+    '#back-to-top, .copy-email-btn, .gallery-drive-link';
 
   // Transitions to remove opacity animation (used when hiding instantly)
   const RING_TRANSITION_NO_OPACITY = 'width 0.18s ease, height 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease, transform 0.1s ease';

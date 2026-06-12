@@ -3,11 +3,17 @@
         <button class="close-btn" onclick="closePopup()">X</button>
         <p>Feel free to reach out to either of my emails below!</p>
         <div class="email-list">
-            <p><strong>Personal email:</strong> 
+            <p><strong>Personal email:</strong>
                 <a href="mailto:elias.assalif14@gmail.com" target="_blank">elias.assalif14@gmail.com</a>
+                <button class="copy-email-btn" onclick="copyEmail('elias.assalif14@gmail.com', this)" aria-label="Copy personal email">
+                    <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                </button>
             </p>
-            <p><strong>School email:</strong> 
+            <p><strong>School email:</strong>
                 <a href="mailto:eba14@uw.edu" target="_blank">eba14@uw.edu</a>
+                <button class="copy-email-btn" onclick="copyEmail('eba14@uw.edu', this)" aria-label="Copy school email">
+                    <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                </button>
             </p>
         </div>
     </div>

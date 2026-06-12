@@ -40,6 +40,18 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
+// Back to top button
+(function () {
+    const btn = document.getElementById('back-to-top');
+    if (!btn) return;
+    window.addEventListener('scroll', function () {
+        btn.classList.toggle('visible', window.scrollY > 400);
+    }, { passive: true });
+    btn.addEventListener('click', function () {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+})();
+
 // Footer show/hide — skipped while loading screen is present
 // (document height is unreliable until all sections have injected their HTML)
 window.addEventListener('scroll', function() {

@@ -25,9 +25,11 @@ class ScrollEffects {
     }
 
     updateActiveNav() {
+        const sections = document.querySelectorAll('section[id]');
+        if (!sections.length) return;
         const scrollPos = window.pageYOffset + 150;
 
-        this.sections.forEach(section => {
+        sections.forEach(section => {
             const sectionTop = section.offsetTop;
             const sectionHeight = section.offsetHeight;
             const sectionId = section.getAttribute('id');

@@ -19,6 +19,7 @@
     transition: all 0.3s ease;
     opacity: 0;
     transform: translateY(20px);
+    padding-bottom: 2px;
 }
 
 .projects-accordion-item.animate {
@@ -753,7 +754,6 @@ img[src*="UWECE"] {
     gap: 8px;
     min-width: 0;
     min-height: 0;
-    overflow: hidden;
     transition: opacity 0.18s ease;
 }
 
@@ -765,6 +765,7 @@ img[src*="UWECE"] {
     border: 1px solid rgba(110, 181, 255, 0.15);
     background: rgba(0,0,0,0.3);
     display: block;
+    box-sizing: border-box;
     cursor: zoom-in;
     transition: border-color 0.25s ease, box-shadow 0.25s ease;
 }
@@ -781,6 +782,7 @@ img[src*="UWECE"] {
     border: 1px solid rgba(110, 181, 255, 0.15);
     background: #000;
     display: block;
+    box-sizing: border-box;
     outline: none;
 }
 
@@ -802,7 +804,8 @@ img[src*="UWECE"] {
     gap: 14px;
     width: 100%;
     aspect-ratio: 16 / 9;
-    max-height: 220px;
+    max-height: 400px;
+    box-sizing: border-box;
     background: rgba(0, 0, 0, 0.5);
     border: 1px solid rgba(110, 181, 255, 0.2);
     border-radius: 10px;

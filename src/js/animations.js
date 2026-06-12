@@ -1,5 +1,27 @@
 // Animation and scroll functionality
 
+// 3D tilt on project cards — desktop pointer devices only
+(function () {
+    if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+    let tiltCard = null;
+
+    document.addEventListener('mousemove', (e) => {
+        const card = e.target.closest('.project-card');
+        if (tiltCard && tiltCard !== card) {
+            tiltCard.style.transition = '';
+            tiltCard.style.transform  = '';
+            tiltCard = null;
+        }
+        if (!card || !card.classList.contains('animate')) return;
+        tiltCard = card;
+        const r  = card.getBoundingClientRect();
+        const dx = (e.clientX - (r.left + r.width  / 2)) / (r.width  / 2);
+        const dy = (e.clientY - (r.top  + r.height / 2)) / (r.height / 2);
+        card.style.transition = 'box-shadow 0.15s ease';
+        card.style.transform  = `perspective(700px) rotateX(${-dy * 5}deg) rotateY(${dx * 5}deg) translateY(-3px)`;
+    });
+})();
+
 // Stagger animation for boxed sections
 function animateBoxedSections() {
   const boxes = document.querySelectorAll('.boxed-section, .project-card, .timeline-item, .academic-timeline-item, .org-card, .accordion-item, .projects-accordion-item');
