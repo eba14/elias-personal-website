@@ -386,6 +386,10 @@
     .elias-a:hover       { transform: none; }
     /* profile-tagline and profile-location intentionally excluded:
        both should respond to tap with translateY(-2px) on touch devices */
+
+    /* Gallery: replace embedded iframe with a Drive link tap target on touch devices */
+    #gallery-main-iframe { display: none !important; }
+    .gallery-drive-link  { display: flex; }
 }
 
 /* =============================================

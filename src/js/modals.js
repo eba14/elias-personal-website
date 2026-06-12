@@ -112,6 +112,7 @@ function renderGallery() {
     const mainImg    = document.getElementById('gallery-main-img');
     const mainVideo  = document.getElementById('gallery-main-video');
     const mainIframe = document.getElementById('gallery-main-iframe');
+    const driveLink  = document.getElementById('gallery-drive-link');
     const caption    = document.getElementById('gallery-main-caption');
     const counter    = document.getElementById('gallery-counter');
     const thumbsEl   = document.getElementById('gallery-thumbnails');
@@ -133,6 +134,11 @@ function renderGallery() {
         mainIframe.style.display = isGdrive ? '' : 'none';
         if (isGdrive && item) mainIframe.src = item.src;
         else mainIframe.src = '';
+    }
+    if (driveLink) {
+        driveLink.style.display = isGdrive ? '' : 'none';
+        if (isGdrive && item) driveLink.href = item.src.replace('/preview', '/view');
+        else driveLink.href = '';
     }
 
     if (caption) caption.textContent = (item && item.caption) || '';
