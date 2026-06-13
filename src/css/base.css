@@ -212,6 +212,33 @@ html.cursor-active * {
     box-shadow: 0 0 20px rgba(110, 181, 255, 0.3);
 }
 
+/* ─── Toast notification ─── */
+#toast {
+    position: fixed;
+    bottom: 84px;
+    left: 50%;
+    transform: translateX(-50%) translateY(10px);
+    background: rgba(14, 24, 42, 0.96);
+    border: 1px solid rgba(110, 181, 255, 0.35);
+    color: #c8e0ff;
+    padding: 9px 22px;
+    border-radius: 20px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 99999;
+    white-space: nowrap;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.4), 0 0 12px rgba(110,181,255,0.12);
+    transition: opacity 0.22s ease, transform 0.22s ease;
+}
+#toast.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
+
 /* Section Spacing */
 section {
     margin-bottom: 25px;

@@ -41,6 +41,14 @@ function initGalleryModal() {
     if (closeBtn) closeBtn.addEventListener('click', closeGallery);
     if (prevBtn)  prevBtn.addEventListener('click',  () => galleryNav(-1));
     if (nextBtn)  nextBtn.addEventListener('click',  () => galleryNav(1));
+
+    // Touch swipe (mobile)
+    let swipeX = 0;
+    modal.addEventListener('touchstart', e => { swipeX = e.touches[0].clientX; }, { passive: true });
+    modal.addEventListener('touchend',   e => {
+        const dx = e.changedTouches[0].clientX - swipeX;
+        if (Math.abs(dx) > 48) galleryNav(dx > 0 ? -1 : 1);
+    }, { passive: true });
 }
 
 function openGallery(items, title) {
@@ -171,9 +179,20 @@ function galleryKeyHandler(e) {
 
 // ─────────────────────────────────────────────────────────────────────────────
 
-// Copy email address to clipboard with checkmark feedback
+// Floating toast
+function showToast(msg) {
+    const t = document.getElementById('toast');
+    if (!t) return;
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(t._hide);
+    t._hide = setTimeout(() => t.classList.remove('show'), 2200);
+}
+
+// Copy email address to clipboard
 function copyEmail(email, btn) {
     navigator.clipboard.writeText(email).then(() => {
+        showToast('Email copied!');
         const orig = btn.innerHTML;
         btn.innerHTML = '<svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
         btn.classList.add('copied');
