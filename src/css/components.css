@@ -385,16 +385,16 @@
 }
 
 .social-btn {
-    width: 60px; /* larger square */
+    width: 60px;
     height: 60px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
     border-radius: 14px;
-    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(124,197,255,0.01));
-    border: 1px solid rgba(124,197,255,0.08);
-    box-shadow: 0 8px 26px rgba(6,18,36,0.36);
-    transition: transform 260ms cubic-bezier(.2,.9,.3,1), box-shadow 260ms ease, background 260ms ease;
+    background: rgba(110, 181, 255, 0.07);
+    border: 1px solid rgba(110, 181, 255, 0.22);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+    transition: transform 260ms cubic-bezier(.2,.9,.3,1), box-shadow 260ms ease, background 260ms ease, border-color 260ms ease;
     -webkit-tap-highlight-color: transparent;
 }
 
@@ -408,10 +408,10 @@
 }
 
 .social-btn:hover {
-    /* lift the square smoothly but do not scale it; icon will scale independently when hovered */
     transform: translateY(-6px);
-    box-shadow: 0 22px 44px rgba(79,156,255,0.18);
-    background: linear-gradient(180deg, rgba(124,197,255,0.08), rgba(124,197,255,0.03));
+    background: rgba(110, 181, 255, 0.16);
+    border-color: rgba(110, 181, 255, 0.5);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.3), 0 0 18px rgba(110, 181, 255, 0.22);
 }
 
 /* Zoom the inner icon when the pointer is directly over it (not the square background) */

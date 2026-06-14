@@ -120,7 +120,6 @@
 .projects-tab-content.active {
     max-height: 5000px;
     opacity: 1;
-    overflow: visible;
 }
 
 /* Projects Content Wrapper - Light background container */
