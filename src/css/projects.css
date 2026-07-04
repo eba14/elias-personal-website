@@ -114,24 +114,20 @@
     max-height: 0;
     overflow: hidden;
     opacity: 0;
-    transition: max-height 0.3s ease, opacity 0.15s ease; /* closing: fade out fast */
+    transition: max-height 0.35s ease, opacity 0.2s ease;
 }
 
 .projects-tab-content.active {
     max-height: 5000px;
     opacity: 1;
-    transition: max-height 0.3s ease, opacity 0.25s ease 0.08s; /* opening: delay opacity so height expands first */
-}
-
-/* Border lives on the accordion item itself when open so overflow:hidden never clips it */
-.projects-accordion-item:has(.projects-tab-content.active) {
-    border: 1.5px solid rgba(110, 181, 255, 0.2);
+    transition: max-height 0.35s ease, opacity 0.3s ease 0.1s;
 }
 
 /* Projects Content Wrapper - Light background container */
 .projects-content-wrapper {
     background: rgba(0, 0, 0, 0.2);
     padding: 20px 25px;
+    border: 1.5px solid rgba(110, 181, 255, 0.2);
     border-radius: 0 0 12px 12px;
     position: relative; /* anchor for the counter badge */
 }
