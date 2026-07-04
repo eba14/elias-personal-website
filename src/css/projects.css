@@ -114,12 +114,13 @@
     max-height: 0;
     overflow: hidden;
     opacity: 0;
-    transition: max-height 0.3s ease, opacity 0.3s ease;
+    transition: max-height 0.3s ease, opacity 0.15s ease; /* closing: fade out fast */
 }
 
 .projects-tab-content.active {
     max-height: 5000px;
     opacity: 1;
+    transition: max-height 0.3s ease, opacity 0.25s ease 0.08s; /* opening: delay opacity so height expands first */
 }
 
 /* Border lives on the accordion item itself when open so overflow:hidden never clips it */
@@ -148,10 +149,7 @@
     flex: 1;
     display: flex;
     flex-direction: column;
-    /* Apply enhanced card styles */
     background: rgba(44, 62, 80, 0.85);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
     background-image:
         radial-gradient(circle at 20% 80%, rgba(110, 181, 255, 0.1) 0%, transparent 50%),
         radial-gradient(circle at 80% 20%, rgba(244, 180, 0, 0.08) 0%, transparent 50%),
@@ -358,10 +356,7 @@ img[src*="UWECE"] {
 }
 
 .academic-project-content {
-    /* Apply enhanced card styles */
     background: rgba(44, 62, 80, 0.85);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
     background-image:
         radial-gradient(circle at 20% 80%, rgba(110, 181, 255, 0.1) 0%, transparent 50%),
         radial-gradient(circle at 80% 20%, rgba(244, 180, 0, 0.08) 0%, transparent 50%),
