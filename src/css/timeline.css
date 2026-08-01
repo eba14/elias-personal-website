@@ -88,6 +88,13 @@ img[alt="Evans Scholars Logo"] {
     transform: scale(1.08);
 }
 
+img[alt="AFE Logo"] {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: contain !important;
+    transform: scale(1.08);
+}
+
 img[alt="StarkHacks Logo"] {
     width: 100% !important;
     height: 100% !important;
