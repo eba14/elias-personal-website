@@ -190,13 +190,17 @@ function showToast(msg) {
 }
 
 // Copy email address to clipboard
-function copyEmail(email, btn) {
+function copyEmail(email, btn, label) {
+    if (!btn._origHTML) btn._origHTML = btn.innerHTML;
     navigator.clipboard.writeText(email).then(() => {
-        showToast('Email copied!');
-        const orig = btn.innerHTML;
+        showToast((label || 'Email') + ' Copied!');
         btn.innerHTML = '<svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
         btn.classList.add('copied');
-        setTimeout(() => { btn.innerHTML = orig; btn.classList.remove('copied'); }, 1800);
+        clearTimeout(btn._resetTimer);
+        btn._resetTimer = setTimeout(() => {
+            btn.innerHTML = btn._origHTML;
+            btn.classList.remove('copied');
+        }, 1800);
     });
 }
 
