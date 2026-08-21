@@ -27,6 +27,10 @@ const FPGA_GALLERY = [
     { src: 'https://drive.google.com/file/d/1N5apfk54jVyQX7ps_Fiwr2bFVogu38_g/preview', caption: 'Live gameplay demo', type: 'gdrive' },
 ];
 
+const TETRISOC_GALLERY = [
+    { src: 'src/images/TetriSoC.webp', caption: '' },
+];
+
 let currentGallery   = [];
 let galleryIndex     = 0;
 let galleryNavLocked = false;
@@ -65,8 +69,9 @@ function openGallery(items, title) {
     document.addEventListener('keydown', galleryKeyHandler);
 }
 
-function openRobotGallery() { openGallery(ROBOT_GALLERY, 'Line-Following Robot Car'); }
-function openFpgaGallery()  { openGallery(FPGA_GALLERY,  'FPGA Connect 4'); }
+function openRobotGallery()    { openGallery(ROBOT_GALLERY,    'Line-Following Robot Car'); }
+function openFpgaGallery()     { openGallery(FPGA_GALLERY,     'FPGA Connect 4'); }
+function openTetrisocGallery() { openGallery(TETRISOC_GALLERY, 'TetriSoC'); }
 function closeRobotGallery() { closeGallery(); }
 
 function closeGallery() {

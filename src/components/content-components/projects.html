@@ -46,7 +46,7 @@
                                     <h3>Line-Following Robot Car</h3>
                                     <p class="date-text">April 2026 – June 2026</p>
                                     <button class="gallery-btn" data-gallery="robot" aria-label="View robot photo gallery">
-                                        <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                                        <svg viewBox="0 0 24 24" width="17" height="17" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
                                         Gallery
                                     </button>
                                     <p>This project involved designing, assembling, and programming a fully autonomous line-following robot as part of EE201 at the University of Washington. Working in a team of 3, we built a robot that uses an array of 7 photoresistors to detect a black line on a white surface, with a PID control loop written in C++ on an Arduino Mega continuously adjusting the left and right motor speeds to keep the robot centered on the track. The weighted-average error calculation across the sensor array produces a smooth, continuous position signal, which the PID controller uses to compute corrective turn rates in real time.</p>
@@ -78,6 +78,10 @@
                                 <div class="academic-project-content">
                                     <h3>TetriSoC</h3>
                                     <p class="date-text">May 2026 – June 2026</p>
+                                    <button class="gallery-btn" onclick="openTetrisocGallery()" aria-label="View TetriSoC gallery">
+                                        <svg viewBox="0 0 24 24" width="17" height="17" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                                        Gallery
+                                    </button>
                                     <p>This project involved designing and implementing a fully playable Tetris game on a remote DE1-SoC FPGA board using SystemVerilog, displayed over VGA and controlled with an N8 NES-style game controller. The system was built as a collection of independent modules, each responsible for a distinct layer of the game: piece logic, board state, rendering, input handling, and overall game flow, keeping the design clean and well-separated.</p>
                                     <p>The game supports full piece movement and rotation with real-time collision detection, soft and hard drop, automatic line clearing, and a score tracked live on the board's 7-segment display. Piece randomization cycles through all 7 Tetris piece types, and a next-piece preview box gives the player a look at what's coming. Each module was verified through SystemVerilog testbenches in ModelSim before being synthesized and demoed on the FPGA.</p>
                                     <p>The end result was a complete, fully functional Tetris game running entirely on LabsLand.</p>
@@ -102,7 +106,7 @@
                                     <h3>FPGA Connect 4</h3>
                                     <p class="date-text">February 2026 – March 2026</p>
                                     <button class="gallery-btn" data-gallery="fpga" aria-label="View FPGA Connect 4 gallery">
-                                        <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                                        <svg viewBox="0 0 24 24" width="17" height="17" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
                                         Gallery
                                     </button>
                                     <p>This project involved designing and implementing a fully functional 2-player Connect 4 game on a DE1-SoC FPGA board using SystemVerilog. At the core of my system's implementation, Finite State Machines (FSMs) were used to manage all aspects of gameplay, from tracking which player's turn it was, to determining when a player had won or when the board had filled up. Clock-based timing was also incorporated to control the pacing between rounds, giving the game a polished and smooth flow.</p>
