@@ -131,6 +131,12 @@ img[alt="ARC Lab Logo"] {
     object-fit: cover !important;
 }
 
+img[alt="Washington Tunneling Logo"] {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+}
+
 img[alt="Amazon Brand Ambassador Logo"] {
     width: 100% !important;
     height: 100% !important;
