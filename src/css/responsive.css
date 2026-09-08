@@ -4,7 +4,11 @@
    on ALL screen sizes
    ============================================= */
 @media screen and (max-width: 992px) {
-    html, body {
+    html {
+        max-width: 100%;
+    }
+
+    body {
         max-width: 100%;
         overflow-x: hidden;
     }
