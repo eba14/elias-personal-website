@@ -9,7 +9,7 @@ A fully responsive personal portfolio website built from scratch with HTML, CSS,
 ## Features
 
 - **Responsive layout** — adapts across desktop, tablet, and mobile with a fixed sidebar on desktop and stacked layout on smaller screens
-- **Custom animated cursor** — smooth ring + dot cursor on pointer devices
+- **Custom animated cursor** — smooth ring + dot cursor on pointer devices, with color and size feedback when hovering interactive elements
 - **Intersection Observer animations** — cards and sections fade in as they enter the viewport
 - **Project gallery lightbox** — photo and video gallery modal with thumbnail navigation and video support
 - **Projects carousel** — swipeable/navigable carousel for browsing personal projects
