@@ -4,7 +4,7 @@ A fully responsive personal portfolio website built from scratch with HTML, CSS,
 
 ## Live Website
 
-[eba14.github.io/elias-personal-website](https://eba14.github.io/elias-personal-website)
+<a href="https://eba14.github.io/elias-personal-website" target="_blank">eba14.github.io/elias-personal-website</a>
 
 ## Features
 
