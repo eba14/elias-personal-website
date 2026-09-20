@@ -28,45 +28,53 @@ A fully responsive personal portfolio website built from scratch with HTML, CSS,
 | Styling | CSS3 (custom, no frameworks) — modular files per feature |
 | Scripting | JavaScript (ES6+), modular JS files |
 | Hosting | GitHub Pages |
-| Assets | WebP / PNG / JPG images, Google Drive embeds for video |
+| Assets | WebP / PNG / JPG images, Google Drive embeds for videos |
 
 ## Project Structure
 
 ```
 personal-portfolio/
 ├── index.html
-├── src/
-│   ├── css/
-│   │   ├── base.css          # Global reset, body, loading screen, toast
-│   │   ├── layout.css        # Two-panel layout (fixed sidebar + scrollable content)
-│   │   ├── header.css        # Fixed nav, mobile menu
-│   │   ├── components.css    # Cards, footer, social buttons, org cards
-│   │   ├── timeline.css      # Work/leadership timeline, skill tags
-│   │   ├── projects.css      # Projects accordion, carousel, gallery lightbox
-│   │   ├── animations.css    # Keyframes and scroll-driven animations
-│   │   ├── hero.css          # Hero section
-│   │   ├── modals.css        # About me modal, email popup
-│   │   └── responsive.css    # Breakpoint overrides (992px, 768px, 480px, landscape)
-│   ├── js/
-│   │   ├── components.js     # Dynamic component injection, modal/popup interactions
-│   │   ├── modals.js         # Gallery lightbox logic, email copy, toast
-│   │   ├── cursor.js         # Custom cursor
-│   │   └── utils/
-│   │       └── smooth-scroll.js
-│   ├── script.js             # Entry point — scroll effects, nav state, animations
-│   └── components/
-│       ├── header.html
-│       ├── left-profile.html
-│       ├── email-popup.html
-│       ├── footer.html
-│       └── content-components/
-│           ├── about-me.html
-│           ├── work-history.html
-│           ├── projects.html
-│           ├── hackathons.html
-│           ├── leadership.html
-│           ├── organizations.html
-│           └── coursework.html
+└── src/
+    ├── styles.css                  # CSS entry point — imports all modular CSS files
+    ├── script.js                   # JS entry point — initializes all modules
+    ├── css/
+    │   ├── base.css                # Global reset, body, loading screen, toast
+    │   ├── layout.css              # Two-panel layout (fixed sidebar + scrollable content)
+    │   ├── header.css              # Fixed nav, mobile menu
+    │   ├── components.css          # Cards, footer, social buttons, org cards
+    │   ├── timeline.css            # Work/leadership timeline, skill tags
+    │   ├── projects.css            # Projects accordion, carousel, gallery lightbox
+    │   ├── animations.css          # Keyframes and scroll-driven animations
+    │   ├── hero.css                # Hero section
+    │   ├── modals.css              # About me modal, email popup
+    │   └── responsive.css          # Breakpoint overrides (992px, 768px, 480px, landscape)
+    ├── js/
+    │   ├── components.js           # Dynamic component injection, modal/popup interactions
+    │   ├── modals.js               # Gallery lightbox logic, email copy, toast
+    │   ├── cursor.js               # Custom cursor
+    │   ├── animations.js           # Scroll-driven animations, 3D card tilt
+    │   ├── hero.js                 # Hero section initialization, typewriter effect
+    │   ├── navigation.js           # Mobile navigation toggle
+    │   └── utils/
+    │       ├── smooth-scroll.js    # Header-offset smooth scrolling
+    │       ├── scroll-effects.js   # Scroll utility functions
+    │       ├── typewriter.js       # Typewriter effect class
+    │       └── emoji-rotator.js    # Emoji rotation utility
+    ├── images/                     # WebP / PNG / JPG assets
+    └── components/
+        ├── header.html
+        ├── left-profile.html
+        ├── email-popup.html
+        ├── footer.html
+        └── content-components/
+            ├── about-me.html
+            ├── work-history.html
+            ├── projects.html
+            ├── hackathons.html
+            ├── leadership.html
+            ├── organizations.html
+            └── coursework.html
 ```
 
 ---
