@@ -1,7 +1,7 @@
 // Scroll-related utility functions
 class ScrollEffects {
     constructor() {
-        this.navLinks = document.querySelectorAll('.nav-link, .mobile-nav-link');
+        this.navLinks = document.querySelectorAll('.nav-link, .mobile-nav-link, .bottom-nav-item');
         this.sections = document.querySelectorAll('section[id]');
         this.header = document.querySelector('header');
         this.isUpdating = false;

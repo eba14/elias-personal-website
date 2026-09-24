@@ -417,7 +417,7 @@
    RIGHT SIDE — trim excess bottom gap on mobile
    ============================================= */
 @media screen and (max-width: 992px) {
-    .right-side { margin-bottom: 80px; }
+    .right-side { margin-bottom: 90px; }
 }
 
 /* =============================================
