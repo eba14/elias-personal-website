@@ -599,7 +599,7 @@
 }
 
 .accordion-item.open .accordion-content {
-    max-height: 2000px;
+    max-height: 9999px;
     opacity: 1;
     overflow: visible;
 }
@@ -926,7 +926,7 @@ img[alt="South Seattle College logo"] {
 }
 
 .hackathon-accordion-item.open .hackathon-content {
-    max-height: 2000px;
+    max-height: 9999px;
     opacity: 1;
     overflow: visible;
 }
