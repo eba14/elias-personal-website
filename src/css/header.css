@@ -226,6 +226,8 @@ header.scrolled .nav-container {
     opacity: 1;
     overflow-y: auto;
     pointer-events: auto;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
 }
 
 .mobile-nav-link {
@@ -298,16 +300,15 @@ header.scrolled .nav-container {
         display: none;
     }
 
-    /* Hamburger replaced by bottom nav on mobile */
     .mobile-menu-toggle {
-        display: none;
+        display: flex;
     }
 
     .nav-container {
         width: 100%;
         padding: 12px 30px;
         gap: 20px;
-        justify-content: center;
+        justify-content: space-between;
     }
 
     #bottom-nav {

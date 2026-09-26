@@ -5,6 +5,11 @@ function initializeMobileNavigation() {
     const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
 
     if (mobileToggle && mobileMenu) {
+        // Prevent page scroll from stealing touch events inside the open dropdown
+        mobileMenu.addEventListener('touchmove', (e) => {
+            e.stopPropagation();
+        }, { passive: true });
+
         // Toggle mobile menu
         mobileToggle.addEventListener('click', () => {
             mobileToggle.classList.toggle('active');
